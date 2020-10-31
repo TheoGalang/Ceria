@@ -122,10 +122,10 @@ class ShowAssignmentParent extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             {
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return DetailTugasParent();
-                              }));
+                              // Navigator.pushReplacement(context,
+                              //     MaterialPageRoute(builder: (context) {
+                              //   return DetailTugasParent();
+                              // }));
                             }
                           },
                           child: Container(

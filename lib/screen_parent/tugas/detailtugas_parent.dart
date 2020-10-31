@@ -1,6 +1,6 @@
+import './widgets/chat_message.dart';
+import 'package:ceria/tools/measure_child.dart';
 import 'package:ceria/screen_parent/tugas/listtugas_parent.dart';
-import 'package:ceria/screen_parent/tugas/pengumpulantugas_parent.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailTugasParent extends StatefulWidget {
@@ -9,292 +9,297 @@ class DetailTugasParent extends StatefulWidget {
 }
 
 class _DetailTugasParentState extends State<DetailTugasParent> {
+  final _inputController = TextEditingController();
+  final List<ChatMessage> _messages = [
+    ChatMessage(
+      text: "Boleh",
+      crossAxisAlignment: CrossAxisAlignment.end,
+    ),
+    ChatMessage(
+      text: "Kalau tidak urut tidak apa apa?",
+      crossAxisAlignment: CrossAxisAlignment.start,
+    ),
+  ];
+  bool _isComposing = false;
+  var descriptionSize = Size(0, 207);
+  var paintingScreenSize = Size(0, 600);
+  var appbarSize = Size(0, 80);
+  var tabBarLabelSize = Size(0, 48);
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {},
-          icon: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {
-              {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) {
-                  return ShowAssignmentParent();
-                }));
-              }
-            },
-          ),
-        ),
-        title: Text("Detail Tugas"),
-        backgroundColor: Color(0xff41348C),
-      ),
-      body: Stack(
-        children: <Widget>[
-          SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 100),
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.all(20),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Tugas Matematika Deret Halaman 20",
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Color(0xff41348C),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.all(10),
-                                child: Icon(
-                                  Icons.circle,
-                                  color: Color(0xff41348C),
-                                  size: 15,
-                                ),
-                              ),
-                              Flexible(
-                                child: Container(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: Text(
-                                    "Kerjakan di Buku Tulis, Dikerjakan secara urut, Kerjakan hanya excersie 1",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color: Color(0xff41348C),
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
-                          alignment: Alignment.centerLeft,
-                          child: Row(
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.all(10),
-                                child: Icon(
-                                  Icons.circle,
-                                  color: Color(0xff41348C),
-                                  size: 15,
-                                ),
-                              ),
-                              Text(
-                                "Deadline 18 September 2020",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xff41348C),
-                                    fontWeight: FontWeight.normal),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(10, 30, 20, 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  {
-                                    Navigator.pushReplacement(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return DetailTugasParent();
-                                    }));
-                                  }
-                                },
-                                child: Text(
-                                  "Komentar",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  {
-                                    Navigator.pushReplacement(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return KumpulTugasParent();
-                                    }));
-                                  }
-                                },
-                                child: Text(
-                                  "Pengumpulan",
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.normal),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            margin: EdgeInsets.fromLTRB(20, 0, 0, 10),
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 3,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              "Kalau tidak urut tidak apa apa?",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff41348C),
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 3,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              "Boleh",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff41348C),
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            margin: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 3,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              "Boleh",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff41348C),
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            constraints: BoxConstraints(maxWidth: 250),
-                            margin: EdgeInsets.fromLTRB(20, 0, 0, 10),
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
-                                  spreadRadius: 3,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: Text(
-                              "Kalau tidak urut tidak apa apa?",
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff41348C),
-                                  fontWeight: FontWeight.normal),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+    var assignmentDescription = Container(
+      margin: EdgeInsets.all(20),
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.all(10),
+            child: Center(
+              child: Text(
+                "Tugas Matematika Deret Halaman 20",
+                style: TextStyle(
+                    fontSize: 20,
+                    color: Color(0xff41348C),
+                    fontWeight: FontWeight.bold),
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomLeft,
+          Container(
+            margin: EdgeInsets.all(10),
             child: Row(
               children: <Widget>[
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: Icon(
+                    Icons.circle,
+                    color: Color(0xff41348C),
+                    size: 15,
+                  ),
+                ),
                 Flexible(
                   child: Container(
-                    margin: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width / 1,
-                    decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 3,
-                        blurRadius: 5,
-                      ),
-                    ]),
-                    child: TextField(
-                      decoration: InputDecoration(
-                          hintText: "ketik disini",
-                          fillColor: Colors.white,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5))),
+                    width: MediaQuery.of(context).size.width,
+                    child: Text(
+                      "Kerjakan di Buku Tulis, Dikerjakan secara urut, Kerjakan hanya excersie 1",
+                      style: TextStyle(
+                          fontSize: 15,
+                          color: Color(0xff41348C),
+                          fontWeight: FontWeight.normal),
                     ),
                   ),
                 ),
-                IconButton(
-                    icon: Icon(
-                      Icons.send,
-                      color: Color(0xff41348C),
-                      size: 30,
-                    ),
-                    onPressed: () {})
               ],
             ),
-          )
+          ),
+          Container(
+            margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.all(10),
+                  child: Icon(
+                    Icons.circle,
+                    color: Color(0xff41348C),
+                    size: 15,
+                  ),
+                ),
+                Text(
+                  "Deadline 18 September 2020",
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Color(0xff41348C),
+                      fontWeight: FontWeight.normal),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
+    var appbar = AppBar(
+      leading: IconButton(
+        onPressed: () {},
+        icon: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return ShowAssignmentParent();
+              }));
+            }
+          },
+        ),
+      ),
+      title: Text("Detail Tugas"),
+      backgroundColor: Color(0xff41348C),
+    );
+    return MeasureSize(
+      onChange: (Size size) {
+        setState(() {
+          paintingScreenSize = size;
+        });
+      },
+      child: Scaffold(
+        appBar: appbar,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              MeasureSize(
+                onChange: (size) {
+                  setState(() {
+                    descriptionSize = size;
+                  });
+                },
+                child: assignmentDescription,
+              ),
+              // tab layout
+              buildDefaultTabController(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  DefaultTabController buildDefaultTabController() {
+    return DefaultTabController(
+        length: 2,
+        child: Column(
+          children: [
+            MeasureSize(
+              onChange: (Size size) {
+                setState(() {
+                  tabBarLabelSize = size;
+                });
+              },
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 20),
+                child: TabBar(
+                    labelColor: Color(0xff41348C),
+                    indicatorColor: Color(0xff41348C),
+                    tabs: [
+                      Tab(
+                        text: "Komentar",
+                      ),
+                      Tab(text: "Submition")
+                    ]),
+              ),
+            ),
+            Container(
+              height: paintingScreenSize.height -
+                  appbarSize.height -
+                  descriptionSize.height -
+                  tabBarLabelSize.height,
+              child: TabBarView(children: [
+                Column(
+                  children: [
+                    Flexible(
+                      child: ListView.builder(
+                        padding: EdgeInsets.all(8.0),
+                        reverse: true,
+                        itemBuilder: (_, int index) => _messages[index],
+                        itemCount: _messages.length,
+                      ),
+                    ),
+                    Divider(
+                      height: 1,
+                    ),
+                    Container(
+                      child: buildTextInput(context),
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 1.5,
+                        padding: EdgeInsets.all(20),
+                        decoration:
+                            BoxDecoration(color: Colors.white, boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 3,
+                            blurRadius: 5,
+                          ),
+                        ]),
+                        child: IconButton(
+                            icon: Icon(
+                              Icons.add,
+                              color: Color(0xff41348C),
+                              size: 30,
+                            ),
+                            onPressed: () {}),
+                      ),
+                    ),
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      child: RaisedButton(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                        onPressed: () {},
+                        child: Text(
+                          "Simpan",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        color: Color(0xff41348C),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                      ),
+                    ),
+                  ],
+                ),
+              ]),
+            )
+          ],
+        ));
+  }
+
+  Row buildTextInput(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        Flexible(
+          child: Container(
+            margin: EdgeInsets.all(10),
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 3,
+                blurRadius: 5,
+              ),
+            ]),
+            child: TextField(
+              onChanged: (String text) {
+                setState(() {
+                  _isComposing = text.length > 0;
+                });
+              },
+              controller: _inputController,
+              onSubmitted: _isComposing ? _handleSubmit : null,
+              decoration: InputDecoration(
+                  hintText: "ketik disini",
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5))),
+            ),
+          ),
+        ),
+        IconButton(
+            icon: Icon(
+              Icons.send,
+              color: _isComposing ? Color(0xff41348C) : Color(0x7741348C),
+              size: 30,
+            ),
+            onPressed: () {
+              // ignore: unnecessary_statements
+              _isComposing ? _handleSubmit(_inputController.text) : null;
+            })
+      ],
+    );
+  }
+
+  void _handleSubmit(String value) {
+    _inputController.clear();
+    setState(() {
+      _isComposing = false;
+    });
+    ChatMessage message = ChatMessage(
+      text: value,
+      crossAxisAlignment: CrossAxisAlignment.start,
+    );
+
+    setState(() {
+      _messages.insert(0, message);
+    });
   }
 }
