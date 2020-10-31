@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:image_picker/image_picker.dart';
+import 'package:sweetalert/sweetalert.dart';
+
 import './widgets/chat_message.dart';
 import 'package:ceria/tools/measure_child.dart';
 import 'package:ceria/screen_parent/tugas/listtugas_parent.dart';
@@ -25,6 +30,16 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
   var paintingScreenSize = Size(0, 600);
   var appbarSize = Size(0, 80);
   var tabBarLabelSize = Size(0, 48);
+
+  File _image;
+
+  Future getImage() async {
+    final image = await ImagePicker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,6 +188,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                   descriptionSize.height -
                   tabBarLabelSize.height,
               child: TabBarView(children: [
+                // Below is Views for Comment tab
                 Column(
                   children: [
                     Flexible(
@@ -191,6 +207,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                     ),
                   ],
                 ),
+                // Below is Views for Submition tab
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -207,13 +224,20 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                             blurRadius: 5,
                           ),
                         ]),
-                        child: IconButton(
-                            icon: Icon(
-                              Icons.add,
-                              color: Color(0xff41348C),
-                              size: 30,
-                            ),
-                            onPressed: () {}),
+                        child: _image == null
+                            ? IconButton(
+                                icon: Icon(
+                                  Icons.add,
+                                  color: Color(0xff41348C),
+                                  size: 50,
+                                ),
+                                onPressed: () {
+                                  getImage();
+                                })
+                            : Container(
+                                width: 100,
+                                child: Image.file(_image),
+                              ),
                       ),
                     ),
                     Container(
@@ -222,7 +246,17 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                       child: RaisedButton(
                         padding:
                             EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                        onPressed: () {},
+                        onPressed: _image == null
+                            ? null
+                            : () {
+                                setState(() {
+                                  _image = null;
+                                });
+                                SweetAlert.show(context,
+                                    title: "Berhasil",
+                                    subtitle: "File Berhasil Terkirim!",
+                                    style: SweetAlertStyle.success);
+                              },
                         child: Text(
                           "Simpan",
                           style: TextStyle(
