@@ -94,7 +94,7 @@ class DetailTugasTeacher extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(10, 30, 20, 20),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         TextButton(
                           onPressed: () {
@@ -113,23 +113,6 @@ class DetailTugasTeacher extends StatelessWidget {
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
-                        TextButton(
-                          onPressed: () {
-                            {
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return LampiranTeacher();
-                              }));
-                            }
-                          },
-                          child: Text(
-                            "Lampiran",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Color(0xff41348C),
-                                fontWeight: FontWeight.normal),
-                          ),
-                        )
                       ],
                     ),
                   ),
