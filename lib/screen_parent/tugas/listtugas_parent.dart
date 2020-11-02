@@ -89,7 +89,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
           ),
         ],
       ),
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 5),
+      margin: EdgeInsets.fromLTRB(0, 10, 0, 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
