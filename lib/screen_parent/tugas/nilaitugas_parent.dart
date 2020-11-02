@@ -1,7 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'listtugas_parent.dart';
+import 'widgets/Assignment.dart';
+
 class NilaiTugasParent extends StatefulWidget {
+  final Assignment assignment;
+
+  const NilaiTugasParent({Key key, this.assignment}) : super(key: key);
   @override
   _NilaiTugasParentState createState() => _NilaiTugasParentState();
 }
@@ -9,10 +15,20 @@ class NilaiTugasParent extends StatefulWidget {
 class _NilaiTugasParentState extends State<NilaiTugasParent> {
   @override
   Widget build(BuildContext context) {
+    var assignmentData = this.widget.assignment;
+    DateTime deadline = assignmentData.getDeadline();
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => ShowAssignmentParent(),
+              ),
+            );
+          },
           icon: Icon(
             Icons.arrow_back,
             color: Colors.white,
@@ -36,7 +52,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                           margin: EdgeInsets.all(10),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "Tugas Matematika Deret Halaman 20",
+                            "${assignmentData.getTitle()}",
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xff41348C),
@@ -59,7 +75,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   child: Text(
-                                    "Kerjakan di Buku Tulis, Dikerjakan secara urut, Kerjakan hanya excersie 1",
+                                    "${assignmentData.getDescription()}",
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Color(0xff41348C),
@@ -84,7 +100,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                                 ),
                               ),
                               Text(
-                                "Deadline 18 September 2020",
+                                "Deadline ${deadline.year.toString()}-${deadline.month.toString().padLeft(2, '0')}-${deadline.day.toString().padLeft(2, '0')}",
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Color(0xff41348C),
@@ -93,60 +109,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.fromLTRB(20, 25, 10, 25),
-                          margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          width: MediaQuery.of(context).size.width / 1.3,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(color: Colors.black, width: 2),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: Text(
-                                  "90",
-                                  style: TextStyle(
-                                      fontSize: 50,
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Flexible(
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                      child: Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: Text(
-                                          "Tugas matematika deret halaman 20",
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Color(0xff41348C),
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Deadline 18 September 2020",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Color(0xff41348C),
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        buildContainerNilai(context, assignmentData),
                         Container(
                             alignment: Alignment.centerLeft,
                             margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
@@ -308,6 +271,78 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
           )
         ],
       ),
+    );
+  }
+
+  Widget buildContainerNilai(BuildContext context, Assignment assignmentData) {
+    DateTime deadline = assignmentData.getDeadline();
+
+    return Container(
+      padding: EdgeInsets.fromLTRB(20, 25, 10, 25),
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+      width: MediaQuery.of(context).size.width / 1.3,
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.black, width: 2),
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      child: assignmentData.grade != null
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  child: Text(
+                    "${assignmentData.grade}",
+                    style: TextStyle(
+                        fontSize: 50,
+                        color: Color(0xff41348C),
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Flexible(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                        child: Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Text(
+                            "${assignmentData.getTitle()}",
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff41348C),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Deadline ${deadline.year.toString()}-${deadline.month.toString().padLeft(2, '0')}-${deadline.day.toString().padLeft(2, '0')}",
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Color(0xff41348C),
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
+          : Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Mohon tunggu hasil pemeriksaan dari guru.",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xff41348C),
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
     );
   }
 }

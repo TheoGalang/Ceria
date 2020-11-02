@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ceria/tools/constants.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:sweetalert/sweetalert.dart';
 
@@ -8,12 +9,20 @@ import 'package:ceria/tools/measure_child.dart';
 import 'package:ceria/screen_parent/tugas/listtugas_parent.dart';
 import 'package:flutter/material.dart';
 
+import 'widgets/Assignment.dart';
+
 class DetailTugasParent extends StatefulWidget {
+  final Assignment assignment;
+
+  const DetailTugasParent({Key key, this.assignment}) : super(key: key);
   @override
-  _DetailTugasParentState createState() => _DetailTugasParentState();
+  _DetailTugasParentState createState() => _DetailTugasParentState(
+        assignmentData: this.assignment,
+      );
 }
 
 class _DetailTugasParentState extends State<DetailTugasParent> {
+  final Assignment assignmentData;
   final _inputController = TextEditingController();
   final List<ChatMessage> _messages = [
     ChatMessage(
@@ -33,6 +42,8 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
 
   File _image;
 
+  _DetailTugasParentState({this.assignmentData});
+
   Future getImage() async {
     final image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
@@ -43,6 +54,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime deadline = this.assignmentData.getDeadline();
     var assignmentDescription = Container(
       margin: EdgeInsets.all(20),
       child: Column(
@@ -51,7 +63,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
             margin: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                "Tugas Matematika Deret Halaman 20",
+                "${assignmentData.getTitle()}",
                 style: TextStyle(
                     fontSize: 20,
                     color: Color(0xff41348C),
@@ -75,7 +87,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     child: Text(
-                      "Kerjakan di Buku Tulis, Dikerjakan secara urut, Kerjakan hanya excersie 1",
+                      "${assignmentData.getDescription()}",
                       style: TextStyle(
                           fontSize: 15,
                           color: Color(0xff41348C),
@@ -100,7 +112,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                   ),
                 ),
                 Text(
-                  "Deadline 18 September 2020",
+                  "Deadline ${deadline.year.toString()}-${deadline.month.toString().padLeft(2, '0')}-${deadline.day.toString().padLeft(2, '0')}",
                   style: TextStyle(
                       fontSize: 15,
                       color: Color(0xff41348C),
@@ -119,10 +131,14 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return ShowAssignmentParent();
-              }));
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return ShowAssignmentParent();
+                  },
+                ),
+              );
             }
           },
         ),
@@ -130,6 +146,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
       title: Text("Detail Tugas"),
       backgroundColor: Color(0xff41348C),
     );
+
     return MeasureSize(
       onChange: (Size size) {
         setState(() {
@@ -249,8 +266,12 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                         onPressed: _image == null
                             ? null
                             : () {
+                                var indexInConst = constAssingments.indexOf(
+                                  this.assignmentData,
+                                );
                                 setState(() {
-                                  _image = null;
+                                  constAssingments[indexInConst].isComplete =
+                                      true;
                                 });
                                 SweetAlert.show(context,
                                     title: "Berhasil",

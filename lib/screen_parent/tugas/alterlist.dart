@@ -4,12 +4,12 @@ import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ShowAssignmentParent extends StatefulWidget {
+class AlterList extends StatefulWidget {
   @override
-  _ShowAssignmentParentState createState() => _ShowAssignmentParentState();
+  _AlterListState createState() => _AlterListState();
 }
 
-class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
+class _AlterListState extends State<AlterList> {
   final List<SimpleAssignmentView> assignmentDone = [];
   final List<SimpleAssignmentView> assingmentNotDoneYet = [];
 
