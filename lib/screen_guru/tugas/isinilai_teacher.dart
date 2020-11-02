@@ -96,6 +96,33 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                     ),
                   ),
                   Container(
+                    margin: EdgeInsets.all(10),
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.fromLTRB(3, 10, 3, 10),
+                          child: Icon(
+                            Icons.download_sharp,
+                            color: Color(0xff41348C),
+                            size: 30,
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Klik disini untuk download file tugas",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xff41348C),
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
                     width: MediaQuery.of(context).size.width / 1,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
