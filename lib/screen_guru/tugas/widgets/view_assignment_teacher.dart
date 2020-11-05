@@ -6,8 +6,9 @@ import 'package:intl/intl.dart';
 
 class TeacherSimpleAssignmentView extends StatelessWidget {
   final Assignment assignment;
+  final int classId;
 
-  TeacherSimpleAssignmentView({this.assignment});
+  TeacherSimpleAssignmentView({this.assignment, this.classId});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,8 @@ class TeacherSimpleAssignmentView extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return DetailTugasTeacher();
+                return DetailTugasTeacher(
+                    assignment: this.assignment, classId: classId);
               },
             ),
           );

@@ -1,10 +1,15 @@
 import 'package:ceria/screen_guru/tugas/isinilai_teacher.dart';
-import 'package:ceria/screen_guru/tugas/lampiran_teacher.dart';
-import 'package:ceria/screen_guru/tugas/listtugas_guru.dart';
+import 'package:ceria/screen_parent/tugas/widgets/Assignment.dart';
+import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DetailTugasTeacher extends StatelessWidget {
+  final Assignment assignment;
+  final int classId;
+
+  DetailTugasTeacher({this.assignment, this.classId});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +26,7 @@ class DetailTugasTeacher extends StatelessWidget {
                     margin: EdgeInsets.all(10),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Tugas Matematika Deret Halaman 20",
+                      "${this.assignment.title}",
                       style: TextStyle(
                           fontSize: 20,
                           color: Color(0xff41348C),
@@ -42,7 +47,7 @@ class DetailTugasTeacher extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Kelas 12 IPA 1",
+                          "${constKelas[this.classId].namaKelas}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Color(0xff41348C),
@@ -65,7 +70,7 @@ class DetailTugasTeacher extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Deadline 18 September 2020",
+                          "${this.assignment.description}",
                           style: TextStyle(
                               fontSize: 15,
                               color: Color(0xff41348C),
@@ -80,14 +85,7 @@ class DetailTugasTeacher extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         TextButton(
-                          onPressed: () {
-                            {
-                              Navigator.pushReplacement(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return DetailTugasTeacher();
-                              }));
-                            }
-                          },
+                          onPressed: null,
                           child: Text(
                             "Pengumpulan",
                             style: TextStyle(
@@ -102,7 +100,7 @@ class DetailTugasTeacher extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       {
-                        Navigator.pushReplacement(context,
+                        Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return IsiNilaiTeacher();
                         }));
@@ -147,7 +145,7 @@ class DetailTugasTeacher extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       {
-                        Navigator.pushReplacement(context,
+                        Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return IsiNilaiTeacher();
                         }));
@@ -192,7 +190,7 @@ class DetailTugasTeacher extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       {
-                        Navigator.pushReplacement(context,
+                        Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return IsiNilaiTeacher();
                         }));
@@ -245,6 +243,7 @@ class DetailTugasTeacher extends StatelessWidget {
 
   AppBar buildAppBar(BuildContext context) {
     return AppBar(
+      title: Text("Detail Tugas"),
       elevation: 0,
       backgroundColor: Color(0xFF41348C),
       leading: IconButton(

@@ -28,6 +28,7 @@ class _ShowAssignmentState extends State<ShowAssignment> {
       temp.insert(
           0,
           TeacherSimpleAssignmentView(
+            classId: widget.id,
             assignment: item,
           ));
     }

@@ -16,10 +16,7 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
         leading: IconButton(
           onPressed: () {
             {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return DetailTugasTeacher();
-              }));
+              Navigator.pop(context);
             }
           },
           icon: Icon(
@@ -213,7 +210,9 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                     margin: EdgeInsets.all(30),
                     child: RaisedButton(
                       padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: Text(
                         "Simpan",
                         style: TextStyle(
