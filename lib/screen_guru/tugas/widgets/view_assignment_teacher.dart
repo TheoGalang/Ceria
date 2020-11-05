@@ -1,13 +1,13 @@
-import 'package:ceria/screen_parent/tugas/detailtugas_parent.dart';
+import 'package:ceria/screen_guru/tugas/detailtugas_teacher.dart';
+import 'package:ceria/screen_parent/tugas/widgets/Assignment.dart';
 
-import '../nilaitugas_parent.dart';
-import 'Assignment.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
-class SimpleAssignmentView extends StatelessWidget {
+class TeacherSimpleAssignmentView extends StatelessWidget {
   final Assignment assignment;
 
-  SimpleAssignmentView({this.assignment});
+  TeacherSimpleAssignmentView({this.assignment});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,7 @@ class SimpleAssignmentView extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return this.assignment.isComplete
-                    ? NilaiTugasParent(assignment: this.assignment)
-                    : DetailTugasParent(assignment: this.assignment);
+                return DetailTugasTeacher();
               },
             ),
           );
@@ -54,7 +52,9 @@ class SimpleAssignmentView extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Deadline ${date.year.toString()}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+                "Deadline " +
+                    DateFormat("EEEE, d MMMM yyyy", "id_ID")
+                        .format(assignment.deadline),
                 style: TextStyle(
                     fontSize: 14,
                     color: Color(0xff41348C),

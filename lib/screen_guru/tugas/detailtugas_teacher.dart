@@ -8,24 +8,7 @@ class DetailTugasTeacher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (context) {
-                return ShowAssignment();
-              }));
-            }
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-        ),
-        title: Text("Detail Tugas"),
-        backgroundColor: Color(0xff41348C),
-      ),
+      appBar: buildAppBar(context),
       body: SafeArea(
         child: ListView(
           children: [
@@ -257,6 +240,25 @@ class DetailTugasTeacher extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Color(0xFF41348C),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.notifications),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

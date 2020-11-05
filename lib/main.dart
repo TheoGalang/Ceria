@@ -1,16 +1,20 @@
+import 'package:ceria/screen_guru/home_guru.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
-import 'screen_parent/tugas/listtugas_parent.dart';
-
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID', null).then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ShowAssignmentParent(),
+      // home: ShowAssignment(
+      //   kelas: constKelas[1],
+      // ),
+      home: Home(),
       debugShowCheckedModeBanner: false,
     );
   }

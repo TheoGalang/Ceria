@@ -1,273 +1,137 @@
-import 'package:ceria/screen_guru/home_guru.dart';
-import 'package:ceria/screen_guru/tugas/listtugas_guru.dart';
+import 'package:ceria/screen_guru/tugas/models/kelas_model.dart';
+import 'package:ceria/screen_guru/tugas/widgets/view_single_class.dart';
+import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ChooseClassTeacherTugas extends StatelessWidget {
+class ChooseClassTeacherTugas extends StatefulWidget {
+  final List<Kelas> listKelas;
+
+  const ChooseClassTeacherTugas({this.listKelas});
+  @override
+  _ChooseClassTeacherTugasState createState() =>
+      _ChooseClassTeacherTugasState();
+}
+
+class _ChooseClassTeacherTugasState extends State<ChooseClassTeacherTugas> {
+  final List<SingleClassView> daftarKelas = [];
+
+  void loadKelas() {
+    List<SingleClassView> temp = [];
+    List<Kelas> classes = widget.listKelas ?? constKelas;
+
+    for (var item in classes) {
+      temp.insert(
+          0,
+          SingleClassView(
+            kelas: item,
+            id: constKelas.indexOf(item),
+          ));
+    }
+    daftarKelas.addAll(temp);
+
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadKelas();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: buildAppBar(),
       body: SafeArea(
-          child: Column(
-        children: <Widget>[
-          Flexible(
-            flex: 1,
-            child: Container(
-              width: MediaQuery.of(context).size.height,
-              padding: EdgeInsets.fromLTRB(15, 15, 0, 0),
-              decoration: BoxDecoration(
-                  color: Color(0xff41348C),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20))),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back, color: Colors.white),
-                        onPressed: () {
-                          {
-                            Navigator.pushReplacement(context,
-                                MaterialPageRoute(builder: (context) {
-                              return Home();
-                            }));
-                          }
-                        },
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Pilih Kelas",
-                        style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Tugas",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                            fontWeight: FontWeight.normal),
-                      ),
-                    ),
-                  ),
-                ],
+        child: Column(
+          children: [
+            buildSimpleHeader(context),
+            kelasListTile(data: daftarKelas),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Flexible kelasListTile({List<SingleClassView> data}) {
+    return Flexible(
+      child: data.length != 0
+          ? ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 50),
+              itemBuilder: (_, index) => data[index],
+              itemCount: data.length)
+          : Container(
+              child: Center(
+                child: Text("Tidak ada kelas."),
               ),
             ),
-          ),
-          Flexible(
-            flex: 2,
-            child: Container(
-              child: ListView(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () {
-                      {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ShowAssignment();
-                        }));
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(40, 40, 40, 30),
-                      padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Text("Kelas 11 IPA 1",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Center(
-                            child: Text("2 Tugas Aktif",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff41348C),
-                                    fontWeight: FontWeight.normal)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ShowAssignment();
-                        }));
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(40, 0, 40, 30),
-                      padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Text("Kelas 12 IPA 2",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Center(
-                            child: Text("3 Tugas Aktif",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff41348C),
-                                    fontWeight: FontWeight.normal)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ShowAssignment();
-                        }));
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(40, 0, 40, 30),
-                      padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Text("Kelas 11 IPA 2",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Center(
-                            child: Text("2 Tugas Aktif",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff41348C),
-                                    fontWeight: FontWeight.normal)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      {
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ShowAssignment();
-                        }));
-                      }
-                    },
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(40, 0, 40, 30),
-                      padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
-                      width: MediaQuery.of(context).size.width / 1.5,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.2),
-                            spreadRadius: 3,
-                            blurRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Text("Kelas 12 IPA 1",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          Center(
-                            child: Text("0 Tugas Aktif",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    color: Color(0xff41348C),
-                                    fontWeight: FontWeight.normal)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+    );
+  }
+
+  Container buildSimpleHeader(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(bottom: 20),
+      decoration: BoxDecoration(
+        color: Color(0xFF41348c),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ),
+      ),
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height / 5,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+              child: Text(
+                "Pilih Kelas",
+                style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
               ),
             ),
-          )
-        ],
-      )),
+            Container(
+              margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  "Tugas",
+                  style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  AppBar buildAppBar() {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: Color(0xFF41348C),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.notifications),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }

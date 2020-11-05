@@ -6,7 +6,7 @@ class Assignment {
   bool isComplete = false;
   File fileSubmition;
   int grade;
-  final List<File> attachmentFile;
+  List<File> attachmentFile;
 
   Assignment({
     this.title,
@@ -19,7 +19,4 @@ class Assignment {
   String getDescription() => this.description;
   DateTime getDeadline() => this.deadline;
   List getAttachmentFile() => this.attachmentFile;
-  void setIsComplete(bool status) {
-    this.isComplete = status;
-  }
 }
