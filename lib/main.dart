@@ -1,4 +1,5 @@
 import 'package:ceria/screen_guru/home_guru.dart';
+import 'package:ceria/screen_parent/home_parent.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       // home: ShowAssignment(
       //   kelas: constKelas[1],
       // ),
-      home: Home(),
+      home: HomeParent(),
       debugShowCheckedModeBanner: false,
     );
   }
