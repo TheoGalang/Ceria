@@ -1,5 +1,6 @@
 import 'package:ceria/screen_guru/tugas/models/kelas_model.dart';
 import 'package:ceria/screen_parent/tugas/widgets/Assignment.dart';
+import 'package:flutter/material.dart';
 
 final List<Assignment> constAssingments = [
   Assignment(
@@ -56,3 +57,20 @@ final List<Kelas> constKelas = [
     assignments: constAssingments,
   ),
 ];
+
+// custome color
+final color = MaterialColor(
+  0xFF41348C,
+  const <int, Color>{
+    50: const Color(0xFF41348C),
+    100: const Color(0xFF41348C),
+    200: const Color(0xFF41348C),
+    300: const Color(0xFF41348C),
+    400: const Color(0xFF41348C),
+    500: const Color(0xFF41348C),
+    600: const Color(0xFF41348C),
+    700: const Color(0xFF41348C),
+    800: const Color(0xFF41348C),
+    900: const Color(0xFF41348C),
+  },
+);
