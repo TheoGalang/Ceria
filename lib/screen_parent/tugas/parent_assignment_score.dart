@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'listtugas_parent.dart';
+import 'parent_assignment_list.dart';
 import 'widgets/Assignment.dart';
 
 class NilaiTugasParent extends StatefulWidget {

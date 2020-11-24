@@ -1,4 +1,4 @@
-import 'package:ceria/screen_parent/tugas/listtugas_parent.dart';
+import 'package:ceria/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
