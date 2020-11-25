@@ -6,7 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:sweetalert/sweetalert.dart';
 
 import './widgets/chat_message.dart';
-import 'package:ceria/tools/measure_child.dart'; 
+import 'package:ceria/tools/measure_child.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/Assignment.dart';

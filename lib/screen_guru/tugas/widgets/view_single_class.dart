@@ -1,5 +1,5 @@
-import 'package:ceria/screen_guru/tugas/models/kelas_model.dart';
 import 'package:ceria/screen_guru/tugas/teacher_assignment_list.dart';
+import 'package:ceria/screen_guru/tugas/models/kelas_model.dart';
 import 'package:flutter/material.dart';
 
 class SingleClassView extends StatelessWidget {

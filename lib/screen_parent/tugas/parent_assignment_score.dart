@@ -1,7 +1,8 @@
 import 'package:ceria/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
- 
+
+import 'parent_assignment_list.dart';
 import 'widgets/Assignment.dart';
 
 class NilaiTugasParent extends StatefulWidget {
