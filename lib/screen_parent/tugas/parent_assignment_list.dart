@@ -1,4 +1,5 @@
-import 'package:ceria/screen_parent/home_parent.dart';
+ 
+import 'package:ceria/screen_parent/parent_home.dart';
 import 'package:ceria/screen_parent/tugas/widgets/SimpleAssignmentView.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';

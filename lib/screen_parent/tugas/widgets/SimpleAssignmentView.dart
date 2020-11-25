@@ -1,6 +1,7 @@
-import 'package:ceria/screen_parent/tugas/detailtugas_parent.dart';
+ 
+import 'package:ceria/screen_parent/tugas/parent_assignment_detail.dart';
+import 'package:ceria/screen_parent/tugas/parent_assignment_score.dart';
 
-import '../nilaitugas_parent.dart';
 import 'Assignment.dart';
 import 'package:flutter/material.dart';
 
