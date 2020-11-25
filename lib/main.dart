@@ -1,3 +1,4 @@
+import 'package:ceria/loginAs.dart';
 import 'package:ceria/loginPage.dart';
 import 'package:ceria/screen_parent/parent_home.dart';
 import 'package:ceria/tools/constants.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "CERIA",
       theme: ThemeData(primarySwatch: color),
-      home: LoginPage(),
+      home: LoginAs(),
       debugShowCheckedModeBanner: false,
     );
   }
