@@ -1,4 +1,4 @@
-import 'package:ceria/screen_guru/tugas/isinilai_teacher.dart';
+import 'package:ceria/screen_guru/tugas/teacher_assignment_givingscore.dart';
 import 'package:ceria/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';

@@ -1,4 +1,4 @@
-import 'package:ceria/screen_guru/tugas/detailtugas_teacher.dart';
+import 'package:ceria/screen_guru/tugas/teacher_assignment_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
