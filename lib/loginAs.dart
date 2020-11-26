@@ -1,6 +1,38 @@
+import 'package:ceria/loginPage.dart';
+import 'package:ceria/screen_parent/parent_home.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginAs extends StatelessWidget {
+import 'screen_guru/teacher_home.dart';
+
+class LoginAs extends StatefulWidget {
+  @override
+  _LoginAsState createState() => _LoginAsState();
+}
+
+class _LoginAsState extends State<LoginAs> {
+  Future<List<String>> checkCurrentUser() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getStringList("user");
+  }
+
+  @override
+  void initState() {
+    checkCurrentUser().then((value) {
+      print(" sharedPreferences value form loginAs : $value");
+      if (value != null) {
+        Navigator.pushReplacement(
+          context,
+          CupertinoPageRoute(
+            builder: (_) => value[3] == "parent" ? HomeParent() : Home(),
+          ),
+        );
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +72,12 @@ class LoginAs extends StatelessWidget {
                   child: RaisedButton(
                     padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
                     onPressed: () {
-                      // Navigator.pop(context);
+                      Navigator.pushReplacement(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (_) => LoginPage(
+                                    role: "teacher",
+                                  )));
                     },
                     child: Text(
                       "Guru",
@@ -61,7 +98,12 @@ class LoginAs extends StatelessWidget {
                   child: RaisedButton(
                     padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
                     onPressed: () {
-                      // Navigator.pop(context);
+                      Navigator.pushReplacement(
+                          context,
+                          CupertinoPageRoute(
+                              builder: (_) => LoginPage(
+                                    role: "parent",
+                                  )));
                     },
                     child: Text(
                       "Orang Tua",

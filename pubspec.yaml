@@ -27,6 +27,7 @@ dependencies:
   flutter_datetime_picker: ^1.4.0
   image_picker: ^0.6.7+12
   intl: ^0.16.1
+  shared_preferences: ^0.5.12+4
   sweetalert: ^0.0.1
 
 dev_dependencies:

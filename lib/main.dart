@@ -1,6 +1,4 @@
 import 'package:ceria/loginAs.dart';
-import 'package:ceria/loginPage.dart';
-import 'package:ceria/screen_parent/parent_home.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +12,7 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print(true.toString());
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.deepPurple));
     return MaterialApp(

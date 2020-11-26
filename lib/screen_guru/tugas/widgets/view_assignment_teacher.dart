@@ -12,8 +12,6 @@ class TeacherSimpleAssignmentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = assignment.getDeadline();
-
     return GestureDetector(
       onTap: () {
         {
