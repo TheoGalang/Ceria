@@ -2,6 +2,8 @@ import 'package:ceria/screen_guru/tugas/teacher_assignment_chooseclass.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../loginAs.dart';
+
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -22,10 +24,20 @@ class Home extends StatelessWidget {
                   children: <Widget>[
                     Align(
                       alignment: Alignment.topRight,
-                      child: Icon(
-                        Icons.notification_important,
-                        color: Colors.white,
-                        size: 30,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.notification_important,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          print("logout");
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => LoginAs(),
+                              ));
+                        },
                       ),
                     ),
                     Align(

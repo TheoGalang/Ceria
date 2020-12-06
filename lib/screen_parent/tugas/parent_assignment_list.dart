@@ -1,10 +1,18 @@
-import 'package:ceria/screen_parent/parent_home.dart';
+import 'package:ceria/providers/parent_assignment_list_viewmodel.dart';
 import 'package:ceria/screen_parent/tugas/widgets/SimpleAssignmentView.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:stacked/stacked.dart';
 
 class ShowAssignmentParent extends StatefulWidget {
+  final String nis;
+  final int idKelas;
+
+  const ShowAssignmentParent({Key key, this.nis, this.idKelas})
+      : super(key: key);
+
   @override
   _ShowAssignmentParentState createState() => _ShowAssignmentParentState();
 }
@@ -45,17 +53,26 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            buildSimpleHeader(context),
-            assignmentLabel(label: "SELESAI"),
-            assignments(data: assignmentDone, aspek: "SELESAI"),
-            assignmentLabel(label: "BELUM SELESAI"),
-            assignments(data: assingmentNotDoneYet, aspek: "BELUM SELESAI"),
-          ],
+    return ViewModelBuilder<ParentAssignmentListViewModel>.reactive(
+      viewModelBuilder: () => ParentAssignmentListViewModel(
+        nis: widget.nis,
+        idKelas: widget.idKelas,
+      ),
+      onModelReady: (model) {
+        model.initial();
+      },
+      builder: (_, model, __) => Scaffold(
+        appBar: buildAppBar(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              buildSimpleHeader(context, model),
+              assignmentLabel(label: "SELESAI"),
+              assignments(data: assignmentDone, aspek: "SELESAI"),
+              assignmentLabel(label: "BELUM SELESAI"),
+              assignments(data: assingmentNotDoneYet, aspek: "BELUM SELESAI"),
+            ],
+          ),
         ),
       ),
     );
@@ -120,7 +137,8 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
     );
   }
 
-  Container buildSimpleHeader(BuildContext context) {
+  Container buildSimpleHeader(
+      BuildContext context, ParentAssignmentListViewModel model) {
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF41348c),
@@ -139,7 +157,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
             Container(
               margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
               child: Text(
-                "Theo Galang Saputra",
+                model?.child?.data?.nama ?? "Theo Galang Saputra",
                 style: TextStyle(
                     fontSize: 24,
                     color: Colors.white,
@@ -149,7 +167,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
             Container(
               margin: EdgeInsets.only(top: 10),
               child: Text(
-                "Kamis, 17 September 2020",
+                DateFormat("EEEE, d MMMM yyyy", "id_ID").format(DateTime.now()),
                 style: TextStyle(
                     fontSize: 13,
                     color: Colors.white,
@@ -159,7 +177,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
             Container(
               margin: EdgeInsets.only(top: 10),
               child: Text(
-                "Nama Kelas",
+                model?.kelas?.data?.kelas ?? "Nama Kelas",
                 style: TextStyle(
                     fontSize: 13,
                     color: Colors.white,
@@ -179,11 +197,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent> {
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => HomeParent(),
-              ));
+          Navigator.pop(context);
         },
       ),
       actions: [

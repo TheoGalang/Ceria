@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'providers/login_viewmodel.dart';
 import 'screen_guru/teacher_home.dart';
 
 class LoginAs extends StatefulWidget {
@@ -76,7 +77,7 @@ class _LoginAsState extends State<LoginAs> {
                           context,
                           CupertinoPageRoute(
                               builder: (_) => LoginPage(
-                                    role: "teacher",
+                                    role: Role.teacher,
                                   )));
                     },
                     child: Text(
@@ -101,9 +102,7 @@ class _LoginAsState extends State<LoginAs> {
                       Navigator.pushReplacement(
                           context,
                           CupertinoPageRoute(
-                              builder: (_) => LoginPage(
-                                    role: "parent",
-                                  )));
+                              builder: (_) => LoginPage(role: Role.parent)));
                     },
                     child: Text(
                       "Orang Tua",
