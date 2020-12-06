@@ -50,9 +50,9 @@ class Data {
     dueDate = json['due_date'];
     isDue = json['isDue'];
     isSubmitted = json['isSubmitted'];
-    collectionDate = json['collection_date'];
+    collectionDate = json['collection_date'] ?? "";
     isLate = json['isLate'];
-    grade = json['grade'];
+    grade = json['grade'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {

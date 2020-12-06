@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ceria/models/assignments.dart';
 import 'package:ceria/models/child.dart';
 import 'package:ceria/models/kelas.dart';
+import 'package:ceria/views/screen_parent/tugas/widgets/SimpleAssignmentView.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,24 +27,38 @@ class ParentAssignmentListViewModel extends BaseViewModel {
   }
 
   initial() async {
-    print(" Initialized from ParentHomeViewModel");
-    setBusy(true);
-
     // get child by nis
+    await getChild();
+    // get kelas by id
+    await getKelas();
+    // get assigments by id
+    await getAssignments();
+  }
+
+  getChild() async {
+    setBusy(true);
     var childReasponse = await http.get(
       _childApiUrl,
     );
 
     this._child = Child.fromJson(json.decode(childReasponse.body));
+    setBusy(false);
+    notifyListeners();
+  }
 
-    // get kelas by id
+  getKelas() async {
+    setBusy(true);
     var kelasResponse = await http.get(
       "https://ceriakan.id/api/kelas/${this._idKelas}",
     );
 
     this._kelas = Kelas.fromJson(json.decode(kelasResponse.body));
+    setBusy(false);
+    notifyListeners();
+  }
 
-    // get kelas by id
+  getAssignments() async {
+    setBusy(true);
     var assignmetsResponse = await http.get(
       _assignmentsApiUrl,
     );
@@ -52,8 +67,33 @@ class ParentAssignmentListViewModel extends BaseViewModel {
         Assigments.fromJson(json.decode(assignmetsResponse.body));
 
     setBusy(false);
-
     notifyListeners();
+  }
+
+  List<SimpleAssignmentView> getListAssignmentsView() {
+    List<SimpleAssignmentView> temp = [];
+    for (var assignment in this._assigments?.data) {
+      if (!assignment.isSubmitted) {
+        temp.add(SimpleAssignmentView(
+          assignment: assignment,
+        ));
+      }
+    }
+
+    return temp;
+  }
+
+  List<SimpleAssignmentView> getListAssignmetsDone() {
+    List<SimpleAssignmentView> temp = [];
+    for (var assignment in this._assigments?.data) {
+      if (assignment.isSubmitted) {
+        temp.add(SimpleAssignmentView(
+          assignment: assignment,
+        ));
+      }
+    }
+
+    return temp;
   }
 
   Child get child => this._child;

@@ -1,18 +1,16 @@
 import 'dart:io';
 
-import 'package:ceria/tools/constants.dart';
+import 'package:ceria/models/assignments.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:sweetalert/sweetalert.dart';
 
 import './widgets/chat_message.dart';
 import 'package:ceria/tools/measure_child.dart';
 import 'package:flutter/material.dart';
 
-import 'parent_assignment_list.dart';
-import 'widgets/Assignment.dart';
-
 class DetailTugasParent extends StatefulWidget {
-  final Assignment assignment;
+  final Data assignment;
 
   const DetailTugasParent({Key key, this.assignment}) : super(key: key);
   @override
@@ -22,7 +20,7 @@ class DetailTugasParent extends StatefulWidget {
 }
 
 class _DetailTugasParentState extends State<DetailTugasParent> {
-  final Assignment assignmentData;
+  final Data assignmentData;
   final _inputController = TextEditingController();
   final List<ChatMessage> _messages = [
     ChatMessage(
@@ -45,6 +43,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
   _DetailTugasParentState({this.assignmentData});
 
   Future getImage() async {
+    // ignore: deprecated_member_use
     final image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {
@@ -54,7 +53,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
 
   @override
   Widget build(BuildContext context) {
-    DateTime deadline = this.assignmentData.getDeadline();
+    DateTime deadline = DateTime.parse(assignmentData.dueDate);
     var assignmentDescription = Container(
       margin: EdgeInsets.all(20),
       child: Column(
@@ -63,7 +62,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
             margin: EdgeInsets.all(10),
             child: Center(
               child: Text(
-                "${assignmentData.getTitle()}",
+                "${assignmentData.title}",
                 style: TextStyle(
                     fontSize: 20,
                     color: Color(0xff41348C),
@@ -87,7 +86,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     child: Text(
-                      "${assignmentData.getDescription()}",
+                      "${assignmentData.title}",
                       style: TextStyle(
                           fontSize: 15,
                           color: Color(0xff41348C),
@@ -112,7 +111,8 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                   ),
                 ),
                 Text(
-                  "Deadline ${deadline.year.toString()}-${deadline.month.toString().padLeft(2, '0')}-${deadline.day.toString().padLeft(2, '0')}",
+                  "Deadline " +
+                      DateFormat("EEEE, d MMMM yyyy", "id_ID").format(deadline),
                   style: TextStyle(
                       fontSize: 15,
                       color: Color(0xff41348C),
@@ -131,14 +131,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return ShowAssignmentParent();
-                  },
-                ),
-              );
+              Navigator.pop(context);
             }
           },
         ),
@@ -266,17 +259,22 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                         onPressed: _image == null
                             ? null
                             : () {
-                                var indexInConst = constAssingments.indexOf(
-                                  this.assignmentData,
-                                );
-                                setState(() {
-                                  constAssingments[indexInConst].isComplete =
-                                      true;
-                                });
+                                //  TODO : Send FIle to Server
+                                // when file get from user device and  this button was cliced
+                                //  then send file to server
+                                //  get the response
+
+                                //  if response success ,
+                                //  then shows success alert
                                 SweetAlert.show(context,
                                     title: "Berhasil",
                                     subtitle: "File Berhasil Terkirim!",
-                                    style: SweetAlertStyle.success);
+                                    onPress: (isConfirm) {
+                                  Navigator.pop(context);
+                                  return isConfirm;
+                                }, style: SweetAlertStyle.success);
+
+                                // Navigator.pop(context);
                               },
                         child: Text(
                           "Simpan",

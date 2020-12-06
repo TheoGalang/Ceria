@@ -67,7 +67,7 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
           },
           child: Text("DatePicker"),
         ),
-        Text("${dateText}"),
+        Text("$dateText"),
       ],
     );
   }

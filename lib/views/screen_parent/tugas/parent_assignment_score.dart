@@ -1,11 +1,10 @@
+import 'package:ceria/models/assignments.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'parent_assignment_list.dart';
-import 'widgets/Assignment.dart';
+import 'package:intl/intl.dart';
 
 class NilaiTugasParent extends StatefulWidget {
-  final Assignment assignment;
+  final Data assignment;
 
   const NilaiTugasParent({Key key, this.assignment}) : super(key: key);
   @override
@@ -16,18 +15,13 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
   @override
   Widget build(BuildContext context) {
     var assignmentData = this.widget.assignment;
-    DateTime deadline = assignmentData.getDeadline();
+    DateTime date = DateTime.parse(assignmentData.dueDate);
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (_) => ShowAssignmentParent(),
-              ),
-            );
+            Navigator.pop(context);
           },
           icon: Icon(
             Icons.arrow_back,
@@ -52,7 +46,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                           margin: EdgeInsets.all(10),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            "${assignmentData.getTitle()}",
+                            "${assignmentData.title}",
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Color(0xff41348C),
@@ -75,7 +69,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                                 child: Container(
                                   width: MediaQuery.of(context).size.width,
                                   child: Text(
-                                    "${assignmentData.getDescription()}",
+                                    assignmentData.title,
                                     style: TextStyle(
                                         fontSize: 15,
                                         color: Color(0xff41348C),
@@ -100,7 +94,9 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                                 ),
                               ),
                               Text(
-                                "Deadline ${deadline.year.toString()}-${deadline.month.toString().padLeft(2, '0')}-${deadline.day.toString().padLeft(2, '0')}",
+                                "Deadline  " +
+                                    DateFormat("EEEE, d MMMM yyyy", "id_ID")
+                                        .format(date),
                                 style: TextStyle(
                                     fontSize: 15,
                                     color: Color(0xff41348C),
@@ -274,8 +270,8 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
     );
   }
 
-  Widget buildContainerNilai(BuildContext context, Assignment assignmentData) {
-    DateTime deadline = assignmentData.getDeadline();
+  Widget buildContainerNilai(BuildContext context, Data assignmentData) {
+    DateTime deadline = DateTime.parse(assignmentData.dueDate);
 
     return Container(
       padding: EdgeInsets.fromLTRB(20, 25, 10, 25),
@@ -307,7 +303,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                         child: Align(
                           alignment: Alignment.bottomLeft,
                           child: Text(
-                            "${assignmentData.getTitle()}",
+                            "${assignmentData.title}",
                             style: TextStyle(
                                 fontSize: 14,
                                 color: Color(0xff41348C),
@@ -318,7 +314,9 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          "Deadline ${deadline.year.toString()}-${deadline.month.toString().padLeft(2, '0')}-${deadline.day.toString().padLeft(2, '0')}",
+                          "Deadline  " +
+                              DateFormat("EEEE, d MMMM yyyy", "id_ID")
+                                  .format(deadline),
                           style: TextStyle(
                               fontSize: 14,
                               color: Color(0xff41348C),
