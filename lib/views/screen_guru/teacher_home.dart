@@ -1,8 +1,8 @@
-import 'package:ceria/screen_guru/tugas/teacher_assignment_chooseclass.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../loginAs.dart';
+import '../../loginAs.dart';
+import 'tugas/teacher_assignment_chooseclass.dart';
 
 class Home extends StatelessWidget {
   @override

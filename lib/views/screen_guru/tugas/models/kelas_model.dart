@@ -1,4 +1,4 @@
-import 'package:ceria/screen_parent/tugas/widgets/Assignment.dart';
+import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
 
 class Kelas {
   String namaKelas;

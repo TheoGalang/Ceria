@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:ceria/models/parent_model.dart';
 import 'package:ceria/models/teacher_model.dart';
-import 'package:ceria/screen_guru/teacher_home.dart';
-import 'package:ceria/screen_parent/parent_home.dart';
+import 'package:ceria/views/screen_guru/teacher_home.dart';
+import 'package:ceria/views/screen_parent/parent_home.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';

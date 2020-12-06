@@ -1,11 +1,11 @@
 import 'package:ceria/loginPage.dart';
-import 'package:ceria/screen_parent/parent_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'providers/login_viewmodel.dart';
-import 'screen_guru/teacher_home.dart';
+import 'views/screen_guru/teacher_home.dart';
+import 'views/screen_parent/parent_home.dart';
 
 class LoginAs extends StatefulWidget {
   @override

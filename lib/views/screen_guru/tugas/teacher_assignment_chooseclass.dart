@@ -1,8 +1,9 @@
-import 'package:ceria/screen_guru/tugas/models/kelas_model.dart';
-import 'package:ceria/screen_guru/tugas/widgets/view_single_class.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'models/kelas_model.dart';
+import 'widgets/view_single_class.dart';
 
 class ChooseClassTeacherTugas extends StatefulWidget {
   final List<Kelas> listKelas;

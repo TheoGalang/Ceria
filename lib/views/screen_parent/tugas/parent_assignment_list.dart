@@ -1,10 +1,11 @@
 import 'package:ceria/providers/parent_assignment_list_viewmodel.dart';
-import 'package:ceria/screen_parent/tugas/widgets/SimpleAssignmentView.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
+
+import 'widgets/SimpleAssignmentView.dart';
 
 class ShowAssignmentParent extends StatefulWidget {
   final String nis;

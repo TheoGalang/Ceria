@@ -1,10 +1,11 @@
 import 'package:ceria/loginAs.dart';
 import 'package:ceria/providers/parent_home_viewmodel.dart';
-import 'package:ceria/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
+
+import 'tugas/parent_assignment_list.dart';
 
 class HomeParent extends StatelessWidget {
   final String nik;

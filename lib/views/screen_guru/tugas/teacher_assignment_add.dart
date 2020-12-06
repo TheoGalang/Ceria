@@ -1,11 +1,12 @@
-import 'package:ceria/screen_guru/tugas/teacher_assignment_list.dart';
-import 'package:ceria/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:sweetalert/sweetalert.dart';
+
+import 'teacher_assignment_list.dart';
 
 class AddAssignmentTugas extends StatefulWidget {
   final int id;

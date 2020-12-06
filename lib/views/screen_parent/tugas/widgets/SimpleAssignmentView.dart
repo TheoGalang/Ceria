@@ -1,17 +1,17 @@
-import 'package:ceria/screen_guru/tugas/teacher_assignment_detail.dart';
-import 'package:ceria/screen_parent/tugas/widgets/Assignment.dart';
-
+import '../parent_assignment_detail.dart';
+import '../parent_assignment_score.dart';
+import 'Assignment.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-class TeacherSimpleAssignmentView extends StatelessWidget {
+class SimpleAssignmentView extends StatelessWidget {
   final Assignment assignment;
-  final int classId;
 
-  TeacherSimpleAssignmentView({this.assignment, this.classId});
+  SimpleAssignmentView({this.assignment});
 
   @override
   Widget build(BuildContext context) {
+    DateTime date = assignment.getDeadline();
+
     return GestureDetector(
       onTap: () {
         {
@@ -19,8 +19,9 @@ class TeacherSimpleAssignmentView extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return DetailTugasTeacher(
-                    assignment: this.assignment, classId: classId);
+                return this.assignment.isComplete
+                    ? NilaiTugasParent(assignment: this.assignment)
+                    : DetailTugasParent(assignment: this.assignment);
               },
             ),
           );
@@ -52,9 +53,7 @@ class TeacherSimpleAssignmentView extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Deadline " +
-                    DateFormat("EEEE, d MMMM yyyy", "id_ID")
-                        .format(assignment.deadline),
+                "Deadline ${date.year.toString()}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
                 style: TextStyle(
                     fontSize: 14,
                     color: Color(0xff41348C),
