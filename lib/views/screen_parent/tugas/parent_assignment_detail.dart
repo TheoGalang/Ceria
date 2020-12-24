@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:ceria/models/assignments.dart';
+import 'package:ceria/providers/parent_assingment_detail_viewmmodel.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:stacked/stacked.dart';
 import 'package:sweetalert/sweetalert.dart';
 
 import './widgets/chat_message.dart';
@@ -11,8 +13,11 @@ import 'package:flutter/material.dart';
 
 class DetailTugasParent extends StatefulWidget {
   final Data assignment;
+  final String nis;
+  final int idKelas;
 
-  const DetailTugasParent({Key key, this.assignment}) : super(key: key);
+  const DetailTugasParent({Key key, this.assignment, this.nis, this.idKelas})
+      : super(key: key);
   @override
   _DetailTugasParentState createState() => _DetailTugasParentState(
         assignmentData: this.assignment,
@@ -140,35 +145,48 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
       backgroundColor: Color(0xff41348C),
     );
 
-    return MeasureSize(
-      onChange: (Size size) {
-        setState(() {
-          paintingScreenSize = size;
-        });
+    return ViewModelBuilder<ParentAssignmentDetailViewModel>.reactive(
+      viewModelBuilder: () => ParentAssignmentDetailViewModel(
+        nis: widget.nis,
+        idKelas: widget.idKelas,
+        idTugas: widget.assignment.id,
+        deskripsi: widget.assignment.title,
+        title: widget.assignment.title,
+      ),
+      onModelReady: (model) {
+        print("Model Ready");
       },
-      child: Scaffold(
-        appBar: appbar,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              MeasureSize(
-                onChange: (size) {
-                  setState(() {
-                    descriptionSize = size;
-                  });
-                },
-                child: assignmentDescription,
-              ),
-              // tab layout
-              buildDefaultTabController(),
-            ],
+      builder: (_, model, __) => MeasureSize(
+        onChange: (Size size) {
+          setState(() {
+            paintingScreenSize = size;
+          });
+        },
+        child: Scaffold(
+          appBar: appbar,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                MeasureSize(
+                  onChange: (size) {
+                    setState(() {
+                      descriptionSize = size;
+                    });
+                  },
+                  child: assignmentDescription,
+                ),
+                // tab layout
+                buildDefaultTabController(model),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  DefaultTabController buildDefaultTabController() {
+  DefaultTabController buildDefaultTabController(
+      ParentAssignmentDetailViewModel model) {
     return DefaultTabController(
         length: 2,
         child: Column(
@@ -242,11 +260,12 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                                   size: 50,
                                 ),
                                 onPressed: () {
-                                  getImage();
+                                  // getImage();
+                                  model?.getFileFromDevice();
                                 })
                             : Container(
                                 width: 100,
-                                child: Image.file(_image),
+                                // child: Image.file(_image),
                               ),
                       ),
                     ),
@@ -266,6 +285,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
 
                                 //  if response success ,
                                 //  then shows success alert
+
                                 SweetAlert.show(context,
                                     title: "Berhasil",
                                     subtitle: "File Berhasil Terkirim!",

@@ -75,6 +75,8 @@ class ParentAssignmentListViewModel extends BaseViewModel {
     for (var assignment in this._assigments?.data) {
       if (!assignment.isSubmitted) {
         temp.add(SimpleAssignmentView(
+          nis: this._child.data.nomorInduk,
+          idKelas: this._child.data.idKelas,
           assignment: assignment,
         ));
       }

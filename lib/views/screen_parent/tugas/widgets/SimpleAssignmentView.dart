@@ -7,8 +7,10 @@ import 'package:flutter/material.dart';
 
 class SimpleAssignmentView extends StatelessWidget {
   final Data assignment;
+  final String nis;
+  final int idKelas;
 
-  SimpleAssignmentView({this.assignment});
+  SimpleAssignmentView({this.assignment, this.nis, this.idKelas});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,8 @@ class SimpleAssignmentView extends StatelessWidget {
                         assignment: this.assignment,
                       )
                     : DetailTugasParent(
+                        nis: this.nis,
+                        idKelas: this.idKelas,
                         assignment: this.assignment,
                       );
               },
