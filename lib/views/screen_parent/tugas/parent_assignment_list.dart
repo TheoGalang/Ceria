@@ -10,11 +10,13 @@ class ShowAssignmentParent extends StatefulWidget {
   final String nis;
   final int idKelas;
 
-  const ShowAssignmentParent({Key key, this.nis, this.idKelas})
-      : super(key: key);
+  const ShowAssignmentParent({Key key, this.nis, this.idKelas});
 
   @override
-  _ShowAssignmentParentState createState() => _ShowAssignmentParentState();
+  _ShowAssignmentParentState createState() => _ShowAssignmentParentState(
+        nis: this.nis,
+        idKelas: this.idKelas,
+      );
 }
 
 class _ShowAssignmentParentState extends State<ShowAssignmentParent>
@@ -22,6 +24,10 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
   List<SimpleAssignmentView> assignmentDone = [];
   TabController _tabBarController;
   List<SimpleAssignmentView> assignmetNotDoneYet = [];
+  Size size = Size.zero;
+  String nis;
+  int idKelas;
+  _ShowAssignmentParentState({this.nis, this.idKelas});
 
   @override
   void initState() {
@@ -34,10 +40,12 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
 
   @override
   Widget build(BuildContext context) {
+    size = MediaQuery.of(context).size;
+
     return ViewModelBuilder<ParentAssignmentListViewModel>.reactive(
       viewModelBuilder: () => ParentAssignmentListViewModel(
-        nis: widget.nis,
-        idKelas: widget.idKelas,
+        nis: this.nis,
+        idKelas: this.idKelas,
       ),
       onModelReady: (model) async {
         await model?.initial();
@@ -57,9 +65,11 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      color: Color(0xff41348C),
-                      borderRadius:
-                          BorderRadius.only(bottomRight: Radius.circular(50))),
+                    color: Color(0xff41348C),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(50),
+                    ),
+                  ),
                   child: TabBar(
                     controller: _tabBarController,
                     indicatorColor: Colors.white,
@@ -91,7 +101,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
                             data: assignmentDone,
                             aspek: "SELESAI",
                             isBusy: model?.isBusy ?? false),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -103,12 +113,9 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
     );
   }
 
-  Flexible assignments({
-    List<SimpleAssignmentView> data,
-    String aspek,
-    bool isBusy,
-  }) {
-    return Flexible(
+  Container assignments(
+      {List<SimpleAssignmentView> data, String aspek, bool isBusy}) {
+    return Container(
       child: isBusy
           ? Center(
               child: Container(
@@ -139,46 +146,44 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
         //   width: 10,
         // )),
       ),
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height * 0.2,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-              child: Text(
-                nama ?? "Theo Galang Saputra",
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
+      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+      width: size.width,
+      height: size.height * 0.2,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            child: Text(
+              nama ?? "Theo Galang Saputra",
+              style: TextStyle(
+                  fontSize: 24,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Text(
-                DateFormat("EEEE, d MMMM yyyy", "id_ID").format(DateTime.now()),
-                style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal),
-              ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Text(
+              DateFormat("EEEE, d MMMM yyyy", "id_ID").format(DateTime.now()),
+              style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal),
             ),
-            Container(
-              margin: EdgeInsets.only(top: 10),
-              child: Text(
-                kelas ?? "Nama Kelas",
-                style: TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                    fontWeight: FontWeight.normal),
-              ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 10),
+            child: Text(
+              kelas ?? "Nama Kelas",
+              style: TextStyle(
+                  fontSize: 13,
+                  color: Colors.white,
+                  fontWeight: FontWeight.normal),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
