@@ -31,7 +31,7 @@ class Home extends StatelessWidget {
                           size: 30,
                         ),
                         onPressed: () {
-                          print("logout");
+                          // print("logout");
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(

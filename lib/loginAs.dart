@@ -21,7 +21,6 @@ class _LoginAsState extends State<LoginAs> {
   @override
   void initState() {
     checkCurrentUser().then((value) {
-      print(" sharedPreferences value form loginAs : $value");
       if (value != null) {
         Navigator.pushReplacement(
           context,

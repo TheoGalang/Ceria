@@ -11,7 +11,7 @@ Future<void> main() async {
   runApp(
     DevicePreview(
       enabled: !kReleaseMode,
-      builder: (context) => MyApp(), // Wrap your app
+      builder: (context) => MyApp(),
     ),
   );
 }
@@ -23,6 +23,8 @@ class MyApp extends StatelessWidget {
         SystemUiOverlayStyle(statusBarColor: Colors.deepPurple));
 
     return MaterialApp(
+      locale: DevicePreview.locale(context), // Add the locale here
+      builder: DevicePreview.appBuilder,
       title: "CERIA",
       theme: ThemeData(primarySwatch: color),
       home: LoginAs(),

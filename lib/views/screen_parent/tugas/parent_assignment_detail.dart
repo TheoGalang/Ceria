@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:ceria/models/assignments.dart';
 import 'package:ceria/providers/parent_assingment_detail_viewmmodel.dart';
+import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
+import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
@@ -38,12 +42,17 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
     ),
   ];
   bool _isComposing = false;
+  bool showModalBottom = false;
   var descriptionSize = Size(0, 207);
   var paintingScreenSize = Size(0, 600);
   var appbarSize = Size(0, 80);
   var tabBarLabelSize = Size(0, 48);
 
   File _image;
+  File _file;
+  String _filename;
+  String _fileExtension;
+  String _iconUrl;
 
   _DetailTugasParentState({this.assignmentData});
 
@@ -136,7 +145,13 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
             {
-              Navigator.pop(context);
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
+                return ShowAssignmentParent(
+                  nis: widget.nis,
+                  idKelas: widget.idKelas,
+                );
+              }));
             }
           },
         ),
@@ -148,13 +163,13 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
     return ViewModelBuilder<ParentAssignmentDetailViewModel>.reactive(
       viewModelBuilder: () => ParentAssignmentDetailViewModel(
         nis: widget.nis,
-        idKelas: widget.idKelas,
-        idTugas: widget.assignment.id,
+        idKelas: widget.idKelas.toString(),
+        idTugas: widget.assignment.id.toString(),
         deskripsi: widget.assignment.title,
         title: widget.assignment.title,
       ),
       onModelReady: (model) {
-        print("Model Ready");
+        // print("Model Ready");
       },
       builder: (_, model, __) => MeasureSize(
         onChange: (Size size) {
@@ -252,20 +267,75 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                             blurRadius: 5,
                           ),
                         ]),
-                        child: _image == null
+                        child: _file == null
                             ? IconButton(
                                 icon: Icon(
                                   Icons.add,
                                   color: Color(0xff41348C),
                                   size: 50,
                                 ),
-                                onPressed: () {
-                                  // getImage();
-                                  model?.getFileFromDevice();
-                                })
+                                onPressed: () async {
+                                  var file = await FilePicker.getFile(
+                                    type: FileType.custom,
+                                    allowedExtensions: [
+                                      'jpg',
+                                      'pdf',
+                                      'png',
+                                      'rar',
+                                      'zip',
+                                      'mp4'
+                                    ],
+                                  );
+                                  model.file = file;
+                                  var filename = file.path.split("/").last;
+                                  var fileExtension = filename.split(".").last;
+                                  var iconUrl = "";
+                                  switch (fileExtension) {
+                                    case "pdf":
+                                      iconUrl =
+                                          "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pdfs-64.png";
+                                      break;
+                                    case "png":
+                                      iconUrl =
+                                          "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pngs-64.png";
+                                      break;
+                                    case "jpg":
+                                      iconUrl =
+                                          "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/jpgs-64.png";
+                                      break;
+                                    case "mp4":
+                                      iconUrl =
+                                          "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/mp4s-64.png";
+                                      break;
+                                    case "zip":
+                                      iconUrl =
+                                          "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/2-64.png";
+                                      break;
+                                    case "rar":
+                                      iconUrl =
+                                          "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/26-64.png";
+                                      break;
+                                  }
+
+                                  setState(() {
+                                    this._file = file;
+                                    this._filename = filename;
+                                    this._fileExtension = fileExtension;
+                                    this._iconUrl = iconUrl;
+                                  });
+                                },
+                              )
                             : Container(
-                                width: 100,
-                                // child: Image.file(_image),
+                                width: MediaQuery.of(context).size.width * 0.8,
+                                child: Row(
+                                  children: [
+                                    Image.network(_iconUrl),
+                                    Container(
+                                      padding: EdgeInsets.only(left: 10),
+                                      child: Text("$_filename"),
+                                    )
+                                  ],
+                                ),
                               ),
                       ),
                     ),
@@ -275,29 +345,35 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                       child: RaisedButton(
                         padding:
                             EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                        onPressed: _image == null
+                        onPressed: _file == null
                             ? null
-                            : () {
-                                //  TODO : Send FIle to Server
-                                // when file get from user device and  this button was cliced
-                                //  then send file to server
-                                //  get the response
+                            : () async {
+                                var statusUpload = await model.uploadFile();
+                                statusUpload == 200
+                                    ? SweetAlert.show(context,
+                                        title: "Berhasil",
+                                        subtitle: "File berhsil terkirim!",
+                                        onPress: (isConfirm) {
+                                        // Navigator.pop(context);
+                                        Navigator.pushReplacement(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return ShowAssignmentParent(
+                                            nis: widget.nis,
+                                            idKelas: widget.idKelas,
+                                          );
+                                        }));
 
-                                //  if response success ,
-                                //  then shows success alert
-
-                                SweetAlert.show(context,
-                                    title: "Berhasil",
-                                    subtitle: "File Berhasil Terkirim!",
-                                    onPress: (isConfirm) {
-                                  Navigator.pop(context);
-                                  return isConfirm;
-                                }, style: SweetAlertStyle.success);
-
-                                // Navigator.pop(context);
+                                        return isConfirm;
+                                      }, style: SweetAlertStyle.success)
+                                    : SweetAlert.show(context,
+                                        title: "Gagal",
+                                        subtitle:
+                                            "File gagal terkirim! \n Mohon cek koneksi anda!",
+                                        style: SweetAlertStyle.error);
                               },
                         child: Text(
-                          "Simpan",
+                          model.isBusy ? "Uploading...." : "Submit",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -306,7 +382,8 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                         ),
                         color: Color(0xff41348C),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                       ),
                     ),
                   ],

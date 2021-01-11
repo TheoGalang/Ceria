@@ -43,7 +43,7 @@ class HomeParent extends StatelessWidget {
                             size: 30,
                           ),
                           onPressed: () {
-                            print("logout");
+                            // print("logout");
                             Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
@@ -128,7 +128,7 @@ class HomeParent extends StatelessWidget {
                                   size: 35,
                                 ),
                               ),
-                              Text("kehadiran",
+                              Text("Kehadiran",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                       fontSize: 15,
@@ -165,7 +165,7 @@ class HomeParent extends StatelessWidget {
                                     size: 35,
                                   ),
                                 ),
-                                Text("tugas",
+                                Text("Tugas",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontSize: 15,

@@ -21,7 +21,7 @@ class ParentHomeViewModel extends BaseViewModel {
   }
 
   initial() async {
-    print(" Initialized from ParentHomeViewModel");
+    // print(" Initialized from ParentHomeViewModel");
     setBusy(true);
     var response = await http.get(
       _parentApiUrl,

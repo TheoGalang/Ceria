@@ -5,8 +5,11 @@ import 'package:intl/intl.dart';
 
 class NilaiTugasParent extends StatefulWidget {
   final Data assignment;
+  final String nis;
+  final int idKelas;
 
-  const NilaiTugasParent({Key key, this.assignment}) : super(key: key);
+  const NilaiTugasParent({Key key, this.assignment, this.nis, this.idKelas})
+      : super(key: key);
   @override
   _NilaiTugasParentState createState() => _NilaiTugasParentState();
 }
@@ -274,14 +277,14 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
     DateTime deadline = DateTime.parse(assignmentData.dueDate);
 
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 25, 10, 25),
+      padding: EdgeInsets.all(10),
       margin: EdgeInsets.fromLTRB(0, 0, 0, 20),
       width: MediaQuery.of(context).size.width / 1.3,
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: Colors.black, width: 2),
           borderRadius: BorderRadius.all(Radius.circular(20))),
-      child: assignmentData.grade != null
+      child: assignmentData.grade != null && assignmentData.grade > 0
           ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

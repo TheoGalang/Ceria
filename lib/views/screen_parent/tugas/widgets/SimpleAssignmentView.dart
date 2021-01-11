@@ -19,12 +19,14 @@ class SimpleAssignmentView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) {
                 return this.assignment.isSubmitted
                     ? NilaiTugasParent(
+                        nis: this.nis,
+                        idKelas: this.idKelas,
                         assignment: this.assignment,
                       )
                     : DetailTugasParent(

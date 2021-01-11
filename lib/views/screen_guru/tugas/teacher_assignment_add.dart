@@ -120,7 +120,7 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
                     selectedDate = date;
                     setState(() {});
                   }, onConfirm: (date) {
-                    print('confirm $date');
+                    // print('confirm $date');
                   }, currentTime: DateTime.now(), locale: LocaleType.id);
                 },
               ),
@@ -272,7 +272,7 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
       child: RaisedButton(
         onPressed: () {
           if (title != null && desc != null && selectedDate != oldTime) {
-            print("DOing Something woy!");
+            // print("DOing Something woy!");
             setState(() {
               constKelas[widget.id].assignments.insert(
                     constKelas.length,

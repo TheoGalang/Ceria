@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:shimmer/shimmer.dart';
 import 'widgets/SimpleAssignmentView.dart';
 
 class ShowAssignmentParent extends StatefulWidget {
@@ -140,28 +140,28 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF41348C),
-        // border: Border.symmetric(
-        //     vertical: BorderSide(
-        //   color: Color(0xFF41348C),
-        //   width: 10,
-        // )),
       ),
-      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 0),
       width: size.width,
-      height: size.height * 0.2,
+      height: size.height * 0.15,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-            child: Text(
-              nama ?? "Theo Galang Saputra",
-              style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold),
-            ),
+            margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: nama == null
+                ? ReplacementText(
+                    text: "Nama Siswa",
+                    fontSize: 24,
+                  )
+                : Text(
+                    nama,
+                    style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
@@ -175,13 +175,18 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
-            child: Text(
-              kelas ?? "Nama Kelas",
-              style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal),
-            ),
+            child: kelas == null
+                ? ReplacementText(
+                    text: "Kelas",
+                    fontSize: 13,
+                  )
+                : Text(
+                    kelas,
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
+                  ),
           ),
         ],
       ),
@@ -204,6 +209,34 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
           onPressed: () {},
         ),
       ],
+      title: Text("Tugas"),
+    );
+  }
+}
+
+class ReplacementText extends StatelessWidget {
+  final String text;
+  final int fontSize;
+  const ReplacementText({
+    Key key,
+    this.text,
+    this.fontSize,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Shimmer.fromColors(
+          baseColor: Colors.deepPurple[400],
+          highlightColor: Colors.grey[400],
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.circular(2),
+            ),
+            width: MediaQuery.of(context).size.width * .4 * fontSize / 24,
+            height: 20,
+          )),
     );
   }
 }
