@@ -4,6 +4,7 @@ import 'package:ceria/models/parent_model.dart';
 import 'package:ceria/models/teacher_model.dart';
 import 'package:ceria/views/screen_guru/teacher_home.dart';
 import 'package:ceria/views/screen_parent/parent_home.dart';
+import 'package:ceria/views/screen_parent/parent_home_alter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -46,9 +47,12 @@ class LoginViewModel extends BaseViewModel {
   goToHome({BuildContext context}) {
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
       return this.role == Role.parent
-          ? HomeParent(
+          ? ParentHomeAlter(
               nik: this._user.data.nik,
             )
+          // HomeParent(
+          //     nik: this._user.data.nik,
+          //   )
           : Home();
     }));
   }
