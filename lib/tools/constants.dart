@@ -76,3 +76,15 @@ final color = MaterialColor(
 );
 
 var child;
+
+Size size = Size.zero;
+double vh, vw = 0;
+Orientation orientation = Orientation.portrait;
+
+void initSize(BuildContext context) {
+  MediaQueryData media = MediaQuery.of(context);
+  orientation = media.orientation;
+  size = media.size;
+  vh = size.height > size.width ? size.height / 100 : size.width / 100;
+  vw = size.height < size.width ? size.height / 100 : size.width / 100;
+}

@@ -1,8 +1,10 @@
 import 'package:ceria/loginAs.dart';
 import 'package:ceria/providers/parent_home_viewmodel.dart';
+import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:shimmer/shimmer.dart';
 import 'dart:ui';
 
 import 'package:stacked/stacked.dart';
@@ -16,10 +18,6 @@ class ParentHomeAlter extends StatefulWidget {
 }
 
 class _ParentHomeAlterState extends State<ParentHomeAlter> {
-  Size size = Size.zero;
-  double vh, vw = 0;
-  Orientation orientation;
-
   @override
   void initState() {
     super.initState();
@@ -27,19 +25,8 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
 
   @override
   Widget build(BuildContext context) {
-    var localSize = MediaQuery.of(context).size;
-    var localvh = localSize.height > localSize.width
-        ? localSize.height / 100
-        : localSize.width / 100;
-    var localvw = localSize.height < localSize.width
-        ? localSize.height / 100
-        : localSize.width / 100;
-
     setState(() {
-      size = localSize;
-      vh = localvh;
-      vw = localvw;
-      orientation = MediaQuery.of(context).orientation;
+      initSize(context);
     });
     return ViewModelBuilder<ParentHomeViewModel>.reactive(
       viewModelBuilder: () => ParentHomeViewModel(nik: widget.nik),
@@ -220,35 +207,52 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Assalamualaikum  ",
-            style: TextStyle(
-                fontSize: 6 * vw,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          Text(
-            parentName,
-            // "Nama ${DateTime.now().add(Duration(hours: 7)).toIso8601String()}"
-            style: TextStyle(
-                fontSize: 6 * vw,
-                color: Colors.white,
-                fontWeight: FontWeight.bold),
-          ),
-          Text(
-            DateFormat("EEEE, d MMMM yyyy", "id_ID").format(DateTime.now()),
-            style: TextStyle(
-                fontSize: 3.5 * vw,
-                color: Colors.white,
-                fontWeight: FontWeight.normal),
-          ),
-          Text(
-            className,
-            style: TextStyle(
-                fontSize: 3.5 * vw,
-                color: Colors.white,
-                fontWeight: FontWeight.normal),
-          ),
+          parentName == null || parentName == ""
+              ? ReplacementText(
+                  fontSize: 7 * vw,
+                )
+              : Text(
+                  "Assalamualaikum  ",
+                  style: TextStyle(
+                      fontSize: 6 * vw,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+          parentName == null || parentName == ""
+              ? ReplacementText(
+                  fontSize: 3.5 * vw,
+                )
+              : Text(
+                  parentName,
+                  // "Nama ${DateTime.now().add(Duration(hours: 7)).toIso8601String()}"
+                  style: TextStyle(
+                      fontSize: 6 * vw,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+          className == null || className == ""
+              ? ReplacementText(
+                  fontSize: 6 * vw,
+                )
+              : Text(
+                  DateFormat("EEEE, d MMMM yyyy", "id_ID")
+                      .format(DateTime.now()),
+                  style: TextStyle(
+                      fontSize: 3.5 * vw,
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal),
+                ),
+          className == null || className == ""
+              ? ReplacementText(
+                  fontSize: 5 * vw,
+                )
+              : Text(
+                  className,
+                  style: TextStyle(
+                      fontSize: 3.5 * vw,
+                      color: Colors.white,
+                      fontWeight: FontWeight.normal),
+                ),
         ],
       ),
     );
@@ -277,6 +281,32 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
                   ));
             })
       ],
+    );
+  }
+}
+
+class ReplacementText extends StatelessWidget {
+  final double fontSize;
+  ReplacementText({
+    this.fontSize,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: fontSize / 10),
+      child: Shimmer.fromColors(
+          baseColor: Colors.deepPurple[400],
+          highlightColor: Colors.grey[400],
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              borderRadius:
+                  BorderRadius.circular(MediaQuery.of(context).size.width / 50),
+            ),
+            width: MediaQuery.of(context).size.width * .4 * fontSize / 24,
+            height: MediaQuery.of(context).size.width * .05,
+          )),
     );
   }
 }

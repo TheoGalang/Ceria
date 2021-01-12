@@ -1,4 +1,5 @@
 import 'package:ceria/providers/parent_assignment_list_viewmodel.dart';
+import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +25,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
   List<SimpleAssignmentView> assignmentDone = [];
   TabController _tabBarController;
   List<SimpleAssignmentView> assignmetNotDoneYet = [];
-  Size size = Size.zero;
+
   String nis;
   int idKelas;
   _ShowAssignmentParentState({this.nis, this.idKelas});
@@ -40,8 +41,9 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-
+    setState(() {
+      initSize(context);
+    });
     return ViewModelBuilder<ParentAssignmentListViewModel>.reactive(
       viewModelBuilder: () => ParentAssignmentListViewModel(
         nis: this.nis,
@@ -117,12 +119,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
       {List<SimpleAssignmentView> data, String aspek, bool isBusy}) {
     return Container(
       child: isBusy
-          ? Center(
-              child: Container(
-              height: 50,
-              width: 50,
-              child: CircularProgressIndicator(),
-            ))
+          ? listReplacement(vh: vh, vw: vw)
           : data.length != 0
               ? ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 50),
@@ -134,6 +131,40 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
                   ),
                 ),
     );
+  }
+
+  Column listReplacement({double vh, double vw}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        listReplatementItem(vw, vh),
+        listReplatementItem(vw, vh),
+        listReplatementItem(vw, vh),
+        listReplatementItem(vw, vh),
+      ],
+    );
+  }
+
+  Container listReplatementItem(double vw, double vh) {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 12 * vw, vertical: 2 * vh),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(bottom: 2 * vw),
+              child: ReplacementText(
+                fontSize: 6 * vw,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(bottom: 2 * vw),
+              child: ReplacementText(
+                fontSize: 8 * vw,
+              ),
+            ),
+          ],
+        ));
   }
 
   Container buildSimpleHeader(BuildContext context, String nama, String kelas) {
@@ -152,8 +183,7 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
             margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: nama == null
                 ? ReplacementText(
-                    text: "Nama Siswa",
-                    fontSize: 24,
+                    fontSize: 24.0,
                   )
                 : Text(
                     nama,
@@ -165,20 +195,24 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
-            child: Text(
-              DateFormat("EEEE, d MMMM yyyy", "id_ID").format(DateTime.now()),
-              style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.white,
-                  fontWeight: FontWeight.normal),
-            ),
+            child: nama == null
+                ? ReplacementText(
+                    fontSize: 24,
+                  )
+                : Text(
+                    DateFormat("EEEE, d MMMM yyyy", "id_ID")
+                        .format(DateTime.now()),
+                    style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.white,
+                        fontWeight: FontWeight.normal),
+                  ),
           ),
           Container(
             margin: EdgeInsets.only(top: 10),
             child: kelas == null
                 ? ReplacementText(
-                    text: "Kelas",
-                    fontSize: 13,
+                    fontSize: 13.0,
                   )
                 : Text(
                     kelas,
@@ -215,13 +249,10 @@ class _ShowAssignmentParentState extends State<ShowAssignmentParent>
 }
 
 class ReplacementText extends StatelessWidget {
-  final String text;
-  final int fontSize;
-  const ReplacementText({
-    Key key,
-    this.text,
+  final double fontSize;
+  ReplacementText({
     this.fontSize,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -232,10 +263,11 @@ class ReplacementText extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: Colors.grey,
-              borderRadius: BorderRadius.circular(2),
+              borderRadius:
+                  BorderRadius.circular(MediaQuery.of(context).size.width / 50),
             ),
             width: MediaQuery.of(context).size.width * .4 * fontSize / 24,
-            height: 20,
+            height: MediaQuery.of(context).size.width * .05,
           )),
     );
   }
