@@ -10,14 +10,18 @@ import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await initializeDateFormatting("id_ID", null)
-      .then((value) => runApp(MyApp()));
-  // runApp(
-  //   DevicePreview(
-  //     enabled: !kReleaseMode,
-  //     builder: (context) => MyApp(),
-  //   ),
-  // );
+
+  // TODO A : Jika mau manjalankan di device (release mode)  uncomment code ini, dan comment todo B
+  // await initializeDateFormatting("id_ID", null)
+  //     .then((value) => runApp(MyApp()));
+
+  // TODO B : jika  mau menjalankan di emulator uncomment code ini dan comment todo A
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

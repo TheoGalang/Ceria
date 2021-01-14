@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:ceria/models/parent_model.dart';
 import 'package:ceria/models/teacher_model.dart';
 import 'package:ceria/views/screen_guru/teacher_home.dart';
+import 'package:ceria/views/screen_guru/teacher_home_alter.dart';
 import 'package:ceria/views/screen_parent/parent_home.dart';
 import 'package:ceria/views/screen_parent/parent_home_alter.dart';
 import 'package:stacked/stacked.dart';
@@ -53,7 +54,11 @@ class LoginViewModel extends BaseViewModel {
           // HomeParent(
           //     nik: this._user.data.nik,
           //   )
-          : Home();
+          :
+          // Home();
+          TeacherHomeAlter(
+              nip: this._user.data.nomorPegawai,
+            );
     }));
   }
 
