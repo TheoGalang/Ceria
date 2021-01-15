@@ -1,14 +1,18 @@
+import 'package:ceria/models/kelas.dart';
+import 'package:ceria/providers/teacher_assignment_chooseclass_viewModel.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 
-import 'models/kelas_model.dart';
+// import 'models/kelas_model.dart';
 import 'widgets/view_single_class.dart';
 
 class ChooseClassTeacherTugas extends StatefulWidget {
   final List<Kelas> listKelas;
+  final String TeachersID;
 
-  const ChooseClassTeacherTugas({this.listKelas});
+  const ChooseClassTeacherTugas({this.listKelas, this.TeachersID});
   @override
   _ChooseClassTeacherTugasState createState() =>
       _ChooseClassTeacherTugasState();
@@ -19,14 +23,14 @@ class _ChooseClassTeacherTugasState extends State<ChooseClassTeacherTugas> {
 
   void loadKelas() {
     List<SingleClassView> temp = [];
-    List<Kelas> classes = widget.listKelas ?? constKelas;
+    List<Kelas> classes = widget.listKelas ?? [];
 
     for (var item in classes) {
       temp.insert(
           0,
           SingleClassView(
             kelas: item,
-            id: constKelas.indexOf(item),
+            id: classes.indexOf(item),
           ));
     }
     daftarKelas.addAll(temp);
@@ -42,14 +46,21 @@ class _ChooseClassTeacherTugasState extends State<ChooseClassTeacherTugas> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            buildSimpleHeader(context),
-            kelasListTile(data: daftarKelas),
-          ],
+    return ViewModelBuilder<TeacherAssignmentChooseClassViweModel>.reactive(
+      viewModelBuilder: () =>
+          TeacherAssignmentChooseClassViweModel(teachersID: widget.TeachersID),
+      onModelReady: (model) {
+        model.initial();
+      },
+      builder: (_, model, __) => Scaffold(
+        appBar: buildAppBar(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              buildSimpleHeader(context),
+              kelasListTile(data: model?.listKelasView ?? []),
+            ],
+          ),
         ),
       ),
     );

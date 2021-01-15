@@ -274,15 +274,15 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
           if (title != null && desc != null && selectedDate != oldTime) {
             // print("DOing Something woy!");
             setState(() {
-              constKelas[widget.id].assignments.insert(
-                    constKelas.length,
-                    Assignment(
-                      deadline: selectedDate,
-                      title: title,
-                      description: desc,
-                      attachmentFile: null,
-                    ),
-                  );
+              // constKelas[widget.id].assignments.insert(
+              //       constKelas.length,
+              //       Assignment(
+              //         deadline: selectedDate,
+              //         title: title,
+              //         description: desc,
+              //         attachmentFile: null,
+              //       ),
+              //     );
             });
 
             SweetAlert.show(context,
@@ -352,13 +352,15 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
       leading: IconButton(
         onPressed: () {
           {
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (_) => ShowAssignment(
-                          kelas: constKelas[widget.id],
-                          id: widget.id,
-                        )));
+            // Navigator.pushReplacement(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (_) => ShowAssignment(
+            //               kelas: constKelas[widget.id],
+            //               id: widget.id,
+            //             )));
+
+            Navigator.pop(context);
           }
         },
         icon: Icon(

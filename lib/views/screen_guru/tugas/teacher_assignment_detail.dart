@@ -48,7 +48,7 @@ class DetailTugasTeacher extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "${constKelas[this.classId].namaKelas}",
+                          "nama kelas",
                           style: TextStyle(
                               fontSize: 15,
                               color: Color(0xff41348C),

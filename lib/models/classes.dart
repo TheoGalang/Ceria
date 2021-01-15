@@ -1,14 +1,21 @@
-class Kelas {
+import 'package:ceria/models/kelas.dart';
+
+class Classes {
   bool success;
   String message;
-  DataKelas data;
+  List<DataKelas> data;
 
-  Kelas({this.success, this.message, this.data});
+  Classes({this.success, this.message, this.data});
 
-  Kelas.fromJson(Map<String, dynamic> json) {
+  Classes.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    data = json['data'] != null ? new DataKelas.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = new List<DataKelas>();
+      json['data'].forEach((v) {
+        data.add(new DataKelas.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -16,23 +23,22 @@ class Kelas {
     data['success'] = this.success;
     data['message'] = this.message;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class DataKelas {
+class Data {
   int id;
   String kelas;
   int thnAkademik;
   int status;
   String nomorPegawai;
 
-  DataKelas(
-      {this.id, this.kelas, this.thnAkademik, this.status, this.nomorPegawai});
+  Data({this.id, this.kelas, this.thnAkademik, this.status, this.nomorPegawai});
 
-  DataKelas.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     kelas = json['kelas'];
     thnAkademik = json['thn_akademik'];

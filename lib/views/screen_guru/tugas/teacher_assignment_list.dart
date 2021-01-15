@@ -1,9 +1,10 @@
+import 'package:ceria/models/kelas.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'models/kelas_model.dart';
+// import 'models/kelas_model.dart';
 import 'teacher_assignment_add.dart';
 import 'teacher_assignment_chooseclass.dart';
 import 'widgets/view_assignment_teacher.dart';
@@ -22,7 +23,7 @@ class _ShowAssignmentState extends State<ShowAssignment> {
 
   void loadAssignment() {
     List<TeacherSimpleAssignmentView> temp = [];
-    List<Assignment> assigments = widget.kelas.assignments ?? constAssingments;
+    List<Assignment> assigments = [];
 
     for (var item in assigments) {
       temp.insert(
@@ -141,7 +142,7 @@ class _ShowAssignmentState extends State<ShowAssignment> {
             Container(
               margin: EdgeInsets.only(top: 10),
               child: Text(
-                "${widget.kelas.namaKelas}",
+                "${widget.kelas.data.kelas}",
                 style: TextStyle(
                     fontSize: 13,
                     color: Colors.white,
@@ -161,11 +162,13 @@ class _ShowAssignmentState extends State<ShowAssignment> {
       leading: IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (_) =>
-                      ChooseClassTeacherTugas(listKelas: constKelas)));
+          // Navigator.pushReplacement(
+          //     context,
+          //     MaterialPageRoute(
+          //         builder: (_) =>
+          //             ChooseClassTeacherTugas(listKelas: constKelas),),);
+
+          Navigator.pop(context);
         },
       ),
       actions: [

@@ -1,4 +1,5 @@
-import 'package:ceria/views/screen_guru/tugas/models/kelas_model.dart';
+import 'package:ceria/models/kelas.dart';
+// import 'package:ceria/views/screen_guru/tugas/models/kelas_model.dart';
 import 'package:flutter/material.dart';
 
 import '../teacher_assignment_list.dart';
@@ -6,8 +7,9 @@ import '../teacher_assignment_list.dart';
 class SingleClassView extends StatelessWidget {
   final Kelas kelas;
   final int id;
+  final int assignmentsNumber;
 
-  SingleClassView({this.kelas, this.id});
+  SingleClassView({this.kelas, this.id, this.assignmentsNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +46,7 @@ class SingleClassView extends StatelessWidget {
             Center(
               child: Container(
                 margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Text("${kelas.namaKelas}",
+                child: Text("${kelas.data.kelas}",
                     style: TextStyle(
                         fontSize: 14,
                         color: Color(0xff41348C),
@@ -52,7 +54,7 @@ class SingleClassView extends StatelessWidget {
               ),
             ),
             Center(
-              child: Text("${kelas.jumlahTugas} Tugas Aktif",
+              child: Text("${this.assignmentsNumber} Tugas Aktif",
                   style: TextStyle(
                       fontSize: 14,
                       color: Color(0xff41348C),

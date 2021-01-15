@@ -28,7 +28,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
       initSize(context);
     });
 
-    print(" Teacher home alter : ${widget.nip}");
+    // print(" Teacher home alter : ${widget.nip}");
     return ViewModelBuilder<TeacherHomeViewModel>.reactive(
       viewModelBuilder: () => TeacherHomeViewModel(nip: widget.nip),
       onModelReady: (model) {
@@ -43,7 +43,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
                 parentName: model?.teacher?.data?.nama ?? "",
                 className: " ",
               ),
-              buildGridMenu(),
+              buildGridMenu(model: model, teachersID: widget.nip),
               buildPengumuman(),
             ],
           ),
@@ -106,7 +106,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
     );
   }
 
-  Container buildGridMenu({ParentHomeViewModel model}) {
+  Container buildGridMenu({TeacherHomeViewModel model, String teachersID}) {
     return Container(
       padding: EdgeInsets.all(3 * vw),
       height: 40 * vh,
@@ -125,7 +125,10 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Tugas",
             iconData: Icons.file_present,
-            onTap: ChooseClassTeacherTugas(),
+            onTap: ChooseClassTeacherTugas(
+              // listKelas: model?.listKelas ?? [],
+              TeachersID: teachersID,
+            ),
           ),
           buildMenu(
             name: "Raport",

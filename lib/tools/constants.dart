@@ -35,28 +35,28 @@ final List<Assignment> constAssingments = [
   ),
 ];
 
-final List<Kelas> constKelas = [
-  Kelas(
-    namaKelas: "Kelas 12 IPA 1",
-    assignments: [],
-  ),
-  Kelas(
-    namaKelas: "Kelas 12 IPA 2",
-    assignments: constAssingments,
-  ),
-  Kelas(
-    namaKelas: "Kelas 12 IPA 3",
-    assignments: constAssingments,
-  ),
-  Kelas(
-    namaKelas: "Kelas 12 IPS 1",
-    assignments: constAssingments,
-  ),
-  Kelas(
-    namaKelas: "Kelas 12 IPS 2",
-    assignments: constAssingments,
-  ),
-];
+// final List<Kelas> constKelas = [
+//   Kelas(
+//     namaKelas: "Kelas 12 IPA 1",
+//     assignments: [],
+//   ),
+//   Kelas(
+//     namaKelas: "Kelas 12 IPA 2",
+//     assignments: constAssingments,
+//   ),
+//   Kelas(
+//     namaKelas: "Kelas 12 IPA 3",
+//     assignments: constAssingments,
+//   ),
+//   Kelas(
+//     namaKelas: "Kelas 12 IPS 1",
+//     assignments: constAssingments,
+//   ),
+//   Kelas(
+//     namaKelas: "Kelas 12 IPS 2",
+//     assignments: constAssingments,
+//   ),
+// ];
 
 // custome color
 final color = MaterialColor(
