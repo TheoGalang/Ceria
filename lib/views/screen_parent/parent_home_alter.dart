@@ -269,17 +269,31 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
       //   onPressed: () {},
       // ),
       actions: [
-        IconButton(
-            icon: Icon(
-              Icons.notification_important,
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(
+              Icons.notifications,
+              color: Colors.white,
+              size: 20,
             ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => LoginAs(),
-                  ));
-            })
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => LoginAs(),
+                    ));
+              },
+              child: Text("Logout ",
+                  style: TextStyle(
+                      fontSize: 4 * vw,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold)),
+            ),
+          ],
+        ),
       ],
     );
   }
