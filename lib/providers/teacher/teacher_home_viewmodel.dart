@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:ceria/main.dart';
 import 'package:ceria/models/classes.dart';
 import 'package:ceria/models/kelas.dart';
 import 'package:ceria/models/teacher_home.dart';
+import 'package:ceria/views/screen_guru/teacher_home_alter.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
@@ -17,8 +20,11 @@ class TeacherHomeViewModel extends BaseViewModel {
     this._url = "https://ceriakan.id/api/teacher/$nip";
   }
 
-  initial() async {
+  initial({BuildContext context}) async {
     setBusy(true);
+    checkConnectivity(
+        context: context, child: TeacherHomeAlter(nip: this._nip));
+
     var response = await http.get(
       this._url,
     );

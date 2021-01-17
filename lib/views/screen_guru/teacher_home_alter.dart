@@ -267,13 +267,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
             icon: Icon(
               Icons.notifications,
             ),
-            onPressed: () {
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => LoginAs(),
-                  ));
-            }),
+            onPressed: () {}),
         TextButton(
           onPressed: () {
             logOut(context: context);

@@ -4,6 +4,7 @@ import 'package:ceria/models/assignments.dart';
 import 'package:ceria/models/child.dart';
 import 'package:ceria/models/kelas.dart';
 import 'package:ceria/views/screen_parent/tugas/widgets/SimpleAssignmentView.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +27,7 @@ class ParentAssignmentListViewModel extends BaseViewModel {
         "https://ceriakan.id/api/nis/$_nis/kelas/$_idKelas/assignment";
   }
 
-  initial() async {
+  initial({BuildContext context}) async {
     // get child by nis
     await getChild();
     // get kelas by id

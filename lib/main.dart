@@ -1,5 +1,7 @@
 import 'package:ceria/loginAs.dart';
+import 'package:ceria/noInternetConnection.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,7 @@ class MyApp extends StatelessWidget {
       title: "CERIA",
       theme: ThemeData(primarySwatch: color),
       home: LoginAs(),
+
       debugShowCheckedModeBanner: false,
     );
   }
@@ -62,5 +65,24 @@ String greetings() {
     return "Selamat Sore, ";
   } else {
     return "Selamat Malam, ";
+  }
+}
+
+void checkConnectivity({BuildContext context, Widget child}) async {
+  var result = await (Connectivity().checkConnectivity());
+  if (result == ConnectivityResult.mobile) {
+    // I am connected to a mobile network.
+    print("Mobile Network");
+  } else if (result == ConnectivityResult.wifi) {
+    // I am connected to a wifi network.
+    print("Wifi");
+  } else if (result == ConnectivityResult.none) {
+    print("Offline");
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (_) => NoInternetConnection(
+                  child: child,
+                )));
   }
 }

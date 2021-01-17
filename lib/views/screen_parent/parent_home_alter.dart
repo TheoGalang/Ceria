@@ -30,7 +30,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
     return ViewModelBuilder<ParentHomeViewModel>.reactive(
       viewModelBuilder: () => ParentHomeViewModel(nik: widget.nik),
       onModelReady: (model) {
-        model.initial();
+        model.initial(context: context);
       },
       builder: (_, model, __) => Scaffold(
         appBar: buildAppBar(),

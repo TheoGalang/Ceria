@@ -1,8 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ceria/models/submissionCollected.dart';
+import 'package:intl/intl.dart';
 
 class IsiNilaiTeacher extends StatefulWidget {
+  final Data data;
+  final String assigmentsTitle;
+
+  const IsiNilaiTeacher({Key key, this.data, this.assigmentsTitle})
+      : super(key: key);
   @override
   _IsiNilaiTeacherState createState() => _IsiNilaiTeacherState();
 }
@@ -38,7 +45,7 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                     margin: EdgeInsets.all(10),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      "Tugas Matematika Deret Halaman 20",
+                      widget.assigmentsTitle,
                       style: TextStyle(
                           fontSize: 20,
                           color: Color(0xff41348C),
@@ -59,7 +66,7 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                           ),
                         ),
                         Text(
-                          "Theo Galang Saputra",
+                          widget.data.nama,
                           style: TextStyle(
                               fontSize: 15,
                               color: Color(0xff41348C),
@@ -81,12 +88,22 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                             size: 15,
                           ),
                         ),
-                        Text(
-                          "20 Menit Yang Lalu",
-                          style: TextStyle(
-                              fontSize: 15,
-                              color: Color(0xff41348C),
-                              fontWeight: FontWeight.normal),
+                        Flexible(
+                          child: Text(
+                            "Dikumpulkan pada hari " +
+                                DateFormat(
+                                        "EEEE, d MMMM yyyy, 'pukul' hh:mm 'WIB'",
+                                        "id_ID")
+                                    .format(DateTime.parse(
+                                        widget.data.file[0].dateModified)),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            softWrap: true,
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: Color(0xff41348C),
+                                fontWeight: FontWeight.normal),
+                          ),
                         ),
                       ],
                     ),

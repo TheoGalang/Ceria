@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:ceria/main.dart';
 import 'package:ceria/models/child.dart';
 import 'package:ceria/models/kelas.dart';
 import 'package:ceria/models/parent_model.dart';
+import 'package:ceria/views/screen_parent/parent_home_alter.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,9 +23,11 @@ class ParentHomeViewModel extends BaseViewModel {
     this._parentApiUrl = "https://ceriakan.id/api/parent/$_nik";
   }
 
-  initial() async {
+  initial({BuildContext context}) async {
     // print(" Initialized from ParentHomeViewModel");
     setBusy(true);
+    checkConnectivity(context: context, child: ParentHomeAlter(nik: this._nik));
+
     var response = await http.get(
       _parentApiUrl,
     );

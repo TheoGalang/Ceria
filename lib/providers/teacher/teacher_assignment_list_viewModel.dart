@@ -4,6 +4,7 @@ import 'package:ceria/models/assignments.dart';
 import 'package:ceria/models/kelas.dart';
 import 'package:ceria/views/screen_guru/tugas/widgets/view_assignment_teacher.dart';
 import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,7 +17,7 @@ class TeacherAssignmentListViewModel extends BaseViewModel {
 
   TeacherAssignmentListViewModel({this.teachersID, this.kelas});
 
-  initial() async {
+  initial({BuildContext context}) async {
     setBusy(true);
 
     var response = await http.get(this._assigmentAPIUrl);
@@ -36,12 +37,14 @@ class TeacherAssignmentListViewModel extends BaseViewModel {
     for (var assignment in this.listAssignment.data) {
       this.assingmentNotDoneYet.add(TeacherSimpleAssignmentView(
             assignment: Assignment(
+              id: assignment.id,
               title: assignment.title,
               deadline: DateTime.parse(assignment.dueDate),
               attachmentFile: null,
               description: assignment.description,
             ),
             classId: this.kelas.data.id,
+            namaKelas: this.kelas.data.kelas,
           ));
     }
 

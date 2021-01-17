@@ -4,6 +4,7 @@ import 'package:ceria/models/assignments.dart';
 import 'package:ceria/models/classes.dart';
 import 'package:ceria/models/kelas.dart';
 import 'package:ceria/views/screen_guru/tugas/widgets/view_single_class.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,7 +23,7 @@ class TeacherAssignmentChooseClassViweModel extends BaseViewModel {
     this._teachersID = teachersID;
   }
 
-  initial() async {
+  initial({BuildContext context}) async {
     setBusy(true);
 
     var kelasResponse = await http.get(this._urlAPIKelas);

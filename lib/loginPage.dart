@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(role: widget.role),
       onModelReady: (model) {
-        model.initial();
+        model.initial(context: context);
       },
       builder: (_, model, __) => Scaffold(
         backgroundColor: Colors.white,

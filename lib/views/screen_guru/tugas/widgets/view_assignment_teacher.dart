@@ -8,8 +8,9 @@ import '../teacher_assignment_detail.dart';
 class TeacherSimpleAssignmentView extends StatelessWidget {
   final Assignment assignment;
   final int classId;
+  final String namaKelas;
 
-  TeacherSimpleAssignmentView({this.assignment, this.classId});
+  TeacherSimpleAssignmentView({this.assignment, this.classId, this.namaKelas});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,10 @@ class TeacherSimpleAssignmentView extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) {
                 return DetailTugasTeacher(
-                    assignment: this.assignment, classId: classId);
+                  assignment: this.assignment,
+                  classId: classId,
+                  namaKelas: namaKelas,
+                );
               },
             ),
           );

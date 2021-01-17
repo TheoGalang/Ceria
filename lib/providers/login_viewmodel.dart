@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:ceria/loginPage.dart';
+import 'package:ceria/main.dart';
 import 'package:ceria/models/parent_model.dart';
 import 'package:ceria/models/teacher_model.dart';
 import 'package:ceria/views/screen_guru/teacher_home_alter.dart';
@@ -23,10 +25,16 @@ class LoginViewModel extends BaseViewModel {
         : "https://ceriakan.id/api/teacher/login";
   }
 
-  initial() async {
+  initial({BuildContext context}) async {
     this.role == Role.parent ? print("parent") : print("teacher");
 
     this.cookies = await SharedPreferences.getInstance();
+
+    checkConnectivity(
+        context: context,
+        child: LoginPage(
+          role: this.role,
+        ));
   }
 
   login({String username, String password}) async {
