@@ -1,4 +1,4 @@
-import 'package:ceria/providers/parent_assignment_list_viewmodel.dart';
+import 'package:ceria/providers/parent/parent_assignment_list_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

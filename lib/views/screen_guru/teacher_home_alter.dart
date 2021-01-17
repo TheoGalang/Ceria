@@ -1,6 +1,6 @@
 import 'package:ceria/loginAs.dart';
-import 'package:ceria/providers/parent_home_viewmodel.dart';
-import 'package:ceria/providers/teacher_home_viewmodel.dart';
+import 'package:ceria/main.dart';
+import 'package:ceria/providers/teacher/teacher_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_guru/tugas/teacher_assignment_chooseclass.dart';
 import 'package:flutter/material.dart';
@@ -210,10 +210,10 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
         children: [
           parentName == null || parentName == ""
               ? ReplacementText(
-                  fontSize: 7 * vw,
+                  fontSize: 6 * vw,
                 )
               : Text(
-                  "Assalamualaikum  ",
+                  greetings(),
                   style: TextStyle(
                       fontSize: 6 * vw,
                       color: Colors.white,
@@ -221,10 +221,10 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
                 ),
           parentName == null || parentName == ""
               ? ReplacementText(
-                  fontSize: 3.5 * vw,
+                  fontSize: 8 * vw,
                 )
               : Text(
-                  parentName,
+                  "Bapak/Ibu Guru " + parentName,
                   // "Nama ${DateTime.now().add(Duration(hours: 7)).toIso8601String()}"
                   style: TextStyle(
                       fontSize: 6 * vw,
@@ -237,7 +237,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
                 )
               : Text(
                   DateFormat("EEEE, d MMMM yyyy", "id_ID")
-                      .format(DateTime.now()),
+                      .format(DateTime.now().add(Duration(hours: 7))),
                   style: TextStyle(
                       fontSize: 3.5 * vw,
                       color: Colors.white,
@@ -261,18 +261,11 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
 
   AppBar buildAppBar() {
     return AppBar(
-      // title: Text("Home Parent"),
       elevation: 0,
-      // leading: IconButton(
-      //   icon: Icon(
-      //     Icons.arrow_back,
-      //   ),
-      //   onPressed: () {},
-      // ),
       actions: [
         IconButton(
             icon: Icon(
-              Icons.notification_important,
+              Icons.notifications,
             ),
             onPressed: () {
               Navigator.pushReplacement(
@@ -280,7 +273,17 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
                   MaterialPageRoute(
                     builder: (_) => LoginAs(),
                   ));
-            })
+            }),
+        TextButton(
+          onPressed: () {
+            logOut(context: context);
+          },
+          child: Text("Logout ",
+              style: TextStyle(
+                  fontSize: 4 * vw,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold)),
+        ),
       ],
     );
   }

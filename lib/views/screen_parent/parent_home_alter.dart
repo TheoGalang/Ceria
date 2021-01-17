@@ -1,12 +1,11 @@
-import 'package:ceria/loginAs.dart';
-import 'package:ceria/providers/parent_home_viewmodel.dart';
+import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 import 'dart:ui';
-
+import 'package:ceria/main.dart';
 import 'package:stacked/stacked.dart';
 
 class ParentHomeAlter extends StatefulWidget {
@@ -209,10 +208,10 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
         children: [
           parentName == null || parentName == ""
               ? ReplacementText(
-                  fontSize: 7 * vw,
+                  fontSize: 6 * vw,
                 )
               : Text(
-                  "Assalamualaikum  ",
+                  greetings(),
                   style: TextStyle(
                       fontSize: 6 * vw,
                       color: Colors.white,
@@ -220,10 +219,10 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
                 ),
           parentName == null || parentName == ""
               ? ReplacementText(
-                  fontSize: 3.5 * vw,
+                  fontSize: 7 * vw,
                 )
               : Text(
-                  parentName,
+                  "Bapak/Ibu " + parentName,
                   // "Nama ${DateTime.now().add(Duration(hours: 7)).toIso8601String()}"
                   style: TextStyle(
                       fontSize: 6 * vw,
@@ -236,7 +235,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
                 )
               : Text(
                   DateFormat("EEEE, d MMMM yyyy", "id_ID")
-                      .format(DateTime.now()),
+                      .format(DateTime.now().add(Duration(hours: 7))),
                   style: TextStyle(
                       fontSize: 3.5 * vw,
                       color: Colors.white,
@@ -280,11 +279,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => LoginAs(),
-                    ));
+                logOut(context: context);
               },
               child: Text("Logout ",
                   style: TextStyle(

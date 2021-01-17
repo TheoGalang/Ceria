@@ -1,12 +1,12 @@
 import 'package:ceria/loginAs.dart';
 import 'package:ceria/tools/constants.dart';
-import 'package:ceria/views/screen_parent/parent_home_alter.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,8 +36,31 @@ class MyApp extends StatelessWidget {
       title: "CERIA",
       theme: ThemeData(primarySwatch: color),
       home: LoginAs(),
-      // home: ParentHomeAlter(),
       debugShowCheckedModeBanner: false,
     );
+  }
+}
+
+void logOut({BuildContext context}) async {
+  SharedPreferences cookies = await SharedPreferences.getInstance();
+
+  cookies.remove("role");
+  cookies.remove("nomorInduk");
+
+  Navigator.pushReplacement(
+      context, MaterialPageRoute(builder: (_) => LoginAs()));
+}
+
+String greetings() {
+  int jam = DateTime.now().add(Duration(hours: 7)).hour;
+
+  if (jam >= 4 && jam <= 10) {
+    return "Selamat Pagi, ";
+  } else if (jam > 10 && jam <= 14) {
+    return "Selamat Siang, ";
+  } else if (jam > 14 && jam <= 18) {
+    return "Selamat Sore, ";
+  } else {
+    return "Selamat Malam, ";
   }
 }

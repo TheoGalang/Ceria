@@ -1,11 +1,11 @@
 import 'package:ceria/loginPage.dart';
+import 'package:ceria/providers/loginaAs_viewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stacked/stacked.dart';
 
 import 'providers/login_viewmodel.dart';
-import 'views/screen_guru/teacher_home.dart';
-import 'views/screen_parent/parent_home.dart';
 
 class LoginAs extends StatefulWidget {
   @override
@@ -18,107 +18,113 @@ class _LoginAsState extends State<LoginAs> {
     return sharedPreferences.getStringList("user");
   }
 
+  Future<String> getRole() async {
+    SharedPreferences cookies = await SharedPreferences.getInstance();
+    return cookies.getString("role");
+  }
+
+  Future<String> getNomorInduk() async {
+    SharedPreferences cookies = await SharedPreferences.getInstance();
+    return cookies.getString("nomorInduk");
+  }
+
   @override
   void initState() {
-    checkCurrentUser().then((value) {
-      if (value != null) {
-        Navigator.pushReplacement(
-          context,
-          CupertinoPageRoute(
-            builder: (_) => value[3] == "parent" ? HomeParent() : Home(),
-          ),
-        );
-      }
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 300,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/images/background.png'),
-                    fit: BoxFit.fill),
-              ),
-              child: Stack(
-                children: <Widget>[
-                  Positioned(
-                    child: Center(
-                      child: Container(
-                        height: 200,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('assets/images/logo.png'),
-                              fit: BoxFit.fill),
+    return ViewModelBuilder<LoginAsViewModel>.reactive(
+      viewModelBuilder: () => LoginAsViewModel(),
+      onModelReady: (model) async {
+        await model.initial(context: context);
+      },
+      builder: (_, model, __) => Scaffold(
+        backgroundColor: Colors.white,
+        body: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 300,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/background.png'),
+                      fit: BoxFit.fill),
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    Positioned(
+                      child: Center(
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('assets/images/logo.png'),
+                                fit: BoxFit.fill),
+                          ),
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Column(
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.fromLTRB(30, 100, 30, 30),
+                    width: 200,
+                    child: RaisedButton(
+                      padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (_) => LoginPage(
+                                      role: Role.teacher,
+                                    )));
+                      },
+                      child: Text(
+                        "Guru",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      color: Color(0xff41348C),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.all(0),
+                    width: 200,
+                    child: RaisedButton(
+                      padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                            context,
+                            CupertinoPageRoute(
+                                builder: (_) => LoginPage(role: Role.parent)));
+                      },
+                      child: Text(
+                        "Orang Tua",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      color: Color(0xff41348C),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5)),
+                    ),
                   ),
                 ],
-              ),
-            ),
-            Column(
-              children: <Widget>[
-                Container(
-                  margin: EdgeInsets.fromLTRB(30, 100, 30, 30),
-                  width: 200,
-                  child: RaisedButton(
-                    padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (_) => LoginPage(
-                                    role: Role.teacher,
-                                  )));
-                    },
-                    child: Text(
-                      "Guru",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    color: Color(0xff41348C),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.all(0),
-                  width: 200,
-                  child: RaisedButton(
-                    padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (_) => LoginPage(role: Role.parent)));
-                    },
-                    child: Text(
-                      "Orang Tua",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    color: Color(0xff41348C),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                  ),
-                ),
-              ],
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

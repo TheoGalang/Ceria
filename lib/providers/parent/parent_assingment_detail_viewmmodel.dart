@@ -1,11 +1,6 @@
-import 'dart:ffi';
 import 'dart:io';
 
-import 'package:ceria/models/assignments.dart';
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:stacked/stacked.dart';
 
 class ParentAssignmentDetailViewModel extends BaseViewModel {

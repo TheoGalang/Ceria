@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:ceria/models/assignments.dart';
-import 'package:ceria/providers/parent_assingment_detail_viewmmodel.dart';
+import 'package:ceria/providers/parent/parent_assingment_detail_viewmmodel.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
-import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -48,7 +46,6 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
   var appbarSize = Size(0, 80);
   var tabBarLabelSize = Size(0, 48);
 
-  File _image;
   File _file;
   String _filename;
   String _fileExtension;
@@ -60,9 +57,7 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
     // ignore: deprecated_member_use
     final image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _image = image;
-    });
+    setState(() {});
   }
 
   @override

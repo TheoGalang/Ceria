@@ -48,16 +48,11 @@ class TeacherAssignmentChooseClassViweModel extends BaseViewModel {
     this.listKelas = temp;
 
     for (var assignment in this._assigments.data) {
-      if (assignment.idTeacher == this._teachersID) {
+      if (assignment.idTeacher == this._teachersID &&
+          assignment.isVisible == 1) {
         this.assigmentNumber++;
       }
     }
-
-    print("_teachersID : ${this._teachersID}");
-    print("kelas.nomorPegawai : ${this._kelas.data[0].nomorPegawai}");
-    print("assignment.idTeachers : ${this._assigments.data[0].idTeacher}");
-    print("kelas length : ${listKelas.length}");
-    print("assignment length : ${this.assigmentNumber}");
 
     for (var kelas in this.listKelas) {
       this.listKelasView.add(SingleClassView(

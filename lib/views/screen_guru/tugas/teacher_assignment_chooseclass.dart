@@ -1,11 +1,8 @@
 import 'package:ceria/models/kelas.dart';
-import 'package:ceria/providers/teacher_assignment_chooseclass_viewModel.dart';
-import 'package:ceria/tools/constants.dart';
+import 'package:ceria/providers/teacher/teacher_assignment_chooseclass_viewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
-// import 'models/kelas_model.dart';
 import 'widgets/view_single_class.dart';
 
 class ChooseClassTeacherTugas extends StatefulWidget {

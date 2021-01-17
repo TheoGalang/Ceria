@@ -1,19 +1,18 @@
 import 'package:ceria/models/kelas.dart';
-import 'package:ceria/tools/constants.dart';
+import 'package:ceria/providers/teacher/teacher_assignment_list_viewModel.dart';
 import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-// import 'models/kelas_model.dart';
+import 'package:stacked/stacked.dart';
 import 'teacher_assignment_add.dart';
-import 'teacher_assignment_chooseclass.dart';
 import 'widgets/view_assignment_teacher.dart';
 
 class ShowAssignment extends StatefulWidget {
   final Kelas kelas;
   final int id;
+  final String teachersID;
 
-  ShowAssignment({this.kelas, this.id});
+  ShowAssignment({this.kelas, this.id, this.teachersID});
   @override
   _ShowAssignmentState createState() => _ShowAssignmentState();
 }
@@ -46,15 +45,26 @@ class _ShowAssignmentState extends State<ShowAssignment> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            buildSimpleHeader(context),
-            assignments(data: assingmentNotDoneYet, aspek: "BELUM SELESAI"),
-            buildButtonNewAssignment(),
-          ],
+    return ViewModelBuilder<TeacherAssignmentListViewModel>.reactive(
+      viewModelBuilder: () => TeacherAssignmentListViewModel(
+        teachersID: widget.teachersID,
+        kelas: widget.kelas,
+      ),
+      onModelReady: (model) {
+        model.initial();
+      },
+      builder: (_, model, __) => Scaffold(
+        appBar: buildAppBar(),
+        body: SafeArea(
+          child: Column(
+            children: [
+              buildSimpleHeader(context),
+              assignments(
+                  data: model?.assingmentNotDoneYet ?? [],
+                  aspek: "BELUM SELESAI"),
+              buildButtonNewAssignment(),
+            ],
+          ),
         ),
       ),
     );

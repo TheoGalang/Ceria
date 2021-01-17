@@ -1,12 +1,8 @@
-import 'package:ceria/tools/constants.dart';
-import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:sweetalert/sweetalert.dart';
-
-import 'teacher_assignment_list.dart';
 
 class AddAssignmentTugas extends StatefulWidget {
   final int id;
@@ -140,29 +136,6 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
     );
   }
 
-  void _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate, // Refer step 1
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2025),
-      errorFormatText: 'Enter valid date',
-      errorInvalidText: 'Enter date in valid range',
-      builder: (context, child) {
-        return Theme(
-          data: ThemeData.light().copyWith(
-            primaryColor: Color(0xFF41348c),
-          ), // This will change to light theme.
-          child: child,
-        );
-      },
-    );
-    if (picked != null && picked != selectedDate)
-      setState(() {
-        selectedDate = picked;
-      });
-  }
-
   Container assignmentLampiran(BuildContext context) {
     return Container(
       margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
@@ -272,18 +245,7 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
       child: RaisedButton(
         onPressed: () {
           if (title != null && desc != null && selectedDate != oldTime) {
-            // print("DOing Something woy!");
-            setState(() {
-              // constKelas[widget.id].assignments.insert(
-              //       constKelas.length,
-              //       Assignment(
-              //         deadline: selectedDate,
-              //         title: title,
-              //         description: desc,
-              //         attachmentFile: null,
-              //       ),
-              //     );
-            });
+            setState(() {});
 
             SweetAlert.show(context,
                 title: "Berhasil",

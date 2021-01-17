@@ -20,7 +20,11 @@ class SingleClassView extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) {
-                return ShowAssignment(kelas: this.kelas, id: this.id);
+                return ShowAssignment(
+                  kelas: this.kelas,
+                  id: this.id,
+                  teachersID: kelas.data.nomorPegawai,
+                );
               },
             ),
           );
