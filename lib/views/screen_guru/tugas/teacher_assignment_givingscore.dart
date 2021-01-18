@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:ceria/models/submissionCollected.dart';
 import 'package:intl/intl.dart';
+import 'package:sweetalert/sweetalert.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IsiNilaiTeacher extends StatefulWidget {
   final Data data;
@@ -15,8 +15,15 @@ class IsiNilaiTeacher extends StatefulWidget {
 }
 
 class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
+  String valueChoose;
+  String feedback;
+  String location;
+  TextEditingController feedbackController = TextEditingController();
+  List<String> values = ["MB", "MSH", "BB"];
+
   @override
   Widget build(BuildContext context) {
+    this.location = widget.data.file[0].location;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -122,7 +129,20 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            String url = "https://ceriakan.id/storage/app/" +
+                                this.location;
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+
+                              SweetAlert.show(context,
+                                  title: "Gagal",
+                                  subtitle: "File tidak dapat dibuka",
+                                  style: SweetAlertStyle.error);
+                            }
+                          },
                           child: Text(
                             "Klik disini untuk download file tugas",
                             style: TextStyle(
@@ -135,75 +155,56 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                       ],
                     ),
                   ),
+
+                  //coba 2 dropdown button
                   Container(
-                    width: MediaQuery.of(context).size.width / 1,
+                    padding: EdgeInsets.all(20),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
+                      children: [
                         Container(
-                          padding: EdgeInsets.all(5),
-                          decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                            ),
-                          ]),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.remove,
-                              color: Color(0xff41348C),
-                              size: 30,
-                            ),
+                          child: Text(
+                            " Nilai : ",
+                            style: TextStyle(fontSize: 18),
                           ),
+                          margin: EdgeInsets.only(right: 10),
                         ),
-                        Container(
-                          margin: EdgeInsets.all(10),
-                          width: MediaQuery.of(context).size.width / 2,
-                          decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 3,
-                              blurRadius: 5,
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(
+                                color: Color(0xff41348C),
+                                width: MediaQuery.of(context).size.width / 200,
+                              ),
                             ),
-                          ]),
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.digitsOnly
-                            ],
-                            decoration: InputDecoration(
-                                hintText: "Nilai",
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5))),
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          decoration:
-                              BoxDecoration(color: Colors.white, boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.2),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                            ),
-                          ]),
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.add,
-                              color: Color(0xff41348C),
-                              size: 30,
+                            margin: EdgeInsets.symmetric(horizontal: 10),
+                            padding: EdgeInsets.only(left: 10),
+                            child: DropdownButton(
+                              dropdownColor: Colors.indigo[100],
+                              isExpanded: true,
+                              icon: Icon(Icons.arrow_drop_down_rounded),
+                              hint: Text("Pilih Nilai"),
+                              items: values.map((valueItem) {
+                                return DropdownMenuItem(
+                                  child: Text(valueItem),
+                                  value: valueItem,
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  valueChoose = newValue;
+                                });
+                              },
+                              value: valueChoose,
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
+
+                  // akhir coba2 dropdown
+
                   Container(
                     margin: EdgeInsets.all(10),
                     width: MediaQuery.of(context).size.width / 1,
@@ -215,6 +216,14 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                       ),
                     ]),
                     child: TextField(
+                      controller: feedbackController,
+                      onChanged: (value) {
+                        setState(() {
+                          this.feedback = value;
+                        });
+
+                        print(feedback);
+                      },
                       decoration: InputDecoration(
                           hintText: "Feedback",
                           fillColor: Colors.white,
@@ -227,7 +236,12 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                     child: RaisedButton(
                       padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                       onPressed: () {
-                        Navigator.pop(context);
+                        SweetAlert.show(context,
+                            title: "Berhasil",
+                            subtitle: "Nilai Berhasil di Simpan.",
+                            style: SweetAlertStyle.success, onPress: (confirm) {
+                          Navigator.pop(context);
+                        });
                       },
                       child: Text(
                         "Simpan",

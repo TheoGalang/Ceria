@@ -235,7 +235,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
                 )
               : Text(
                   DateFormat("EEEE, d MMMM yyyy", "id_ID")
-                      .format(DateTime.now().add(Duration(hours: 7))),
+                      .format(DateTime.now()),
                   style: TextStyle(
                       fontSize: 3.5 * vw,
                       color: Colors.white,

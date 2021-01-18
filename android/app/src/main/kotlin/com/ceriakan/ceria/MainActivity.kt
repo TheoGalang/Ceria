@@ -1,4 +1,4 @@
-package com.example.Ceria
+package com.ceriakan.ceria
 
 import io.flutter.embedding.android.FlutterActivity
 

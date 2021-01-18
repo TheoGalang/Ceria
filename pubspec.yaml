@@ -36,6 +36,7 @@ dependencies:
   shimmer: ^1.1.2
   stacked: ^1.7.6
   sweetalert: ^0.0.1
+  url_launcher: ^5.7.10
 
 dev_dependencies:
   flutter_test:

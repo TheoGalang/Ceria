@@ -1,8 +1,5 @@
-import 'package:ceria/providers/login_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'loginPage.dart';
 
 class NoInternetConnection extends StatelessWidget {
   final Widget child;

@@ -1,4 +1,3 @@
-import 'package:ceria/loginAs.dart';
 import 'package:ceria/main.dart';
 import 'package:ceria/providers/teacher/teacher_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
@@ -237,7 +236,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
                 )
               : Text(
                   DateFormat("EEEE, d MMMM yyyy", "id_ID")
-                      .format(DateTime.now().add(Duration(hours: 7))),
+                      .format(DateTime.now()),
                   style: TextStyle(
                       fontSize: 3.5 * vw,
                       color: Colors.white,

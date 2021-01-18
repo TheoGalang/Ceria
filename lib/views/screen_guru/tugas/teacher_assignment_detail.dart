@@ -4,8 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'teacher_assignment_givingscore.dart';
-
 class DetailTugasTeacher extends StatelessWidget {
   final Assignment assignment;
   final int classId;

@@ -6,7 +6,6 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,7 +54,7 @@ void logOut({BuildContext context}) async {
 }
 
 String greetings() {
-  int jam = DateTime.now().add(Duration(hours: 7)).hour;
+  int jam = DateTime.now().hour;
 
   if (jam >= 4 && jam <= 10) {
     return "Selamat Pagi, ";
