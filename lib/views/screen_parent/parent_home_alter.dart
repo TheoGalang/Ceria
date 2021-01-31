@@ -1,5 +1,9 @@
 import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:ceria/views/screen_guru/teacher_chooseclass.dart';
+import 'package:ceria/views/screen_guru/teacher_presence_list.dart';
+import 'package:ceria/views/screen_parent/parent_addpresences.dart';
+import 'package:ceria/views/screen_parent/parent_studentlist.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -118,7 +122,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
           buildMenu(
             name: "Kehadiran",
             iconData: Icons.emoji_people_outlined,
-            onTap: null,
+            onTap: IsiKehadiranParent(),
           ),
           buildMenu(
             name: "Tugas",
@@ -136,7 +140,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
           buildMenu(
             name: "Kelas",
             iconData: Icons.account_balance_outlined,
-            onTap: null,
+            onTap: ListStudentParent(),
           ),
           buildMenu(
             name: "Buletin",
