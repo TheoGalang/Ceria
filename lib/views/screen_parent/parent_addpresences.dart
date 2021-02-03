@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class IsiKehadiranParent extends StatelessWidget {
+  String status = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +73,7 @@ class IsiKehadiranParent extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(10, 40, 0, 10),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("Masukkan Nama",
+                        child: Text("Masukkan Nomor Induk",
                             style: TextStyle(
                                 fontSize: 17,
                                 color: Color(0xff41348C),
@@ -90,7 +91,7 @@ class IsiKehadiranParent extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(10, 20, 0, 10),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Text("Masukkan Nomor Absen",
+                        child: Text("Masukkan Tanggal",
                             style: TextStyle(
                                 fontSize: 17,
                                 color: Color(0xff41348C),
@@ -103,6 +104,53 @@ class IsiKehadiranParent extends StatelessWidget {
                           fillColor: Colors.white,
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(5))),
+                    ),
+                    ButtonBar(
+                      alignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Row(children: <Widget>[
+                          Radio(
+                              value: 'hadir',
+                              groupValue: status,
+                              activeColor: Color(0xff41348C),
+                              onChanged: (val) {
+                                status = val;
+                              }),
+                          Text("Hadir",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: Color(0xff41348C),
+                                  fontWeight: FontWeight.bold)),
+                        ]),
+                        Row(children: <Widget>[
+                          Radio(
+                              value: 'izin',
+                              groupValue: status,
+                              activeColor: Color(0xff41348C),
+                              onChanged: (val) {
+                                status = val;
+                              }),
+                          Text("Izin",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: Color(0xff41348C),
+                                  fontWeight: FontWeight.bold)),
+                        ]),
+                        Row(children: <Widget>[
+                          Radio(
+                              value: 'sakit',
+                              groupValue: status,
+                              activeColor: Color(0xff41348C),
+                              onChanged: (val) {
+                                status = val;
+                              }),
+                          Text("Sakit",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: Color(0xff41348C),
+                                  fontWeight: FontWeight.bold)),
+                        ]),
+                      ],
                     ),
                     Container(
                       margin: EdgeInsets.all(30),
@@ -128,7 +176,7 @@ class IsiKehadiranParent extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
         ],
       )),
     );
