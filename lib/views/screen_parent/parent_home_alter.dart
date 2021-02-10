@@ -1,7 +1,5 @@
 import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
-import 'package:ceria/views/screen_guru/teacher_chooseclass.dart';
-import 'package:ceria/views/screen_guru/teacher_presence_list.dart';
 import 'package:ceria/views/screen_parent/parent_addpresences.dart';
 import 'package:ceria/views/screen_parent/parent_studentlist.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
@@ -122,7 +120,9 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
           buildMenu(
             name: "Kehadiran",
             iconData: Icons.emoji_people_outlined,
-            onTap: IsiKehadiranParent(),
+            onTap: IsiKehadiranParent(
+              child: model.child,
+            ),
           ),
           buildMenu(
             name: "Tugas",

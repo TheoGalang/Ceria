@@ -1,10 +1,32 @@
+import 'package:ceria/models/child.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:ceria/main.dart';
+import 'package:sweetalert/sweetalert.dart';
 
-class IsiKehadiranParent extends StatelessWidget {
-  String status = '';
+class IsiKehadiranParent extends StatefulWidget {
+  final Child child;
+
+  const IsiKehadiranParent({Key key, this.child}) : super(key: key);
+
+  @override
+  _IsiKehadiranParentState createState() => _IsiKehadiranParentState();
+}
+
+class _IsiKehadiranParentState extends State<IsiKehadiranParent> {
+  String status = 'hadir';
+
+  TextEditingController controllerNomorInduk = TextEditingController();
+  TextEditingController controllerTanggal = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    // initiate controller value
+    controllerNomorInduk.text = widget.child.data.nomorInduk;
+    controllerTanggal.text = DateTime.now().toString();
+
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -25,9 +47,14 @@ class IsiKehadiranParent extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: Icon(
-                          Icons.arrow_back,
-                          color: Colors.white,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -81,6 +108,7 @@ class IsiKehadiranParent extends StatelessWidget {
                       ),
                     ),
                     TextField(
+                      controller: controllerNomorInduk,
                       decoration: InputDecoration(
                           hintText: "ketik disini",
                           fillColor: Colors.white,
@@ -99,6 +127,7 @@ class IsiKehadiranParent extends StatelessWidget {
                       ),
                     ),
                     TextField(
+                      controller: controllerTanggal,
                       decoration: InputDecoration(
                           hintText: "ketik disini",
                           fillColor: Colors.white,
@@ -114,7 +143,9 @@ class IsiKehadiranParent extends StatelessWidget {
                               groupValue: status,
                               activeColor: Color(0xff41348C),
                               onChanged: (val) {
-                                status = val;
+                                setState(() {
+                                  status = val;
+                                });
                               }),
                           Text("Hadir",
                               style: TextStyle(
@@ -128,7 +159,9 @@ class IsiKehadiranParent extends StatelessWidget {
                               groupValue: status,
                               activeColor: Color(0xff41348C),
                               onChanged: (val) {
-                                status = val;
+                                setState(() {
+                                  status = val;
+                                });
                               }),
                           Text("Izin",
                               style: TextStyle(
@@ -142,7 +175,9 @@ class IsiKehadiranParent extends StatelessWidget {
                               groupValue: status,
                               activeColor: Color(0xff41348C),
                               onChanged: (val) {
-                                status = val;
+                                setState(() {
+                                  status = val;
+                                });
                               }),
                           Text("Sakit",
                               style: TextStyle(
@@ -158,6 +193,29 @@ class IsiKehadiranParent extends StatelessWidget {
                         padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                         onPressed: () {
                           // Navigator.pop(context);
+                          this
+                              .saveKehadiran(
+                                  statusKehadiran: status,
+                                  tanggal: controllerTanggal.text)
+                              .then((value) {
+                            if (value == 200) {
+                              print("Success");
+                              SweetAlert.show(context,
+                                  title: "Berhasil",
+                                  subtitle: "Kehadiran Tersimpan!",
+                                  onPress: (isConfirm) {
+                                Navigator.pop(context);
+
+                                return isConfirm;
+                              }, style: SweetAlertStyle.success);
+                            } else {
+                              print("Failed");
+                              SweetAlert.show(context,
+                                  title: "Gagal",
+                                  subtitle: "Gagal tersimpan!",
+                                  style: SweetAlertStyle.error);
+                            }
+                          });
                         },
                         child: Text(
                           "Simpan",
@@ -180,5 +238,33 @@ class IsiKehadiranParent extends StatelessWidget {
         ],
       )),
     );
+  }
+
+  Future<int> saveKehadiran({String tanggal, String statusKehadiran}) async {
+    String urlKehadiran = "https://ceriakan.id/api/attendance/store";
+
+    // persiapkan data;
+
+    checkConnectivity(
+        context: context,
+        child: IsiKehadiranParent(
+          child: widget.child,
+        ));
+
+    try {
+      FormData formData = new FormData.fromMap({
+        "id_class": widget.child.data.idKelas,
+        "nomor_induk": widget.child.data.nomorInduk,
+        "tanggal": tanggal,
+        "status_kehadiran": statusKehadiran,
+      });
+
+      Response response = await Dio().post(urlKehadiran, data: formData);
+      return response.statusCode;
+    } catch (e) {
+      print("expectation Caugch: $e");
+    }
+
+    return 400;
   }
 }
