@@ -1,6 +1,8 @@
 import 'package:ceria/main.dart';
 import 'package:ceria/providers/teacher/teacher_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:ceria/views/screen_guru/teacher_chooseclass.dart';
+import 'package:ceria/views/screen_guru/teacher_presence_list.dart';
 import 'package:ceria/views/screen_guru/tugas/teacher_assignment_chooseclass.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -119,7 +121,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Kehadiran",
             iconData: Icons.emoji_people_outlined,
-            onTap: null,
+            onTap: ListStudentAbsen(),
           ),
           buildMenu(
             name: "Tugas",
@@ -137,7 +139,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Kelas",
             iconData: Icons.account_balance_outlined,
-            onTap: null,
+            onTap: ChooseClassTeacher(),
           ),
           buildMenu(
             name: "Buletin",
