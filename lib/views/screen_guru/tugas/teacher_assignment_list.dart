@@ -90,6 +90,7 @@ class _ShowAssignmentState extends State<ShowAssignment> {
               ),
             ),
           ).then((_) {
+            model = TeacherAssignmentListViewModel();
             model.initial();
             setState(() {});
           });

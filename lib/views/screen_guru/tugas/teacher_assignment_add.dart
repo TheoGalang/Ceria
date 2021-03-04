@@ -28,8 +28,15 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
   DateTime selectedDate = DateTime.now();
   DateTime oldTime = DateTime.now();
 
-  List<FileWithDescription> files = [];
   bool isLoad = false;
+
+  File _file;
+
+  String _fileExtension;
+
+  String _filename;
+
+  String _iconUrl;
 
   @override
   void initState() {
@@ -71,95 +78,133 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
                       child: Column(
                         children: [
                           Column(
-                            children: files.length == 0
-                                ? [SizedBox()]
-                                :
-                                // jika ada file maka tampilkan cardfile
-                                files
-                                    .map((e) => Container(
-                                          margin: EdgeInsets.symmetric(
-                                            horizontal: 0,
-                                            vertical: 4,
-                                          ),
-                                          padding: EdgeInsets.all(8),
-                                          width: double.infinity,
-                                          decoration: BoxDecoration(
-                                            color: Colors.teal[200],
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  blurRadius: 15,
-                                                  spreadRadius: 3,
-                                                  color: Colors.black26)
-                                            ],
-                                          ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Expanded(
-                                                child: Row(
-                                                  children: [
-                                                    Container(
-                                                        margin: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 12),
-                                                        child: Image.network(
-                                                            e.iconUrl)),
-                                                    Flexible(
-                                                        flex: 1,
-                                                        child:
-                                                            Text(e.filename)),
-                                                  ],
-                                                ),
-                                              ),
-                                              IconButton(
-                                                  icon: Icon(Icons.delete),
-                                                  onPressed: () {
-                                                    print(
-                                                        "item ke-${files.indexOf(e)} dihapus");
-                                                    setState(() {
-                                                      files.remove(e);
-                                                    });
-                                                  })
-                                            ],
-                                          ),
-                                        ))
-                                    .toList(),
-                          ), // akhir dari list file yang telah didapatkan
+                            children: [
+                              // jika ada file maka tampilkan cardfile
 
-                          // button add file
-                          files.length != 0
-                              ? SizedBox()
-                              : Container(
-                                  margin: EdgeInsets.only(top: 12),
-                                  child: GestureDetector(
-                                    onTap: () async {
-                                      FileWithDescription fileResult =
-                                          await getFile(model: model);
+                              this._file == null
+                                  ? Container(
+                                      margin: EdgeInsets.only(top: 12),
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          var file = await FilePicker.getFile(
+                                            type: FileType.custom,
+                                            allowedExtensions: [
+                                              'jpg',
+                                              'pdf',
+                                              'png',
+                                              'rar',
+                                              'zip',
+                                              'mp4'
+                                            ],
+                                          );
+                                          model.file = file;
+                                          var filename =
+                                              file.path.split("/").last;
+                                          model.filename = filename;
+                                          var fileExtension =
+                                              filename.split(".").last;
+                                          var iconUrl = "";
+                                          switch (fileExtension) {
+                                            case "pdf":
+                                              iconUrl =
+                                                  "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pdfs-32.png";
+                                              break;
+                                            case "png":
+                                              iconUrl =
+                                                  "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pngs-32.png";
+                                              break;
+                                            case "jpg":
+                                              iconUrl =
+                                                  "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/jpgs-32.png";
+                                              break;
+                                            case "mp4":
+                                              iconUrl =
+                                                  "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/mp4s-32.png";
+                                              break;
+                                            case "zip":
+                                              iconUrl =
+                                                  "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/2-32.png";
+                                              break;
+                                            case "rar":
+                                              iconUrl =
+                                                  "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/26-32.png";
+                                              break;
+                                          }
 
-                                      if (fileResult != null) {
-                                        setState(() {
-                                          files.add(fileResult);
-                                        });
-                                      }
-                                    },
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          color: Colors.grey[300],
-                                        ),
-                                        width: double.infinity,
-                                        padding: EdgeInsets.all(8),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 50,
-                                          color: Colors.grey[600],
-                                        )),
-                                  ),
-                                ) // akhir button add file
+                                          setState(() {
+                                            this._file = file;
+                                            this._filename = filename;
+                                            this._fileExtension = fileExtension;
+                                            this._iconUrl = iconUrl;
+                                          });
+                                        },
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                              color: Colors.grey[300],
+                                            ),
+                                            width: double.infinity,
+                                            padding: EdgeInsets.all(8),
+                                            child: Icon(
+                                              Icons.add,
+                                              size: 50,
+                                              color: Colors.grey[600],
+                                            )),
+                                      ),
+                                    ) // akhir button add file
+
+                                  : Container(
+                                      margin: EdgeInsets.symmetric(
+                                        horizontal: 0,
+                                        vertical: 4,
+                                      ),
+                                      padding: EdgeInsets.all(8),
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.teal[200],
+                                        borderRadius: BorderRadius.circular(8),
+                                        boxShadow: [
+                                          BoxShadow(
+                                              blurRadius: 15,
+                                              spreadRadius: 3,
+                                              color: Colors.black26)
+                                        ],
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    margin:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 12),
+                                                    child: Image.network(
+                                                        _iconUrl)),
+                                                Flexible(
+                                                    flex: 1,
+                                                    child: Text(_filename)),
+                                              ],
+                                            ),
+                                          ),
+                                          IconButton(
+                                              icon: Icon(Icons.delete),
+                                              onPressed: () {
+                                                print("item   dihapus");
+                                                setState(() {
+                                                  _file = null;
+                                                });
+                                              })
+                                        ],
+                                      ),
+                                    ),
+
+                              //akhir dari list file yang telah didapatkan
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -173,54 +218,6 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
         ),
       ),
     );
-  }
-
-  Future<FileWithDescription> getFile(
-      {File lampiran, TeacherAssignmentAddViewModel model}) async {
-    FileWithDescription data = FileWithDescription();
-
-    data.file = await FilePicker.getFile(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'pdf', 'png', 'rar', 'zip', 'mp4'],
-    );
-
-    // model.file = file;
-    data.filename = data.file.path.split("/").last;
-    data.fileExtension = data.filename.split(".").last;
-    data.iconUrl = "";
-
-    // MultipartFile tempLampiran =
-    //     await MultipartFile.fromFile(data.file.path, filename: data.filename);
-
-    // model.lampiran.add(tempLampiran);
-
-    switch (data.fileExtension) {
-      case "pdf":
-        data.iconUrl =
-            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pdfs-32.png";
-        break;
-      case "png":
-        data.iconUrl =
-            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pngs-32.png";
-        break;
-      case "jpg":
-        data.iconUrl =
-            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/jpgs-32.png";
-        break;
-      case "mp4":
-        data.iconUrl =
-            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/mp4s-32.png";
-        break;
-      case "zip":
-        data.iconUrl =
-            "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/2-32.png";
-        break;
-      case "rar":
-        data.iconUrl =
-            "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/26-32.png";
-        break;
-    }
-    return data;
   }
 
   Widget datePicker(BuildContext context, String dateText, String time) {
@@ -308,9 +305,6 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
             model.nip = widget.idTeacher;
             model.subject = "";
             model.isVisible = true;
-            model.filesWithDescription = files;
-
-            await model.assignMultiFilesData();
 
             setState(() {
               isLoad = true;
