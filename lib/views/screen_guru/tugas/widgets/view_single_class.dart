@@ -16,7 +16,7 @@ class SingleClassView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) {

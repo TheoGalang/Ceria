@@ -4,7 +4,6 @@ import 'package:ceria/models/assignments.dart';
 import 'package:ceria/providers/parent/parent_assingment_detail_viewmmodel.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sweetalert/sweetalert.dart';
@@ -48,14 +47,15 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
 
   File _file;
   String _filename;
-  String _fileExtension;
+  // ignore: unused_field
+  String _fileExtension = '';
   String _iconUrl;
 
   _DetailTugasParentState({this.assignmentData});
 
   Future getImage() async {
     // ignore: deprecated_member_use
-    final image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    // final image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
     setState(() {});
   }

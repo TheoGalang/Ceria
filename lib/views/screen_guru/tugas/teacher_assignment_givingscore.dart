@@ -135,12 +135,12 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                             if (await canLaunch(url)) {
                               await launch(url);
                             } else {
-                              throw 'Could not launch $url';
-
                               SweetAlert.show(context,
                                   title: "Gagal",
                                   subtitle: "File tidak dapat dibuka",
                                   style: SweetAlertStyle.error);
+
+                              throw 'Could not launch $url';
                             }
                           },
                           child: Text(
@@ -241,6 +241,7 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                             subtitle: "Nilai Berhasil di Simpan.",
                             style: SweetAlertStyle.success, onPress: (confirm) {
                           Navigator.pop(context);
+                          return confirm;
                         });
                       },
                       child: Text(

@@ -1,13 +1,19 @@
+import 'dart:io';
+import 'package:ceria/providers/teacher/teacher_assignment_add_viewModel.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:stacked/stacked.dart';
 import 'package:sweetalert/sweetalert.dart';
 
 class AddAssignmentTugas extends StatefulWidget {
   final int id;
+  final int idKelas;
+  final String idTeacher;
 
-  const AddAssignmentTugas({this.id});
+  const AddAssignmentTugas({this.id, this.idKelas, this.idTeacher});
   @override
   _AddAssignmentTugasState createState() => _AddAssignmentTugasState();
 }
@@ -22,6 +28,14 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
   DateTime selectedDate = DateTime.now();
   DateTime oldTime = DateTime.now();
 
+  List<FileWithDescription> files = [];
+  bool isLoad = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String dateText =
@@ -30,42 +44,183 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
     String minute = DateFormat("mm").format(selectedDate);
     String time = "$hour:$minute WIB, ";
 
-    return Scaffold(
-      appBar: buildAppBar(context),
-      body: SafeArea(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          margin: EdgeInsets.all(20),
-          child: ListView(
-            children: [
-              Column(
-                children: <Widget>[
-                  assignmentTitleTextField(context),
-                  assignmentDescTextField(context),
-                  datePicker(context, dateText, time),
-                  assignmentLampiran(context),
-                  buttonSave(),
-                ],
-              ),
-            ],
+    return ViewModelBuilder<TeacherAssignmentAddViewModel>.reactive(
+      viewModelBuilder: () => TeacherAssignmentAddViewModel(),
+      onModelReady: (model) {
+        model.initial();
+      },
+      builder: (_, model, __) => Scaffold(
+        appBar: buildAppBar(context),
+        body: SafeArea(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.all(20),
+            child: ListView(
+              children: [
+                Column(
+                  children: <Widget>[
+                    assignmentTitleTextField(context),
+                    assignmentDescTextField(context),
+                    datePicker(context, dateText, time),
+
+                    // Tampilan File Picker
+                    Container(
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      width: double.infinity,
+                      child: Column(
+                        children: [
+                          Column(
+                            children: files.length == 0
+                                ? [SizedBox()]
+                                :
+                                // jika ada file maka tampilkan cardfile
+                                files
+                                    .map((e) => Container(
+                                          margin: EdgeInsets.symmetric(
+                                            horizontal: 0,
+                                            vertical: 4,
+                                          ),
+                                          padding: EdgeInsets.all(8),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            color: Colors.teal[200],
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  blurRadius: 15,
+                                                  spreadRadius: 3,
+                                                  color: Colors.black26)
+                                            ],
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Row(
+                                                  children: [
+                                                    Container(
+                                                        margin: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 12),
+                                                        child: Image.network(
+                                                            e.iconUrl)),
+                                                    Flexible(
+                                                        flex: 1,
+                                                        child:
+                                                            Text(e.filename)),
+                                                  ],
+                                                ),
+                                              ),
+                                              IconButton(
+                                                  icon: Icon(Icons.delete),
+                                                  onPressed: () {
+                                                    print(
+                                                        "item ke-${files.indexOf(e)} dihapus");
+                                                    setState(() {
+                                                      files.remove(e);
+                                                    });
+                                                  })
+                                            ],
+                                          ),
+                                        ))
+                                    .toList(),
+                          ), // akhir dari list file yang telah didapatkan
+
+                          // button add file
+                          files.length != 0
+                              ? SizedBox()
+                              : Container(
+                                  margin: EdgeInsets.only(top: 12),
+                                  child: GestureDetector(
+                                    onTap: () async {
+                                      FileWithDescription fileResult =
+                                          await getFile(model: model);
+
+                                      if (fileResult != null) {
+                                        setState(() {
+                                          files.add(fileResult);
+                                        });
+                                      }
+                                    },
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          color: Colors.grey[300],
+                                        ),
+                                        width: double.infinity,
+                                        padding: EdgeInsets.all(8),
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 50,
+                                          color: Colors.grey[600],
+                                        )),
+                                  ),
+                                ) // akhir button add file
+                        ],
+                      ),
+                    ),
+
+                    buttonSave(model: model),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Row alterdatepicker(String dateText) {
-    return Row(
-      children: [
-        RaisedButton(
-          onPressed: () {
-            // _selectDate(context);
-          },
-          child: Text("DatePicker"),
-        ),
-        Text("$dateText"),
-      ],
+  Future<FileWithDescription> getFile(
+      {File lampiran, TeacherAssignmentAddViewModel model}) async {
+    FileWithDescription data = FileWithDescription();
+
+    data.file = await FilePicker.getFile(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'pdf', 'png', 'rar', 'zip', 'mp4'],
     );
+
+    // model.file = file;
+    data.filename = data.file.path.split("/").last;
+    data.fileExtension = data.filename.split(".").last;
+    data.iconUrl = "";
+
+    // MultipartFile tempLampiran =
+    //     await MultipartFile.fromFile(data.file.path, filename: data.filename);
+
+    // model.lampiran.add(tempLampiran);
+
+    switch (data.fileExtension) {
+      case "pdf":
+        data.iconUrl =
+            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pdfs-32.png";
+        break;
+      case "png":
+        data.iconUrl =
+            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/pngs-32.png";
+        break;
+      case "jpg":
+        data.iconUrl =
+            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/jpgs-32.png";
+        break;
+      case "mp4":
+        data.iconUrl =
+            "https://cdn4.iconfinder.com/data/icons/file-extensions-1/64/mp4s-32.png";
+        break;
+      case "zip":
+        data.iconUrl =
+            "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/2-32.png";
+        break;
+      case "rar":
+        data.iconUrl =
+            "https://cdn3.iconfinder.com/data/icons/file-extension-names-vol-5-3/512/26-32.png";
+        break;
+    }
+    return data;
   }
 
   Widget datePicker(BuildContext context, String dateText, String time) {
@@ -136,121 +291,52 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
     );
   }
 
-  Container assignmentLampiran(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-      width: MediaQuery.of(context).size.width / 1.2,
-      alignment: Alignment.centerLeft,
-      child: Column(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              "  Lampiran",
-              style: TextStyle(
-                fontSize: 14,
-                color: Color(0xff41348C),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                    ),
-                  ]),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.add,
-                      color: Color(0xff41348C),
-                      size: 30,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                    ),
-                  ]),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.add,
-                      color: Color(0xff41348C),
-                      size: 30,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                    ),
-                  ]),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.add,
-                      color: Color(0xff41348C),
-                      size: 30,
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 3,
-                      blurRadius: 5,
-                    ),
-                  ]),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.add,
-                      color: Color(0xff41348C),
-                      size: 30,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container buttonSave() {
+  Container buttonSave({TeacherAssignmentAddViewModel model}) {
     return Container(
       margin: EdgeInsets.all(30),
       child: RaisedButton(
-        onPressed: () {
+        onPressed: () async {
           if (title != null && desc != null && selectedDate != oldTime) {
             setState(() {});
 
-            SweetAlert.show(context,
-                title: "Berhasil",
-                subtitle: "Tugas baru telah dibuat!",
-                style: SweetAlertStyle.success);
+            model.title = title;
+            model.description = desc;
+            model.dueDate = selectedDate.toString();
+            model.createdDate = DateTime.now().toString();
+            model.isVisible = true;
+            model.idkelas = widget.idKelas;
+            model.nip = widget.idTeacher;
+            model.subject = "";
+            model.isVisible = true;
+            model.filesWithDescription = files;
+
+            await model.assignMultiFilesData();
+
+            setState(() {
+              isLoad = true;
+            });
+
+            this.isLoad == true
+                ? SweetAlert.show(context,
+                    title: "Uploading...", style: SweetAlertStyle.loading)
+                : print("notLoading");
+
+            await model.createAssignment();
+
+            setState(() {
+              isLoad = false;
+            });
+
+            model.isCreated
+                ? SweetAlert.show(context,
+                    title: "Berhasil",
+                    subtitle: "Tugas baru telah dibuat!", onPress: (confirm) {
+                    Navigator.pop(context);
+                  }, style: SweetAlertStyle.success)
+                : SweetAlert.show(context,
+                    title: "Upps!!",
+                    subtitle: "Terjadi kesalahan, silahkan coba lagi",
+                    style: SweetAlertStyle.error);
           } else {
             SweetAlert.show(context,
                 title: "Error",
@@ -314,14 +400,6 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
       leading: IconButton(
         onPressed: () {
           {
-            // Navigator.pushReplacement(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (_) => ShowAssignment(
-            //               kelas: constKelas[widget.id],
-            //               id: widget.id,
-            //             )));
-
             Navigator.pop(context);
           }
         },
@@ -334,4 +412,18 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
       backgroundColor: Color(0xff41348C),
     );
   }
+}
+
+class FileWithDescription {
+  File file;
+  String filename;
+  String fileExtension;
+  String iconUrl;
+
+  FileWithDescription({
+    this.file,
+    this.filename,
+    this.fileExtension,
+    this.iconUrl,
+  });
 }

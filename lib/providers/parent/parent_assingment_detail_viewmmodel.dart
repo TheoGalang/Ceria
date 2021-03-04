@@ -53,7 +53,7 @@ class ParentAssignmentDetailViewModel extends BaseViewModel {
 
   uploadFile() async {
     String fileName = this._file.path.split("/").last;
-    print("file base name:$fileName");
+    // print("file base name:$fileName");
 
     try {
       setBusy(true);

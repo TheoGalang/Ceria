@@ -2,10 +2,12 @@ import 'package:ceria/models/kelas.dart';
 import 'package:ceria/providers/teacher/teacher_assignment_list_viewModel.dart';
 import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'teacher_assignment_add.dart';
 import 'widgets/view_assignment_teacher.dart';
+import 'package:supercharged/supercharged.dart';
 
 class ShowAssignment extends StatefulWidget {
   final Kelas kelas;
@@ -60,8 +62,10 @@ class _ShowAssignmentState extends State<ShowAssignment> {
             children: [
               buildSimpleHeader(context),
               assignments(
-                  data: model?.assingmentNotDoneYet ?? [],
-                  aspek: "BELUM SELESAI"),
+                data: model?.assingmentNotDoneYet ?? [],
+                aspek: "BELUM SELESAI",
+                model: model,
+              ),
               buildButtonNewAssignment(),
             ],
           ),
@@ -70,18 +74,25 @@ class _ShowAssignmentState extends State<ShowAssignment> {
     );
   }
 
-  Container buildButtonNewAssignment() {
+  Container buildButtonNewAssignment({TeacherAssignmentListViewModel model}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       child: RaisedButton(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         onPressed: () {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => AddAssignmentTugas(id: widget.id),
+              builder: (_) => AddAssignmentTugas(
+                id: widget.id,
+                idKelas: widget.kelas.data.id,
+                idTeacher: widget.teachersID,
+              ),
             ),
-          );
+          ).then((_) {
+            model.initial();
+            setState(() {});
+          });
         },
         child: Text(
           "Tambah Tugas",
@@ -97,18 +108,23 @@ class _ShowAssignmentState extends State<ShowAssignment> {
     );
   }
 
-  Flexible assignments({List<TeacherSimpleAssignmentView> data, String aspek}) {
+  Flexible assignments(
+      {List<TeacherSimpleAssignmentView> data,
+      String aspek,
+      TeacherAssignmentListViewModel model}) {
     return Flexible(
-      child: data.length != 0
-          ? ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 50),
-              itemBuilder: (_, index) => data[index],
-              itemCount: data.length)
-          : Container(
-              child: Center(
-                child: Text("Tidak ada tugas."),
-              ),
-            ),
+      child: model.isBusy
+          ? SpinKitCircle(color: "41348C".toColor())
+          : data.length != 0
+              ? ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  itemBuilder: (_, index) => data[index],
+                  itemCount: data.length)
+              : Container(
+                  child: Center(
+                    child: Text("Tidak ada tugas."),
+                  ),
+                ),
     );
   }
 

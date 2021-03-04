@@ -2,14 +2,16 @@ import 'package:ceria/models/kelas.dart';
 import 'package:ceria/providers/teacher/teacher_assignment_chooseclass_viewModel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
 import 'widgets/view_single_class.dart';
+import 'package:supercharged/supercharged.dart';
 
 class ChooseClassTeacherTugas extends StatefulWidget {
   final List<Kelas> listKelas;
-  final String TeachersID;
+  final String teachersID;
 
-  const ChooseClassTeacherTugas({this.listKelas, this.TeachersID});
+  const ChooseClassTeacherTugas({this.listKelas, this.teachersID});
   @override
   _ChooseClassTeacherTugasState createState() =>
       _ChooseClassTeacherTugasState();
@@ -45,7 +47,7 @@ class _ChooseClassTeacherTugasState extends State<ChooseClassTeacherTugas> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<TeacherAssignmentChooseClassViweModel>.reactive(
       viewModelBuilder: () =>
-          TeacherAssignmentChooseClassViweModel(teachersID: widget.TeachersID),
+          TeacherAssignmentChooseClassViweModel(teachersID: widget.teachersID),
       onModelReady: (model) {
         model.initial();
       },
@@ -55,7 +57,7 @@ class _ChooseClassTeacherTugasState extends State<ChooseClassTeacherTugas> {
           child: Column(
             children: [
               buildSimpleHeader(context),
-              kelasListTile(data: model?.listKelasView ?? []),
+              kelasListTile(data: model?.listKelasView ?? [], model: model),
             ],
           ),
         ),
@@ -63,18 +65,24 @@ class _ChooseClassTeacherTugasState extends State<ChooseClassTeacherTugas> {
     );
   }
 
-  Flexible kelasListTile({List<SingleClassView> data}) {
+  Flexible kelasListTile(
+      {List<SingleClassView> data,
+      TeacherAssignmentChooseClassViweModel model}) {
     return Flexible(
-      child: data.length != 0
-          ? ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 50),
-              itemBuilder: (_, index) => data[index],
-              itemCount: data.length)
-          : Container(
-              child: Center(
-                child: Text("Tidak ada kelas."),
-              ),
-            ),
+      child: model.isBusy
+          ? SpinKitCircle(
+              color: "41348C".toColor(),
+            )
+          : data.length != 0
+              ? ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 50),
+                  itemBuilder: (_, index) => data[index],
+                  itemCount: data.length)
+              : Container(
+                  child: Center(
+                    child: Text("Tidak ada kelas."),
+                  ),
+                ),
     );
   }
 

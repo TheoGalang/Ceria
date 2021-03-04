@@ -25,7 +25,7 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
     this.cookies = await SharedPreferences.getInstance();
     this.nip = cookies.getString("nomorInduk");
 
-    print("cookies nip : $nip");
+    // print("cookies nip : $nip");
 
     this._submissionCollectedAPIUrl =
         "https://ceriakan.id/api/submission/${this.assignment.id}/teacher/${this.nip}/collected";
@@ -44,10 +44,10 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
     }
     this.submissionCollected.data = temp.data;
 
-    print("list submission collected");
+    // print("list submission collected");
     for (var item in this.submissionCollected.data) {
-      print("submission not null: ${item.nama}");
-      print("file https://ceriakan.id/storage/app/${item.file[0].location}");
+      // print("submission not null: ${item.nama}");
+      // print("file https://ceriakan.id/storage/app/${item.file[0].location}");
 
       this.listPengumpulan.add(widget(
             context: context,

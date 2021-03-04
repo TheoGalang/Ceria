@@ -167,7 +167,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
       onTap: () {
         onTap != null
             ? Navigator.push(context, MaterialPageRoute(builder: (_) => onTap))
-            : null;
+            : SizedBox();
       },
       child: Column(
         children: [

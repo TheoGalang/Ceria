@@ -67,8 +67,8 @@ class LoginViewModel extends BaseViewModel {
             ? this._user.data.nik
             : this._user.data.nomorPegawai);
 
-    print("role : ${this.cookies.getString("role")}");
-    print("nomorInduk : ${this.cookies.getString("nomorInduk")}");
+    // print("role : ${this.cookies.getString("role")}");
+    // print("nomorInduk : ${this.cookies.getString("nomorInduk")}");
 
     Navigator.pushReplacement(
       context,

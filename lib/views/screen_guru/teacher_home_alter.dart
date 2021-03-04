@@ -126,7 +126,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
             iconData: Icons.file_present,
             onTap: ChooseClassTeacherTugas(
               // listKelas: model?.listKelas ?? [],
-              TeachersID: teachersID,
+              teachersID: teachersID,
             ),
           ),
           buildMenu(
@@ -164,7 +164,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
       onTap: () {
         onTap != null
             ? Navigator.push(context, MaterialPageRoute(builder: (_) => onTap))
-            : null;
+            : SizedBox();
       },
       child: Column(
         children: [
