@@ -66,7 +66,7 @@ class _ShowAssignmentState extends State<ShowAssignment> {
                 aspek: "BELUM SELESAI",
                 model: model,
               ),
-              buildButtonNewAssignment(),
+              buildButtonNewAssignment(model: model),
             ],
           ),
         ),
@@ -83,16 +83,14 @@ class _ShowAssignmentState extends State<ShowAssignment> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (_) => AddAssignmentTugas(
+              builder: (context) => AddAssignmentTugas(
                 id: widget.id,
                 idKelas: widget.kelas.data.id,
                 idTeacher: widget.teachersID,
               ),
             ),
-          ).then((_) {
-            model = TeacherAssignmentListViewModel();
+          ).then((value) {
             model.initial();
-            setState(() {});
           });
         },
         child: Text(

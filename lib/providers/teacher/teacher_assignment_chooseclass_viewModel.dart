@@ -33,6 +33,11 @@ class TeacherAssignmentChooseClassViweModel extends BaseViewModel {
     this._assigments =
         Assigments.fromJson(json.decode(assignmentResponse.body));
 
+    if (assignmentResponse.statusCode == 200) {
+      this.assigmentNumber = 0;
+      this.listKelasView = [];
+    }
+
     setBusy(false);
 
     notifyListeners();

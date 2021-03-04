@@ -35,15 +35,17 @@ class TeacherAssignmentAddViewModel extends BaseViewModel {
       setBusy(true);
 
       FormData formData = FormData.fromMap({
-        "title": this.title,
-        "description": this.description,
+        "title": this.title ?? "title",
+        "description": this.description ?? "no description",
         "due_date": this.dueDate,
         "date_created": this.createdDate ?? DateTime.now().toString(),
         "id_teacher": this.nip ?? "",
         "id_kelas": this.idkelas ?? "",
         "is_visible": this.isVisible ? 1 : 0,
-        "lampiran": await MultipartFile.fromFile(this.file.path,
-            filename: this.fileName),
+        "lampiran": this.file != null
+            ? await MultipartFile.fromFile(this.file.path,
+                filename: this.fileName)
+            : null,
       });
 
       Response response = await Dio()

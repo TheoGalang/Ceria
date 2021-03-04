@@ -1,5 +1,6 @@
 import 'package:ceria/models/kelas.dart';
 import 'package:ceria/providers/teacher/teacher_assignment_chooseclass_viewModel.dart';
+import 'package:ceria/views/screen_guru/tugas/teacher_assignment_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -76,7 +77,24 @@ class _ChooseClassTeacherTugasState extends State<ChooseClassTeacherTugas> {
           : data.length != 0
               ? ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 50),
-                  itemBuilder: (_, index) => data[index],
+                  itemBuilder: (_, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ShowAssignment(
+                                kelas: data[index].kelas,
+                                id: data[index].id,
+                                teachersID: data[index].kelas.data.nomorPegawai,
+                              );
+                            },
+                          ),
+                        ).then((value) {
+                          model.initial();
+                        });
+                      },
+                      child: data[index]),
                   itemCount: data.length)
               : Container(
                   child: Center(
