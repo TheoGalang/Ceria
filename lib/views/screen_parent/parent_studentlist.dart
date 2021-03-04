@@ -17,7 +17,7 @@ class ListStudentParent extends StatelessWidget {
 
     List<Container> siswa = [];
 
-    for (var student in students.data) {
+    for (var student in students?.data ?? []) {
       if (student.idKelas == this.classId) {
         siswa.add(Container(
           width: MediaQuery.of(context).size.width / 1,
@@ -134,39 +134,40 @@ class ListStudentParent extends StatelessWidget {
             child: SingleChildScrollView(
               child: Container(
                 child: Column(
-                  children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width / 1,
-                          margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
-                          padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          child: Row(
-                            children: <Widget>[
+                    children: [
                               Container(
-                                margin: EdgeInsets.only(left: 40),
-                                child: Text("No Absen",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Color(0xff41348C),
-                                        fontWeight: FontWeight.bold)),
-                              ),
-                              Expanded(
+                                width: MediaQuery.of(context).size.width / 1,
+                                margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                                padding: EdgeInsets.fromLTRB(20, 20, 20, 20),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text("Nama Siswa",
-                                        style: TextStyle(
-                                            fontSize: 14,
-                                            color: Color(0xff41348C),
-                                            fontWeight: FontWeight.bold)),
+                                  children: <Widget>[
+                                    Container(
+                                      margin: EdgeInsets.only(left: 40),
+                                      child: Text("No Absen",
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Color(0xff41348C),
+                                              fontWeight: FontWeight.bold)),
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text("Nama Siswa",
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color(0xff41348C),
+                                                  fontWeight: FontWeight.bold)),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ] +
-                      siswa.toList(),
-                ),
+                            ] +
+                            siswa ??
+                        []),
               ),
             ),
           )
