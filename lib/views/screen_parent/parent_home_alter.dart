@@ -1,3 +1,4 @@
+import 'package:ceria/models/students.dart';
 import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_parent/parent_addpresences.dart';
@@ -9,6 +10,7 @@ import 'package:shimmer/shimmer.dart';
 import 'dart:ui';
 import 'package:ceria/main.dart';
 import 'package:stacked/stacked.dart';
+import 'package:sweetalert/sweetalert.dart';
 
 class ParentHomeAlter extends StatefulWidget {
   final String nik;
@@ -34,21 +36,23 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
       onModelReady: (model) {
         model.initial(context: context);
       },
-      builder: (_, model, __) => Scaffold(
-        appBar: buildAppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              userHeader(
-                parentName: model?.parent?.data?.nama ?? "",
-                className: model?.kelas?.data?.kelas ?? "",
-              ),
-              buildGridMenu(model: model),
-              buildPengumuman(),
-            ],
+      builder: (_, model, __) {
+        return Scaffold(
+          appBar: buildAppBar(),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                userHeader(
+                  parentName: model?.parent?.data?.nama ?? "",
+                  className: model?.kelas?.data?.kelas ?? "",
+                ),
+                buildGridMenu(model: model),
+                buildPengumuman(),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -121,7 +125,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
             name: "Kehadiran",
             iconData: Icons.emoji_people_outlined,
             onTap: IsiKehadiranParent(
-              child: model.child,
+              model: model,
             ),
           ),
           buildMenu(
@@ -140,7 +144,11 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
           buildMenu(
             name: "Kelas",
             iconData: Icons.account_balance_outlined,
-            onTap: ListStudentParent(),
+            onTap: ListStudentParent(
+              className: model?.kelas?.data?.kelas ?? "",
+              classId: model?.kelas?.data?.id,
+              students: model?.students ?? Students(),
+            ),
           ),
           buildMenu(
             name: "Buletin",
@@ -165,9 +173,28 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
   Widget buildMenu({String name, IconData iconData, Widget onTap}) {
     return GestureDetector(
       onTap: () {
-        onTap != null
-            ? Navigator.push(context, MaterialPageRoute(builder: (_) => onTap))
-            : SizedBox();
+        if (name == "Kehadiran") {
+          String hari =
+              DateFormat("EEEE", "id_ID").format(DateTime.now()).toString();
+
+          print("Hari : $hari");
+          if (hari == "Sabtu" || hari == "Minggu") {
+            SweetAlert.show(context,
+                title: "Hari Libur",
+                subtitle: "Tidak ada jadwal isi kehadiran!",
+                style: SweetAlertStyle.confirm);
+          } else {
+            onTap != null
+                ? Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => onTap))
+                : SizedBox();
+          }
+        } else {
+          onTap != null
+              ? Navigator.push(
+                  context, MaterialPageRoute(builder: (_) => onTap))
+              : SizedBox();
+        }
       },
       child: Column(
         children: [

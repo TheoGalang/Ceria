@@ -4,6 +4,7 @@ import 'package:ceria/main.dart';
 import 'package:ceria/models/child.dart';
 import 'package:ceria/models/kelas.dart';
 import 'package:ceria/models/parent_model.dart';
+import 'package:ceria/models/students.dart';
 import 'package:ceria/views/screen_parent/parent_home_alter.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -16,6 +17,7 @@ class ParentHomeViewModel extends BaseViewModel {
   Kelas _kelas;
   String _parentApiUrl;
   String _childApiUrl;
+  Students students;
 
   ParentHomeViewModel({String nik}) {
     this._nik = nik;
@@ -46,6 +48,10 @@ class ParentHomeViewModel extends BaseViewModel {
     );
 
     this._kelas = Kelas.fromJson(json.decode(kelasResponse.body));
+
+    var studentsResponse = await http.get("https://ceriakan.id/api/child");
+
+    this.students = Students.fromJson(json.decode(studentsResponse.body));
 
     setBusy(false);
 
