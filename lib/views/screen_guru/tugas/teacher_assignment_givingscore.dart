@@ -241,6 +241,16 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                     child: RaisedButton(
                       padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                       onPressed: () async {
+                        bool isLoad = true;
+                        if (isLoad) {
+                          SweetAlert.show(
+                            context,
+                            title: "Loading..",
+                            subtitle: "Menyimpan nilai..",
+                            style: SweetAlertStyle.loading,
+                          );
+                        }
+
                         try {
                           FormData formData = FormData.fromMap({
                             "id": widget?.data?.id ?? "",
@@ -255,6 +265,10 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                               data: formData);
 
                           if (response.statusCode == 200) {
+                            setState(() {
+                              isLoad = false;
+                            });
+
                             SweetAlert.show(context,
                                 title: "Berhasil",
                                 subtitle: "Nilai Berhasil di Simpan.",
@@ -264,6 +278,9 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                               return confirm;
                             });
                           } else {
+                            setState(() {
+                              isLoad = false;
+                            });
                             SweetAlert.show(
                               context,
                               title: "Gagal",
@@ -272,7 +289,17 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                             );
                           }
                         } catch (e) {
+                          setState(() {
+                            isLoad = false;
+                          });
                           print("Terjadi error $e");
+                          SweetAlert.show(
+                            context,
+                            title: "Gagal",
+                            subtitle:
+                                "Terjadi kendala, silahkan coba lagi nanti!",
+                            style: SweetAlertStyle.error,
+                          );
                         }
 
                         // SweetAlert.show(context,

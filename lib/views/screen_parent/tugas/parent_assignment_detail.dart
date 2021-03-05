@@ -346,29 +346,46 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                                 model.idTugas =
                                     widget?.assignment?.id.toString() ?? "";
 
-                                var statusUpload = await model.uploadFile();
-                                statusUpload == 200
-                                    ? SweetAlert.show(context,
-                                        title: "Berhasil",
-                                        subtitle: "File berhsil terkirim!",
-                                        onPress: (isConfirm) {
-                                        // Navigator.pop(context);
-                                        Navigator.pushReplacement(context,
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          return ShowAssignmentParent(
-                                            nis: widget.nis,
-                                            idKelas: widget.idKelas,
-                                          );
-                                        }));
+                                bool isLoad = true;
 
-                                        return isConfirm;
-                                      }, style: SweetAlertStyle.success)
-                                    : SweetAlert.show(context,
-                                        title: "Gagal",
-                                        subtitle:
-                                            "File gagal terkirim! \n Mohon cek koneksi anda!",
-                                        style: SweetAlertStyle.error);
+                                if (isLoad) {
+                                  SweetAlert.show(context,
+                                      title: "Loading..",
+                                      subtitle: "Mengirim tugas...",
+                                      style: SweetAlertStyle.loading);
+                                }
+
+                                var statusUpload = await model.uploadFile();
+                                if (statusUpload == 200) {
+                                  setState(() {
+                                    isLoad = false;
+                                  });
+
+                                  SweetAlert.show(context,
+                                      title: "Berhasil",
+                                      subtitle: "File berhsil terkirim!",
+                                      onPress: (isConfirm) {
+                                    // Navigator.pop(context);
+                                    Navigator.pushReplacement(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return ShowAssignmentParent(
+                                        nis: widget.nis,
+                                        idKelas: widget.idKelas,
+                                      );
+                                    }));
+
+                                    return isConfirm;
+                                  }, style: SweetAlertStyle.success);
+                                } else {
+                                  setState(() {
+                                    isLoad = false;
+                                  });
+                                  SweetAlert.show(context,
+                                      title: "Gagal",
+                                      subtitle:
+                                          "File gagal terkirim! \n Mohon cek koneksi anda!",
+                                      style: SweetAlertStyle.error);
+                                }
                               },
                         child: Text(
                           model.isBusy ? "Uploading...." : "Submit",
