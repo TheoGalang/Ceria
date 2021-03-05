@@ -3,6 +3,7 @@ import 'package:ceria/noInternetConnection.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:device_preview/device_preview.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -35,7 +36,11 @@ class MyApp extends StatelessWidget {
       builder: DevicePreview.appBuilder,
       title: "CERIA",
       theme: ThemeData(primarySwatch: color),
-      home: LoginAs(),
+      home: Scaffold(
+        body: DoubleBackToCloseApp(
+            snackBar: SnackBar(content: Text("Tab back again to leave")),
+            child: LoginAs()),
+      ),
 
       debugShowCheckedModeBanner: false,
     );
@@ -48,8 +53,10 @@ void logOut({BuildContext context}) async {
   cookies.remove("role");
   cookies.remove("nomorInduk");
 
-  Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (_) => LoginAs()));
+  // Navigator.pushReplacement(
+  //     context, MaterialPageRoute(builder: (_) => LoginAs()));
+  Navigator.pop(context);
+  // Navigator.pop(context);
 }
 
 String greetings() {

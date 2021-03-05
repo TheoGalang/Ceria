@@ -4,6 +4,7 @@ import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_parent/parent_addpresences.dart';
 import 'package:ceria/views/screen_parent/parent_studentlist.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -39,16 +40,20 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
       builder: (_, model, __) {
         return Scaffold(
           appBar: buildAppBar(),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                userHeader(
-                  parentName: model?.parent?.data?.nama ?? "",
-                  className: model?.kelas?.data?.kelas ?? "",
-                ),
-                buildGridMenu(model: model),
-                buildPengumuman(),
-              ],
+          body: DoubleBackToCloseApp(
+            snackBar:
+                SnackBar(content: Text("Tekan sekali lagi untuk keluar.")),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  userHeader(
+                    parentName: model?.parent?.data?.nama ?? "",
+                    className: model?.kelas?.data?.kelas ?? "",
+                  ),
+                  buildGridMenu(model: model),
+                  buildPengumuman(),
+                ],
+              ),
             ),
           ),
         );
@@ -290,14 +295,8 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
 
   AppBar buildAppBar() {
     return AppBar(
-      // title: Text("Home Parent"),
+      automaticallyImplyLeading: false,
       elevation: 0,
-      // leading: IconButton(
-      //   icon: Icon(
-      //     Icons.arrow_back,
-      //   ),
-      //   onPressed: () {},
-      // ),
       actions: [
         Row(
           mainAxisSize: MainAxisSize.max,

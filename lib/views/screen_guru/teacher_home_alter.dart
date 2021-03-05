@@ -2,6 +2,7 @@ import 'package:ceria/main.dart';
 import 'package:ceria/providers/teacher/teacher_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_guru/tugas/teacher_assignment_chooseclass.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
@@ -35,16 +36,19 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
       },
       builder: (_, model, __) => Scaffold(
         appBar: buildAppBar(),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              userHeader(
-                parentName: model?.teacher?.data?.nama ?? "",
-                className: " ",
-              ),
-              buildGridMenu(model: model, teachersID: widget.nip),
-              buildPengumuman(),
-            ],
+        body: DoubleBackToCloseApp(
+          snackBar: SnackBar(content: Text("Tekan sekali lagi untuk keluar.")),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                userHeader(
+                  parentName: model?.teacher?.data?.nama ?? "",
+                  className: " ",
+                ),
+                buildGridMenu(model: model, teachersID: widget.nip),
+                buildPengumuman(),
+              ],
+            ),
           ),
         ),
       ),
@@ -260,6 +264,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
 
   AppBar buildAppBar() {
     return AppBar(
+      automaticallyImplyLeading: false,
       elevation: 0,
       actions: [
         IconButton(

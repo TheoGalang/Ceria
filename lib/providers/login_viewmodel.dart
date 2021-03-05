@@ -6,6 +6,7 @@ import 'package:ceria/models/parent_model.dart';
 import 'package:ceria/models/teacher_model.dart';
 import 'package:ceria/views/screen_guru/teacher_home_alter.dart';
 import 'package:ceria/views/screen_parent/parent_home_alter.dart';
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;

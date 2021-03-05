@@ -77,7 +77,7 @@ class _LoginAsState extends State<LoginAs> {
                     child: RaisedButton(
                       padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             CupertinoPageRoute(
                                 builder: (_) => LoginPage(
@@ -103,7 +103,7 @@ class _LoginAsState extends State<LoginAs> {
                     child: RaisedButton(
                       padding: EdgeInsets.fromLTRB(50, 10, 50, 10),
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                             context,
                             CupertinoPageRoute(
                                 builder: (_) => LoginPage(role: Role.parent)));
