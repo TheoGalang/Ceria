@@ -32,7 +32,7 @@ class Data {
   String nama;
   String nis;
   String dateCreated;
-  Null grade;
+  String grade;
   List<File> file;
 
   Data({this.id, this.nama, this.nis, this.dateCreated, this.grade, this.file});

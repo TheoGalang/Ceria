@@ -2,7 +2,9 @@ import 'package:ceria/providers/teacher/teacher_assignment_detail%20_viewModel.d
 import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:stacked/stacked.dart';
+import 'package:supercharged/supercharged.dart';
 
 class DetailTugasTeacher extends StatelessWidget {
   final Assignment assignment;
@@ -110,7 +112,11 @@ class DetailTugasTeacher extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      child: Column(children: model?.listPengumpulan ?? []),
+                      child: model.isBusy
+                          ? SpinKitCircle(
+                              color: "41348C".toColor(),
+                            )
+                          : Column(children: model?.listPengumpulan ?? []),
                     )
                   ],
                 ),

@@ -64,6 +64,8 @@ class ParentAssignmentListViewModel extends BaseViewModel {
       _assignmentsApiUrl,
     );
 
+    print(assignmetsResponse.body);
+
     this._assigments =
         Assigments.fromJson(json.decode(assignmetsResponse.body));
 

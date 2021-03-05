@@ -31,7 +31,7 @@ class Data {
   bool isSubmitted;
   String collectionDate;
   bool isLate;
-  int grade;
+  String grade;
   String description;
   String dateCreated;
   String dueDate;
@@ -64,7 +64,7 @@ class Data {
     isSubmitted = json['isSubmitted'];
     collectionDate = json['collection_date'] ?? "";
     isLate = json['isLate'];
-    grade = json['grade'] ?? 0;
+    grade = json['grade'] ?? null;
 
     description = json['description'];
     dateCreated = json['date_created'];

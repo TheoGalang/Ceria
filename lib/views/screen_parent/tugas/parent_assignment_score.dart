@@ -284,7 +284,7 @@ class _NilaiTugasParentState extends State<NilaiTugasParent> {
           color: Colors.white,
           border: Border.all(color: Colors.black, width: 2),
           borderRadius: BorderRadius.all(Radius.circular(20))),
-      child: assignmentData.grade != null && assignmentData.grade > 0
+      child: assignmentData.grade != null
           ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
