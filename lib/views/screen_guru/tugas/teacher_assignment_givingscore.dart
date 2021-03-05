@@ -17,13 +17,15 @@ class IsiNilaiTeacher extends StatefulWidget {
 class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
   String valueChoose;
   String feedback;
-  String location;
+  String location = "";
   TextEditingController feedbackController = TextEditingController();
   List<String> values = ["MB", "MSH", "BB"];
 
   @override
   Widget build(BuildContext context) {
-    this.location = widget.data.file[0].location;
+    this.location = widget?.data?.file?.length == 0
+        ? ""
+        : widget?.data?.file?.first?.location;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -102,7 +104,8 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                                         "EEEE, d MMMM yyyy, 'pukul' hh:mm 'WIB'",
                                         "id_ID")
                                     .format(DateTime.parse(
-                                        widget.data.file[0].dateModified)),
+                                        widget?.data?.dateCreated ??
+                                            DateTime.now())),
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             softWrap: true,

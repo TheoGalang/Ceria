@@ -38,7 +38,7 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
         message: "Submission Collected", success: true, data: []);
 
     for (var item in this.submissionCollected.data) {
-      if (item.file != null) {
+      if (item.file != null && item.dateCreated != null) {
         temp.data.add(item);
       }
     }
@@ -65,14 +65,13 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
       {BuildContext context, Data item, String assignmentTitle}) {
     return GestureDetector(
       onTap: () {
-        {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return IsiNilaiTeacher(
-              data: item,
-              assigmentsTitle: assignmentTitle,
-            );
-          }));
-        }
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (_) => IsiNilaiTeacher(
+                      data: item ?? null,
+                      assigmentsTitle: assignmentTitle ?? "",
+                    )));
       },
       child: Container(
         width: MediaQuery.of(context).size.width / 1.2,

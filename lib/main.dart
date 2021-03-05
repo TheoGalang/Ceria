@@ -37,9 +37,7 @@ class MyApp extends StatelessWidget {
       title: "CERIA",
       theme: ThemeData(primarySwatch: color),
       home: Scaffold(
-        body: DoubleBackToCloseApp(
-            snackBar: SnackBar(content: Text("Tab back again to leave")),
-            child: LoginAs()),
+        body: LoginAs(),
       ),
 
       debugShowCheckedModeBanner: false,
@@ -53,9 +51,13 @@ void logOut({BuildContext context}) async {
   cookies.remove("role");
   cookies.remove("nomorInduk");
 
-  // Navigator.pushReplacement(
-  //     context, MaterialPageRoute(builder: (_) => LoginAs()));
-  Navigator.pop(context);
+  if (Navigator.canPop(context)) {
+    Navigator.pop(context);
+  } else {
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (_) => LoginAs()));
+  }
+
   // Navigator.pop(context);
 }
 
