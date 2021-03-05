@@ -9,7 +9,7 @@ class ParentAssignmentDetailViewModel extends BaseViewModel {
   String _title;
   String _deskripsi;
   String _idKelas;
-  String _idTugas;
+  String idTugas;
   File _file;
 
   ParentAssignmentDetailViewModel({
@@ -23,7 +23,7 @@ class ParentAssignmentDetailViewModel extends BaseViewModel {
     this._title = title;
     this._deskripsi = deskripsi;
     this._idKelas = idKelas;
-    this._idTugas = idTugas;
+    this.idTugas = idTugas;
     this._file = null;
   }
 
@@ -59,7 +59,7 @@ class ParentAssignmentDetailViewModel extends BaseViewModel {
       setBusy(true);
       FormData formData = new FormData.fromMap({
         "id_kelas": this._idKelas,
-        "id_assignment": this._idTugas,
+        "id_assignment": this.idTugas,
         "user_update": this._nis,
         "title": this._title,
         "description": this._deskripsi,

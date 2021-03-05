@@ -69,6 +69,7 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
             context,
             MaterialPageRoute(
                 builder: (_) => IsiNilaiTeacher(
+                      nip: this.nip,
                       data: item ?? null,
                       assigmentsTitle: assignmentTitle ?? "",
                     )));

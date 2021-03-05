@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:ceria/models/submissionCollected.dart';
 import 'package:intl/intl.dart';
@@ -5,10 +6,11 @@ import 'package:sweetalert/sweetalert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class IsiNilaiTeacher extends StatefulWidget {
+  final String nip;
   final Data data;
   final String assigmentsTitle;
 
-  const IsiNilaiTeacher({Key key, this.data, this.assigmentsTitle})
+  const IsiNilaiTeacher({Key key, this.data, this.assigmentsTitle, this.nip})
       : super(key: key);
   @override
   _IsiNilaiTeacherState createState() => _IsiNilaiTeacherState();
@@ -238,14 +240,48 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                     margin: EdgeInsets.all(30),
                     child: RaisedButton(
                       padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                      onPressed: () {
-                        SweetAlert.show(context,
-                            title: "Berhasil",
-                            subtitle: "Nilai Berhasil di Simpan.",
-                            style: SweetAlertStyle.success, onPress: (confirm) {
-                          Navigator.pop(context);
-                          return confirm;
-                        });
+                      onPressed: () async {
+                        try {
+                          FormData formData = FormData.fromMap({
+                            "id": widget?.data?.id ?? "",
+                            "nis": widget?.data?.nis ?? "",
+                            "nip": widget?.nip ?? "",
+                            "grade": this.valueChoose ?? "BSH",
+                            "description": this.feedbackController.text ?? "",
+                          });
+
+                          Response response = await Dio().post(
+                              "https://ceriakan.id/api/submission/grade",
+                              data: formData);
+
+                          if (response.statusCode == 200) {
+                            SweetAlert.show(context,
+                                title: "Berhasil",
+                                subtitle: "Nilai Berhasil di Simpan.",
+                                style: SweetAlertStyle.success,
+                                onPress: (confirm) {
+                              Navigator.pop(context);
+                              return confirm;
+                            });
+                          } else {
+                            SweetAlert.show(
+                              context,
+                              title: "Gagal",
+                              subtitle: "Terjadi kendala, silahkan coba lagi!",
+                              style: SweetAlertStyle.error,
+                            );
+                          }
+                        } catch (e) {
+                          print("Terjadi error $e");
+                        }
+
+                        // SweetAlert.show(context,
+                        //     title: "Berhasil",
+                        //     subtitle: "Nilai Berhasil di Simpan.",
+                        //     style: SweetAlertStyle.success, onPress: (confirm) {
+                        //   Navigator.pop(context);
+                        //   return confirm;
+                        // });
                       },
                       child: Text(
                         "Simpan",

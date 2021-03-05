@@ -343,6 +343,9 @@ class _DetailTugasParentState extends State<DetailTugasParent> {
                         onPressed: _file == null
                             ? null
                             : () async {
+                                model.idTugas =
+                                    widget?.assignment?.id.toString() ?? "";
+
                                 var statusUpload = await model.uploadFile();
                                 statusUpload == 200
                                     ? SweetAlert.show(context,
