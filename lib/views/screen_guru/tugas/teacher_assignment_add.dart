@@ -32,6 +32,7 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
 
   File _file;
 
+  // ignore: unused_field
   String _fileExtension;
 
   String _filename;
@@ -324,6 +325,7 @@ class _AddAssignmentTugasState extends State<AddAssignmentTugas> {
             model.isCreated
                 ? SweetAlert.show(context,
                     title: "Berhasil",
+                    // ignore: missing_return
                     subtitle: "Tugas baru telah dibuat!", onPress: (confirm) {
                     Navigator.pop(context);
                   }, style: SweetAlertStyle.success)

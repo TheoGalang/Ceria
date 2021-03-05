@@ -51,8 +51,10 @@ class TeacherAssignmentChooseClassViweModel extends BaseViewModel {
         temp.add(Kelas(data: kelas));
       }
     }
-    this.listKelas = temp;
+    this.listKelas =
+        temp; // kelas didapat kan misal ada 2 kelas kelas A dan kelas B
 
+    // looping semua tugas
     for (var assignment in this._assigments.data) {
       if (assignment.idTeacher == this._teachersID &&
           assignment.isVisible == 1) {
