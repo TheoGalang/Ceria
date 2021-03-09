@@ -1,6 +1,8 @@
 import 'package:ceria/loginAs.dart';
 import 'package:ceria/noInternetConnection.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:ceria/views/screen_guru/teacher_presence_chooseclass.dart';
+import 'package:ceria/views/screen_guru/teacher_presence_list.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';

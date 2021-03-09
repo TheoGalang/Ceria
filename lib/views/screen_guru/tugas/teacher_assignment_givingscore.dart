@@ -257,7 +257,7 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                             "nis": widget?.data?.nis ?? "",
                             "nip": widget?.nip ?? "",
                             "grade": this.valueChoose ?? "BSH",
-                            "description": this.feedbackController.text ?? "",
+                            // "description": this.feedbackController.text ?? "",
                           });
 
                           Response response = await Dio().post(
