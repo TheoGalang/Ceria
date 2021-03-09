@@ -20,6 +20,7 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
   TeacherAssignmentDetailViewModel({this.assignment});
 
   initial({BuildContext context}) async {
+    this.listPengumpulan = [];
     setBusy(true);
 
     this.cookies = await SharedPreferences.getInstance();
@@ -72,7 +73,9 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
                       nip: this.nip,
                       data: item ?? null,
                       assigmentsTitle: assignmentTitle ?? "",
-                    )));
+                    ))).then((value) {
+          this.initial(context: context);
+        });
       },
       child: Container(
         width: MediaQuery.of(context).size.width / 1.2,
@@ -90,22 +93,43 @@ class TeacherAssignmentDetailViewModel extends BaseViewModel {
           ],
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              // margin: EdgeInsets.fromLTRB(35, 0, 25, 0),
+          children: [
+            item.grade != null
+                ? Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  )
+                : SizedBox(),
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    // margin: EdgeInsets.fromLTRB(35, 0, 25, 0),
 
-              child: Text(item.nis,
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal)),
+                    child: Text(item.nis,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black,
+                            fontWeight: FontWeight.normal)),
+                  ),
+                  Text(item.nama,
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontWeight: FontWeight.normal)),
+                ],
+              ),
             ),
-            Text(item.nama,
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontWeight: FontWeight.normal)),
+            item.grade != null
+                ? Container(
+                    margin: EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(item.grade,
+                        style: TextStyle(
+                          color: Color(0xFF41348C),
+                          fontWeight: FontWeight.bold,
+                        )))
+                : SizedBox(),
           ],
         ),
       ),

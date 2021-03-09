@@ -39,17 +39,22 @@ class LoginViewModel extends BaseViewModel {
 
   login({String username, String password}) async {
     setBusy(true);
-    var response = await http.post(
-      loginUrl,
-      body: {
-        "username": username,
-        "password": password,
-      },
-    );
+    try {
+      var response = await http.post(
+        loginUrl,
+        body: {
+          "username": username,
+          "password": password,
+        },
+      );
 
-    this._user = this.role == Role.parent
-        ? Parent.fromJson(json.decode(response.body))
-        : Teacher.fromJson(json.decode(response.body));
+      this._user = this.role == Role.parent
+          ? Parent.fromJson(json.decode(response.body))
+          : Teacher.fromJson(json.decode(response.body));
+    } catch (e) {
+      print("Error $e");
+      setBusy(false);
+    }
 
     setBusy(false);
 
