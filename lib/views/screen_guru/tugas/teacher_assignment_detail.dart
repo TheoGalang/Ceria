@@ -116,7 +116,9 @@ class DetailTugasTeacher extends StatelessWidget {
                           ? SpinKitCircle(
                               color: "41348C".toColor(),
                             )
-                          : Column(children: model?.listPengumpulan ?? []),
+                          : model?.listPengumpulan?.length == 0
+                              ? Center(child: Text("Belum ada pengumpulan"))
+                              : Column(children: model?.listPengumpulan ?? []),
                     )
                   ],
                 ),

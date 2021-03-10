@@ -17,7 +17,7 @@ class IsiNilaiTeacher extends StatefulWidget {
 }
 
 class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
-  String valueChoose;
+  String valueChoose = "MSH";
   String feedback;
   String location = "";
   TextEditingController feedbackController = TextEditingController();
@@ -199,6 +199,7 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                                 setState(() {
                                   valueChoose = newValue;
                                 });
+                                print(valueChoose);
                               },
                               value: valueChoose,
                             ),
@@ -256,7 +257,7 @@ class _IsiNilaiTeacherState extends State<IsiNilaiTeacher> {
                             "id": widget?.data?.id ?? "",
                             "nis": widget?.data?.nis ?? "",
                             "nip": widget?.nip ?? "",
-                            "grade": this.valueChoose ?? "BSH",
+                            "grade": this.valueChoose ?? "MSH",
                             // "description": this.feedbackController.text ?? "",
                           });
 
