@@ -1,11 +1,17 @@
 import 'package:ceria/main.dart';
 import 'package:ceria/providers/teacher/teacher_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
-import 'package:ceria/views/screen_guru/teacher_choose_theme.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_add_nilai.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_add_themes.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_choose_history.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_choose_theme.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_indicator.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_rapot_nilai.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_studentlist_rapot.dart';
 import 'package:ceria/views/screen_guru/teacher_chooseclass.dart';
 import 'package:ceria/views/screen_guru/teacher_presence_chooseclass.dart';
 import 'package:ceria/views/screen_guru/teacher_presence_list.dart';
-import 'package:ceria/views/screen_guru/teacher_raport_choose.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_raport_choose.dart';
 import 'package:ceria/views/screen_guru/teacher_studentlist.dart';
 import 'package:ceria/views/screen_guru/tugas/teacher_assignment_chooseclass.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
@@ -142,7 +148,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Raport",
             iconData: Icons.school,
-            onTap: ChooseThemeTeacher(),
+            onTap: ListNilaiStudentRaport(),
           ),
           buildMenu(
             name: "Kelas",
