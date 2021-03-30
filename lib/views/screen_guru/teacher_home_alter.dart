@@ -1,6 +1,12 @@
 import 'package:ceria/main.dart';
 import 'package:ceria/providers/teacher/teacher_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:ceria/views/screen_guru/teacher_choose_theme.dart';
+import 'package:ceria/views/screen_guru/teacher_chooseclass.dart';
+import 'package:ceria/views/screen_guru/teacher_presence_chooseclass.dart';
+import 'package:ceria/views/screen_guru/teacher_presence_list.dart';
+import 'package:ceria/views/screen_guru/teacher_raport_choose.dart';
+import 'package:ceria/views/screen_guru/teacher_studentlist.dart';
 import 'package:ceria/views/screen_guru/tugas/teacher_assignment_chooseclass.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +129,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Kehadiran",
             iconData: Icons.emoji_people_outlined,
-            onTap: null,
+            onTap: ChooseClassTeacherAbsen(),
           ),
           buildMenu(
             name: "Tugas",
@@ -136,12 +142,12 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Raport",
             iconData: Icons.school,
-            onTap: null,
+            onTap: ChooseThemeTeacher(),
           ),
           buildMenu(
             name: "Kelas",
             iconData: Icons.account_balance_outlined,
-            onTap: null,
+            onTap: ChooseClassTeacher(),
           ),
           buildMenu(
             name: "Buletin",
