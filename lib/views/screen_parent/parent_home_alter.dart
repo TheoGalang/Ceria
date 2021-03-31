@@ -3,6 +3,8 @@ import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
 import 'package:ceria/views/screen_parent/parent_addpresences.dart';
 import 'package:ceria/views/screen_parent/parent_studentlist.dart';
+import 'package:ceria/views/screen_parent/raport/parent_choose_history.dart';
+import 'package:ceria/views/screen_parent/raport/parent_rapot_nilai.dart';
 import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
@@ -144,7 +146,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
           buildMenu(
             name: "Raport",
             iconData: Icons.school,
-            onTap: null,
+            onTap: ListNilaiStudentRaportParent(),
           ),
           buildMenu(
             name: "Kelas",
