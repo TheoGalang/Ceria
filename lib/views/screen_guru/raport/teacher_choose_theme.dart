@@ -1,12 +1,13 @@
 import 'package:ceria/views/generalPage.dart';
+import 'package:ceria/views/screen_guru/raport/teacher_indicator.dart';
 import 'package:flutter/material.dart';
 
-class ChooseThemeTeacher extends StatefulWidget {
+class TeacherChooseTheme extends StatefulWidget {
   @override
-  _ChooseThemeTeacherState createState() => _ChooseThemeTeacherState();
+  _TeacherChooseThemeState createState() => _TeacherChooseThemeState();
 }
 
-class _ChooseThemeTeacherState extends State<ChooseThemeTeacher> {
+class _TeacherChooseThemeState extends State<TeacherChooseTheme> {
   String _valsubTema;
 
   List _subTema = [
@@ -17,6 +18,17 @@ class _ChooseThemeTeacherState extends State<ChooseThemeTeacher> {
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => TeacherIndicator(),
+            ),
+          );
+        },
+        child: Text("Next"),
+      ),
       judul: 'Pilih Tema dan Sub Tema',
       child: Container(
         margin: EdgeInsets.fromLTRB(40, 40, 40, 30),
@@ -35,6 +47,7 @@ class _ChooseThemeTeacherState extends State<ChooseThemeTeacher> {
         ),
         child: DropdownButton(
           dropdownColor: Colors.white,
+          isExpanded: true,
           hint: Center(
             child: Text('Diri Sendiri',
                 style: TextStyle(

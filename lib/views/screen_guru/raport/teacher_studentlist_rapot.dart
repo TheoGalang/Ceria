@@ -1,15 +1,37 @@
+import 'package:ceria/tools/theme.dart';
 import 'package:ceria/views/generalPage.dart';
 import 'package:flutter/material.dart';
 
-class ListStudentRaport extends StatelessWidget {
+class TeacherRaportListStudent extends StatelessWidget {
   final String kelas;
 
-  const ListStudentRaport({Key key, this.kelas}) : super(key: key);
+  const TeacherRaportListStudent({Key key, this.kelas}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
       judul: "Daftar Siswa",
-      subjudul: kelas ?? '',
+      subJudul1: kelas ?? '',
+      floatingActionButton: Material(
+        elevation: 20,
+        child: GestureDetector(
+          onTap: () {},
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              color: mainColor,
+            ),
+            child: Text(
+              "Pilih",
+              style: TextStyle(
+                fontSize: 20,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
+      ),
       child: Container(
         child: Column(
           children: <Widget>[
@@ -66,24 +88,6 @@ class ListStudentRaport extends StatelessWidget {
                           color: Colors.black,
                           fontWeight: FontWeight.normal)),
                 ],
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              margin: EdgeInsets.all(30),
-              child: RaisedButton(
-                onPressed: () {},
-                color: Color(0xff41348C),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                child: Text(
-                  "Pilih",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
               ),
             ),
           ],

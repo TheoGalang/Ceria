@@ -9,7 +9,7 @@ class ListStudentAbsen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GeneralPage(
       judul: 'Kehadiran Siswa',
-      subjudul: kelas ?? '',
+      subJudul1: kelas ?? '',
       child: Container(
         child: Column(
           children: <Widget>[

@@ -19,8 +19,8 @@ class _ListNilaiStudentRaportState extends State<ListNilaiStudentRaport> {
   Widget build(BuildContext context) {
     return GeneralPage(
       judul: "Rapot Siswa",
-      subjudul: 'Theo Galang saputra',
-      subjudul2: 'Senin, 1 Maret 2021',
+      subJudul1: 'Theo Galang saputra',
+      subJudul2: 'Senin, 1 Maret 2021',
       child: Column(
         children: [
           GestureDetector(

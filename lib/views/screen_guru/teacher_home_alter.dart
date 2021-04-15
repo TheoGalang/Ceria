@@ -148,7 +148,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Raport",
             iconData: Icons.school,
-            onTap: ListNilaiStudentRaport(),
+            onTap: TeacherChooseOptionRaport(),
           ),
           buildMenu(
             name: "Kelas",

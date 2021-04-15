@@ -10,7 +10,7 @@ class ChooseClassTeacherAbsen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GeneralPage(
       judul: 'Pilih Kelas',
-      subjudul: '',
+      subJudul1: '',
       child: Container(
         margin: EdgeInsets.fromLTRB(40, 40, 40, 30),
         padding: EdgeInsets.fromLTRB(40, 20, 40, 20),

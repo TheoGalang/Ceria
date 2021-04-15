@@ -26,8 +26,8 @@ class _AddNilaiStudentRaportState extends State<AddNilaiStudentRaport> {
   Widget build(BuildContext context) {
     return GeneralPage(
       judul: "Pengisian Nilai",
-      subjudul: 'Theo Galang saputra',
-      subjudul2: 'Diri Sendiri / Identitas',
+      subJudul1: 'Theo Galang saputra',
+      subJudul2: 'Diri Sendiri / Identitas',
       child: Column(
         children: [
           GestureDetector(

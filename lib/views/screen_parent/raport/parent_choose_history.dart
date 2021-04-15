@@ -6,7 +6,7 @@ class ChooseHistoryParentRaport extends StatelessWidget {
   Widget build(BuildContext context) {
     return GeneralPage(
       judul: 'Rapot',
-      subjudul: 'Theo Galang Saputra',
+      subJudul1: 'Theo Galang Saputra',
       child: Column(
         children: [
           Container(
