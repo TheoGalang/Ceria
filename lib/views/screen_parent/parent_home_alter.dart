@@ -1,6 +1,10 @@
 import 'package:ceria/models/students.dart';
 import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:ceria/views/screen_parent/bulletin/parent_bulletin.dart';
+import 'package:ceria/views/screen_parent/bulletin/parent_choosebulletin.dart';
+import 'package:ceria/views/screen_parent/bulletin/parent_createbulletin.dart';
+import 'package:ceria/views/screen_parent/bulletin/parent_viewbulletin.dart';
 import 'package:ceria/views/screen_parent/parent_addpresences.dart';
 import 'package:ceria/views/screen_parent/parent_studentlist.dart';
 import 'package:ceria/views/screen_parent/raport/parent_choose_history.dart';
@@ -160,7 +164,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
           buildMenu(
             name: "Buletin",
             iconData: Icons.campaign_outlined,
-            onTap: null,
+            onTap: ViewBulletinParent(),
           ),
           buildMenu(
             name: "Dokumen",
