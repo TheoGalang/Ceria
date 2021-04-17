@@ -1,6 +1,10 @@
 import 'package:ceria/main.dart';
 import 'package:ceria/providers/teacher/teacher_home_viewmodel.dart';
 import 'package:ceria/tools/constants.dart';
+import 'package:ceria/views/screen_guru/bulletin/teacher_bulletin.dart';
+import 'package:ceria/views/screen_guru/bulletin/teacher_choosebulletin.dart';
+import 'package:ceria/views/screen_guru/bulletin/teacher_createbulletin.dart';
+import 'package:ceria/views/screen_guru/bulletin/teacher_viewbulletin.dart';
 import 'package:ceria/views/screen_guru/raport/teacher_add_nilai.dart';
 import 'package:ceria/views/screen_guru/raport/teacher_add_themes.dart';
 import 'package:ceria/views/screen_guru/raport/teacher_choose_history.dart';
@@ -158,7 +162,7 @@ class _TeacherHomeAlterState extends State<TeacherHomeAlter> {
           buildMenu(
             name: "Buletin",
             iconData: Icons.campaign_outlined,
-            onTap: null,
+            onTap: TeacherBulletin(),
           ),
           buildMenu(
             name: "Dokumen",
