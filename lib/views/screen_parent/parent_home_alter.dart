@@ -5,6 +5,7 @@ import 'package:ceria/views/screen_parent/bulletin/parent_bulletin.dart';
 import 'package:ceria/views/screen_parent/bulletin/parent_choosebulletin.dart';
 import 'package:ceria/views/screen_parent/bulletin/parent_createbulletin.dart';
 import 'package:ceria/views/screen_parent/bulletin/parent_viewbulletin.dart';
+import 'package:ceria/views/screen_parent/dokumen/parent_listdocument.dart';
 import 'package:ceria/views/screen_parent/parent_addpresences.dart';
 import 'package:ceria/views/screen_parent/parent_studentlist.dart';
 import 'package:ceria/views/screen_parent/raport/parent_choose_history.dart';
@@ -169,7 +170,7 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
           buildMenu(
             name: "Dokumen",
             iconData: Icons.assignment_outlined,
-            onTap: null,
+            onTap: ListDocumentParent(),
           ),
           buildMenu(
             name: "Reminder",
