@@ -1,5 +1,5 @@
-import 'package:ceria/views/screen_guru/teacher_home_alter.dart';
-import 'package:ceria/views/screen_parent/parent_home_alter.dart';
+import '../views/screen_guru/teacher_home_alter.dart';
+import '../views/screen_parent/parent_home_alter.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';

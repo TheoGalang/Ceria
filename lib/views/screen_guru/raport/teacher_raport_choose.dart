@@ -1,6 +1,6 @@
-import 'package:ceria/tools/theme.dart';
-import 'package:ceria/views/generalPage.dart';
-import 'package:ceria/views/screen_guru/raport/teacher_choose_theme.dart';
+import '../../../tools/theme.dart';
+import '../../generalPage.dart';
+import 'teacher_choose_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../teacher_chooseclass.dart';

@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:ceria/loginPage.dart';
-import 'package:ceria/main.dart';
-import 'package:ceria/models/parent_model.dart';
-import 'package:ceria/models/teacher_model.dart';
-import 'package:ceria/views/screen_guru/teacher_home_alter.dart';
-import 'package:ceria/views/screen_parent/parent_home_alter.dart';
+import '../loginPage.dart';
+import '../main.dart';
+import '../models/parent_model.dart';
+import '../models/teacher_model.dart';
+import '../views/screen_guru/teacher_home_alter.dart';
+import '../views/screen_parent/parent_home_alter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;

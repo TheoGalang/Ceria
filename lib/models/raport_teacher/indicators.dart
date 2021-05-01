@@ -1,19 +1,17 @@
-import 'kelas.dart';
-
-class Classes {
+class Indicators {
   bool success;
   String message;
-  List<DataKelas> data;
+  List<Data> data;
 
-  Classes({this.success, this.message, this.data});
+  Indicators({this.success, this.message, this.data});
 
-  Classes.fromJson(Map<String, dynamic> json) {
+  Indicators.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
     if (json['data'] != null) {
-      data = new List<DataKelas>();
+      data = new List<Data>();
       json['data'].forEach((v) {
-        data.add(new DataKelas.fromJson(v));
+        data.add(new Data.fromJson(v));
       });
     }
   }
@@ -31,28 +29,25 @@ class Classes {
 
 class Data {
   int id;
-  String kelas;
-  int thnAkademik;
-  int status;
-  String nomorPegawai;
+  String description;
+  int idTema;
+  int idSubtema;
 
-  Data({this.id, this.kelas, this.thnAkademik, this.status, this.nomorPegawai});
+  Data({this.id, this.description, this.idTema, this.idSubtema});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    kelas = json['kelas'];
-    thnAkademik = json['thn_akademik'];
-    status = json['status'];
-    nomorPegawai = json['nomor_pegawai'];
+    description = json['description'];
+    idTema = json['id_tema'];
+    idSubtema = json['id_subtema'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['kelas'] = this.kelas;
-    data['thn_akademik'] = this.thnAkademik;
-    data['status'] = this.status;
-    data['nomor_pegawai'] = this.nomorPegawai;
+    data['description'] = this.description;
+    data['id_tema'] = this.idTema;
+    data['id_subtema'] = this.idSubtema;
     return data;
   }
 }

@@ -1,5 +1,5 @@
-import 'package:ceria/loginAs.dart';
-import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
+import '../../loginAs.dart';
+import '../../providers/parent/parent_home_viewmodel.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

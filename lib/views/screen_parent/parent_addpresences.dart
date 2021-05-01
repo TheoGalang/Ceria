@@ -1,8 +1,8 @@
-import 'package:ceria/providers/parent/parent_home_viewmodel.dart';
+import '../../providers/parent/parent_home_viewmodel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ceria/main.dart';
+import '../../main.dart';
 import 'package:intl/intl.dart';
 import 'package:sweetalert/sweetalert.dart';
 import 'package:supercharged/supercharged.dart';

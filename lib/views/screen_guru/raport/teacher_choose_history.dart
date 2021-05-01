@@ -1,4 +1,4 @@
-import 'package:ceria/views/generalPage.dart';
+import '../../generalPage.dart';
 import 'package:flutter/material.dart';
 
 class ChooseHistoryTeacherRaport extends StatelessWidget {

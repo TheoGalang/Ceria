@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:ceria/main.dart';
-import 'package:ceria/models/classes.dart';
-import 'package:ceria/models/kelas.dart';
-import 'package:ceria/models/teacher_home.dart';
-import 'package:ceria/views/screen_guru/teacher_home_alter.dart';
+import '../../main.dart';
+import '../../models/classes.dart';
+import '../../models/kelas.dart';
+import '../../models/teacher_home.dart';
+import '../../views/screen_guru/teacher_home_alter.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;

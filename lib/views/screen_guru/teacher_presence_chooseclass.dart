@@ -1,10 +1,10 @@
-import 'package:ceria/views/generalPage.dart';
+import '../generalPage.dart';
 import 'package:flutter/material.dart';
 
 class ChooseClassTeacherAbsen extends StatelessWidget {
-  final String nama_kelas;
+  final String namaKelas;
 
-  const ChooseClassTeacherAbsen({Key key, this.nama_kelas}) : super(key: key);
+  const ChooseClassTeacherAbsen({Key key, this.namaKelas}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class ChooseClassTeacherAbsen extends StatelessWidget {
           ],
         ),
         child: Center(
-          child: Text(nama_kelas ?? '',
+          child: Text(namaKelas ?? '',
               style: TextStyle(
                   fontSize: 14,
                   color: Color(0xff41348C),

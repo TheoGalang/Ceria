@@ -1,5 +1,5 @@
-import 'package:ceria/loginPage.dart';
-import 'package:ceria/providers/loginaAs_viewModel.dart';
+import 'loginPage.dart';
+import 'providers/loginaAs_viewModel.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

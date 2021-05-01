@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:ceria/models/submissionCollected.dart';
-import 'package:ceria/views/screen_guru/tugas/teacher_assignment_givingscore.dart';
-import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
+import '../../models/submissionCollected.dart';
+import '../../views/screen_guru/tugas/teacher_assignment_givingscore.dart';
+import '../../views/screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';

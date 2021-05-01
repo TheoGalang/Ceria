@@ -1,6 +1,6 @@
-import 'package:ceria/models/kelas.dart';
-import 'package:ceria/providers/teacher/teacher_assignment_chooseclass_viewModel.dart';
-import 'package:ceria/views/screen_guru/tugas/teacher_assignment_list.dart';
+import '../../../models/kelas.dart';
+import '../../../providers/teacher/teacher_assignment_chooseclass_viewModel.dart';
+import 'teacher_assignment_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

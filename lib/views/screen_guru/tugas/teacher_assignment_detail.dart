@@ -1,5 +1,5 @@
-import 'package:ceria/providers/teacher/teacher_assignment_detail%20_viewModel.dart';
-import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
+import '../../../providers/teacher/teacher_assignment_detail%20_viewModel.dart';
+import '../../screen_parent/tugas/widgets/Assignment.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

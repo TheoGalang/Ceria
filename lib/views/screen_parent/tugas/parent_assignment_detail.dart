@@ -1,15 +1,15 @@
 import 'dart:io';
 
-import 'package:ceria/models/assignments.dart';
-import 'package:ceria/providers/parent/parent_assingment_detail_viewmmodel.dart';
-import 'package:ceria/views/screen_parent/tugas/parent_assignment_list.dart';
+import '../../../models/assignments.dart';
+import '../../../providers/parent/parent_assingment_detail_viewmmodel.dart';
+import 'parent_assignment_list.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sweetalert/sweetalert.dart';
 
-import './widgets/chat_message.dart';
-import 'package:ceria/tools/measure_child.dart';
+import 'widgets/chat_message.dart';
+import '../../../tools/measure_child.dart';
 import 'package:flutter/material.dart';
 
 class DetailTugasParent extends StatefulWidget {

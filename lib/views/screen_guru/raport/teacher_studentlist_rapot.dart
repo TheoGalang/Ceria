@@ -1,5 +1,5 @@
-import 'package:ceria/tools/theme.dart';
-import 'package:ceria/views/generalPage.dart';
+import '../../../tools/theme.dart';
+import '../../generalPage.dart';
 import 'package:flutter/material.dart';
 
 class TeacherRaportListStudent extends StatelessWidget {

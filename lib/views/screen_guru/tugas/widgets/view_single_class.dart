@@ -1,4 +1,4 @@
-import 'package:ceria/models/kelas.dart';
+import '../../../../models/kelas.dart';
 // import 'package:ceria/views/screen_guru/tugas/models/kelas_model.dart';
 import 'package:flutter/material.dart';
 

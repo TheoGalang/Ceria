@@ -1,4 +1,4 @@
-import 'package:ceria/models/assignments.dart';
+import '../../../../models/assignments.dart';
 import 'package:intl/intl.dart';
 
 import '../parent_assignment_detail.dart';

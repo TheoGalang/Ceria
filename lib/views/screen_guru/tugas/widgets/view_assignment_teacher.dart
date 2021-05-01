@@ -1,4 +1,4 @@
-import 'package:ceria/views/screen_parent/tugas/widgets/Assignment.dart';
+import '../../../screen_parent/tugas/widgets/Assignment.dart';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

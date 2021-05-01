@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:ceria/models/submissionCollected.dart';
+import '../../../models/submissionCollected.dart';
 import 'package:intl/intl.dart';
 import 'package:sweetalert/sweetalert.dart';
 import 'package:url_launcher/url_launcher.dart';

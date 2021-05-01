@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:ceria/models/assignments.dart';
-import 'package:ceria/models/child.dart';
-import 'package:ceria/models/kelas.dart';
-import 'package:ceria/views/screen_parent/tugas/widgets/SimpleAssignmentView.dart';
+import '../../models/assignments.dart';
+import '../../models/child.dart';
+import '../../models/kelas.dart';
+import '../../views/screen_parent/tugas/widgets/SimpleAssignmentView.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;

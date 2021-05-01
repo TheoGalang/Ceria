@@ -1,12 +1,12 @@
-import 'package:ceria/views/generalPage.dart';
+import '../generalPage.dart';
 import 'package:flutter/material.dart';
 
 import 'raport/teacher_studentlist_rapot.dart';
 
 class ChooseClassTeacher extends StatelessWidget {
-  final String nama_kelas;
+  final String namaKelas;
 
-  const ChooseClassTeacher({Key key, this.nama_kelas}) : super(key: key);
+  const ChooseClassTeacher({Key key, this.namaKelas}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
