@@ -19,7 +19,6 @@ class _TeacherChooseThemeState extends State<TeacherChooseTheme> {
     "Identitas",
     "Bagian Tubuh",
   ];
-  List _listSubTema = [];
 
   initiateListTema(Tema tema) {
     _listTema = [];
