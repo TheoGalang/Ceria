@@ -2,11 +2,27 @@ import '../../generalPage.dart';
 import 'package:flutter/material.dart';
 
 class ChooseHistoryTeacherRaport extends StatelessWidget {
+  final String namaSiswa;
+
+  ChooseHistoryTeacherRaport({Key key, this.namaSiswa}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return GeneralPage(
-      judul: 'Diri Sendiri',
-      subJudul1: 'Identitas',
+      judul: 'History Raport',
+      subJudul1: namaSiswa ?? 'Nama Siswa',
+      floatingActionButton: RaisedButton(
+        onPressed: () {},
+        color: Color(0xff41348C),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Text(
+          "Isi Nilai baru",
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       child: Column(
         children: [
           Container(
@@ -30,22 +46,6 @@ class ChooseHistoryTeacherRaport extends StatelessWidget {
                       fontSize: 14,
                       color: Color(0xff41348C),
                       fontWeight: FontWeight.bold)),
-            ),
-          ),
-          Center(
-            child: RaisedButton(
-              onPressed: () {},
-              color: Color(0xff41348C),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: Text(
-                "Isi Nilai baru",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             ),
           ),
         ],

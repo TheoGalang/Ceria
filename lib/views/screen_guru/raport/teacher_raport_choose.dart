@@ -1,3 +1,4 @@
+import 'package:ceria/views/screen_guru/raport/teacher_raport_chooseclass.dart';
 import 'package:ceria/views/screen_guru/raport/viewModel/teacher_choose_option_raport_viewModel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:sweetalert/sweetalert.dart';
@@ -11,6 +12,9 @@ import '../teacher_chooseclass.dart';
 
 class TeacherChooseOptionRaport extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  final String nip;
+
+  TeacherChooseOptionRaport({Key key, this.nip}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +97,12 @@ class TeacherChooseOptionRaport extends StatelessWidget {
             Container(
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (_) => ChooseClassTeacher()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => TeacherRaphortChooseClass(
+                                nip: nip,
+                              )));
                 },
                 child: Container(
                   padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
