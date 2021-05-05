@@ -5,7 +5,6 @@ import 'package:sweetalert/sweetalert.dart';
 
 import '../../../tools/theme.dart';
 import '../../generalPage.dart';
-import 'teacher_add_themes.dart';
 import 'teacher_choose_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -419,7 +418,7 @@ class _TeacherChooseOptionRaportState extends State<TeacherChooseOptionRaport> {
                                       SweetAlert.show(context,
                                           title: "Berhasil",
                                           subtitle:
-                                              "Berhasil menambahkan tema baru",
+                                              "Berhasil menambahkan subtema baru",
                                           style: SweetAlertStyle.success,
                                           onPress: (confirm) {
                                         Navigator.pop(context);
