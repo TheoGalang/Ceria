@@ -1,3 +1,4 @@
+import 'package:ceria/models/raport_teacher/sub_tema.dart';
 import 'package:ceria/models/raport_teacher/tema.dart';
 
 import 'viewModel/teacher_choose_theme_viewModel.dart';
@@ -19,11 +20,27 @@ class _TeacherChooseThemeState extends State<TeacherChooseTheme> {
     "Identitas",
     "Bagian Tubuh",
   ];
+  List _listSubTema = [];
+
+  String _valSubTema;
+
+  int subTemaIDChoosed;
 
   initiateListTema(Tema tema) {
     _listTema = [];
     for (var item in tema.data) {
       _listTema.add(item.title);
+    }
+  }
+
+  initiateListSubTema(SubTema subTema) {
+    _listSubTema = [];
+    if (subTema.data.length <= 0) {
+      // _listSubTema.add("Tidak ada sub tema.");
+    } else {
+      for (var item in subTema.data) {
+        _listSubTema.add(item.title);
+      }
     }
   }
 
@@ -34,6 +51,7 @@ class _TeacherChooseThemeState extends State<TeacherChooseTheme> {
       onModelReady: (model) async {
         await model.initial(context: context);
         initiateListTema(model.tema ?? Tema());
+        // initiateListSubTema(model.subTema ?? SubTema());
       },
       builder: (_, model, __) => GeneralPage(
         floatingActionButton: FloatingActionButton(
@@ -45,9 +63,9 @@ class _TeacherChooseThemeState extends State<TeacherChooseTheme> {
                     MaterialPageRoute(
                         builder: (_) => TeacherIndicator(
                               idTema: temaIDChoosed,
-                              idSubTema: model.subTema.data.id,
+                              idSubTema: model.subTema.data[0].id,
                               tema: this._valTema,
-                              subTema: model.subTema.data.title,
+                              subTema: model.subTema.data[0].title,
                             )),
                   );
                 },
@@ -75,28 +93,31 @@ class _TeacherChooseThemeState extends State<TeacherChooseTheme> {
                 dropdownColor: Colors.white,
                 isExpanded: true,
                 hint: Center(
-                  child: Text('Diri Sendiri',
+                  child: Text('Pilih Tema!',
                       style: TextStyle(
                           fontSize: 20,
                           color: Color(0xff41348C),
                           fontWeight: FontWeight.bold)),
                 ),
                 value: _valTema,
-                items: _listTema.map((value) {
-                  return DropdownMenuItem(
-                    child: Text(value,
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xff41348C),
-                            fontWeight: FontWeight.bold)),
-                    value: value,
-                  );
-                }).toList(),
+                items: _listTema.length <= 0
+                    ? []
+                    : _listTema.map((value) {
+                        return DropdownMenuItem(
+                          child: Text(value,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xff41348C),
+                                  fontWeight: FontWeight.bold)),
+                          value: value,
+                        );
+                      }).toList(),
                 onChanged: (value) async {
-                  var index = model.tema.data
-                      .indexWhere((element) => element.title == value);
-                  this.temaIDChoosed = model.tema.data[index].id;
-                  await model.getSubTema(this.temaIDChoosed);
+                  var index = model?.tema?.data
+                      ?.indexWhere((element) => element.title == value);
+                  this.temaIDChoosed = model?.tema?.data[index]?.id ?? 0;
+                  await model.getSubTema(this.temaIDChoosed ?? 1);
+                  initiateListSubTema(model?.subTema ?? SubTema());
 
                   setState(() {
                     _valTema = value;
@@ -120,13 +141,42 @@ class _TeacherChooseThemeState extends State<TeacherChooseTheme> {
                   ),
                 ],
               ),
-              child: Center(
-                child: Text(model?.subTema?.data?.title ?? "Tidak ada subtema",
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Color(0xff41348C),
-                        fontWeight: FontWeight.bold)),
-              ),
+              child: _listSubTema.length == 0
+                  ? Text("Tidak ada sub tema")
+                  : _listSubTema.length == 1
+                      ? Text(_listSubTema.first.toString())
+                      : DropdownButton(
+                          dropdownColor: Colors.white,
+                          isExpanded: true,
+                          hint: Center(
+                            child: Text('Pilih Sub Tema!',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xff41348C),
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                          value: _valSubTema,
+                          items: _listSubTema.map((value) {
+                            return DropdownMenuItem(
+                              child: Text(value,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color(0xff41348C),
+                                      fontWeight: FontWeight.bold)),
+                              value: value,
+                            );
+                          }).toList(),
+                          onChanged: (value) async {
+                            var index = model?.subTema?.data?.indexWhere(
+                                (element) => element.title == value);
+                            this.subTemaIDChoosed =
+                                model?.subTema?.data[index]?.id ?? 0;
+
+                            setState(() {
+                              _valSubTema = value;
+                            });
+                          },
+                        ),
             ),
           ],
         ),

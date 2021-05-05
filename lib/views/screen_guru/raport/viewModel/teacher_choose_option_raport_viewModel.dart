@@ -8,9 +8,16 @@ import 'dart:convert';
 class TeacherChooseOptionRaportViewModel extends BaseViewModel {
   Tema tema;
   String latestTema;
+  String choosedTemaValue;
 
   TeacherChooseOptionRaportViewModel();
   initial({BuildContext context}) {
+    getTema();
+  }
+
+  setChoosedTemaValue(String value) {
+    /// kyknya gk guna . .. hehe
+    this.choosedTemaValue = value;
     notifyListeners();
   }
 
@@ -27,25 +34,6 @@ class TeacherChooseOptionRaportViewModel extends BaseViewModel {
     );
     setBusy(false);
 
-    getLatestTema();
-
-    if (subTema != null) {
-      setBusy(true);
-      var subTemaUrl = "https://ceriakan.id/api/subtema/store";
-
-      response = await http.post(
-        subTemaUrl,
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'title': subTema,
-          'id_tema': tema?.data[0]?.id ?? 1,
-        }),
-      );
-      setBusy(false);
-    }
-
     notifyListeners();
 
     if (response.statusCode == 200) {
@@ -56,18 +44,40 @@ class TeacherChooseOptionRaportViewModel extends BaseViewModel {
     }
   }
 
-  getLatestTema() async {
+  getTema() async {
     setBusy(true);
     var temaUrl = 'https://ceriakan.id/api/tema';
     var result = await http.get(temaUrl);
     tema = Tema.fromJson(json.decode(result.body));
-    var temaChoosed =
-        tema.data.where((element) => element.title == latestTema).first;
-    tema.data = [temaChoosed];
 
-    print("""getLatestTema : ${tema.data[0].title} ${tema.data[0].id} 
-        /n StringLatestTema: $latestTema""");
+    // print("""getTema : ${tema?.data.length} """);
 
     setBusy(false);
+    notifyListeners();
+  }
+
+  Future<bool> createSubTema(
+      {@required String subTema, @required int idTema}) async {
+    setBusy(true);
+    var subTemaUrl = "https://ceriakan.id/api/subtema/store";
+
+    var response = await http.post(
+      subTemaUrl,
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'title': subTema,
+        'id_tema': idTema,
+      }),
+    );
+    setBusy(false);
+    notifyListeners();
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      print("Gagal di create subtema");
+      return false;
+    }
   }
 }

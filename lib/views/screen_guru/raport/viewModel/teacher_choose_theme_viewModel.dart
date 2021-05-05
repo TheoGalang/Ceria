@@ -27,6 +27,7 @@ class TeacherRaportChooseThemeViewModel extends BaseViewModel {
     setBusy(true);
     var resultSubTema = await http.get(subTemaUrl);
     subTema = SubTema.fromJson(json.decode(resultSubTema.body));
+    print(resultSubTema.body);
 
     setBusy(false);
     notifyListeners();
