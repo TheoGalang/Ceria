@@ -63,6 +63,9 @@ class TeacherRaportListStudent extends StatelessWidget {
                                             namaSiswa: model?.classDetail
                                                     ?.students[index]?.nama ??
                                                 '',
+                                                nis:  model?.classDetail
+                                                    ?.students[index]?.nomorInduk ??
+                                                '',
                                           )));
                             },
                             child: Container(
