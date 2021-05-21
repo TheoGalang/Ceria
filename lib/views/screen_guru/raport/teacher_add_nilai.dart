@@ -80,6 +80,7 @@ class _TeacherRaportAddNilaiState extends State<TeacherRaportAddNilai> {
 
   @override
   Widget build(BuildContext context) {
+    print(MediaQuery.of(context).size.width);
     return ViewModelBuilder<TeacherRaportAddNilaiViewModel>.reactive(
       viewModelBuilder: () => TeacherRaportAddNilaiViewModel(),
       onModelReady: (model) async {
@@ -145,17 +146,12 @@ class _TeacherRaportAddNilaiState extends State<TeacherRaportAddNilai> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                    child: Text("Tema",
+                    child: Text("Tema / Sub Tema",
                         style: TextStyle(
                             fontSize: 14,
                             color: Color(0xff41348C),
                             fontWeight: FontWeight.bold)),
                   ),
-                  Text("SubTema",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xff41348C),
-                          fontWeight: FontWeight.bold)),
                 ],
               ),
             ),
@@ -176,122 +172,118 @@ class _TeacherRaportAddNilaiState extends State<TeacherRaportAddNilai> {
                     ),
                   ],
                 ),
-                child: Row(
+                child: Column(
                   children: [
                     // dropdown tema
-                    Expanded(
-                      child: DropdownButton(
-                        dropdownColor: Colors.white,
-                        hint: Center(
-                          child: Text('Pilih Tema!',
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xff41348C),
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                        value: _valTema,
-                        items: _listTema.length <= 0
-                            ? []
-                            : _listTema.map((value) {
-                                return DropdownMenuItem(
-                                  child: Text(value,
+                    DropdownButton(
+                      dropdownColor: Colors.white,
+                      hint: Center(
+                        child: Text('Pilih Tema!',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Color(0xff41348C),
+                                fontWeight: FontWeight.bold)),
+                      ),
+                      value: _valTema,
+                      items: _listTema.length <= 0
+                          ? []
+                          : _listTema.map((value) {
+                              return DropdownMenuItem(
+                                child: Text(value,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Color(0xff41348C),
+                                        fontWeight: FontWeight.bold)),
+                                value: value,
+                              );
+                            }).toList(),
+                      onChanged: (value) async {
+                        setState(() {
+                          _visible = false;
+                          _valTema = null;
+                          _valSubTema = null;
+                        });
+
+                        var index = model?.tema?.data
+                            ?.indexWhere((element) => element.title == value);
+                        this.temaIDChoosed = model?.tema?.data[index]?.id ?? 0;
+                        await model.getSubTema(this.temaIDChoosed ?? 1);
+                        initiateListSubTema(model?.subTema ?? SubTema());
+
+                        if (model.subTema.data.length == 1) {
+                          //  Get all indikator
+                          await model.getIndikator(
+                            idTema: this.temaIDChoosed,
+                            idSubTema: model.subTema.data[0].id,
+                          );
+                          initiateListNilai(model.indicators);
+                          _toggle();
+
+                          setState(() {
+                            subTemaIDChoosed = model.subTema.data[0].id;
+                            _valSubTema = model.subTema.data[0].title;
+                          });
+                        }
+                        setState(() {
+                          _valTema = value;
+                        });
+                      },
+                    ),
+
+                    // akhir dropdown tema
+
+                    // dropdown subtema
+                    _listSubTema.length == 0
+                        ? Text("Tidak ada sub tema")
+                        : _listSubTema.length == 1
+                            ? Text(_listSubTema.first.toString(),
+                                style: TextStyle(
+                                    color: Color(0xff41348C),
+                                    fontWeight: FontWeight.bold))
+                            : DropdownButton(
+                                dropdownColor: Colors.white,
+                                hint: Center(
+                                  child: Text('Pilih Sub Tema!',
                                       style: TextStyle(
                                           fontSize: 14,
                                           color: Color(0xff41348C),
                                           fontWeight: FontWeight.bold)),
-                                  value: value,
-                                );
-                              }).toList(),
-                        onChanged: (value) async {
-                          setState(() {
-                            _visible = false;
-                            _valTema = null;
-                            _valSubTema = null;
-                          });
-
-                          var index = model?.tema?.data
-                              ?.indexWhere((element) => element.title == value);
-                          this.temaIDChoosed =
-                              model?.tema?.data[index]?.id ?? 0;
-                          await model.getSubTema(this.temaIDChoosed ?? 1);
-                          initiateListSubTema(model?.subTema ?? SubTema());
-
-                          if (model.subTema.data.length == 1) {
-                            //  Get all indikator
-                            await model.getIndikator(
-                              idTema: this.temaIDChoosed,
-                              idSubTema: model.subTema.data[0].id,
-                            );
-                            initiateListNilai(model.indicators);
-                            _toggle();
-
-                            setState(() {
-                              subTemaIDChoosed = model.subTema.data[0].id;
-                              _valSubTema = model.subTema.data[0].title;
-                            });
-                          }
-                          setState(() {
-                            _valTema = value;
-                          });
-                        },
-                      ),
-                    ),
-                    // akhir dropdown tema
-
-                    // dropdown subtema
-                    Expanded(
-                      child: _listSubTema.length == 0
-                          ? Text("Tidak ada sub tema")
-                          : _listSubTema.length == 1
-                              ? Text(_listSubTema.first.toString(),
-                                  style: TextStyle(
-                                      color: Color(0xff41348C),
-                                      fontWeight: FontWeight.bold))
-                              : DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  hint: Center(
-                                    child: Text('Pilih Sub Tema!',
+                                ),
+                                value: _valSubTema,
+                                items: _listSubTema.map((value) {
+                                  return DropdownMenuItem(
+                                    child: Text(value,
                                         style: TextStyle(
                                             fontSize: 14,
                                             color: Color(0xff41348C),
                                             fontWeight: FontWeight.bold)),
-                                  ),
-                                  value: _valSubTema,
-                                  items: _listSubTema.map((value) {
-                                    return DropdownMenuItem(
-                                      child: Text(value,
-                                          style: TextStyle(
-                                              fontSize: 14,
-                                              color: Color(0xff41348C),
-                                              fontWeight: FontWeight.bold)),
-                                      value: value,
-                                    );
-                                  }).toList(),
-                                  onChanged: (value) async {
-                                    setState(() {
-                                      _visible = false;
-                                      _valSubTema = null;
-                                    });
-                                    var index = model?.subTema?.data
-                                        ?.indexWhere((element) =>
-                                            element.title == value);
-                                    this.subTemaIDChoosed =
-                                        model?.subTema?.data[index]?.id ?? 0;
+                                    value: value,
+                                  );
+                                }).toList(),
+                                onChanged: (value) async {
+                                  setState(() {
+                                    _visible = false;
+                                    _valSubTema = null;
+                                  });
+                                  var index = model?.subTema?.data?.indexWhere(
+                                      (element) => element.title == value);
+                                  this.subTemaIDChoosed =
+                                      model?.subTema?.data[index]?.id ?? 0;
 
-                                    // get all indikator
-                                    await model.getIndikator(
-                                        idTema: temaIDChoosed,
-                                        idSubTema: subTemaIDChoosed);
-                                    initiateListNilai(model.indicators);
+                                  // get all indikator
+                                  await model.getIndikator(
+                                      idTema: temaIDChoosed,
+                                      idSubTema: subTemaIDChoosed);
+                                  initiateListNilai(model.indicators);
 
-                                    _toggle();
+                                  _toggle();
 
-                                    setState(() {
-                                      _valSubTema = value;
-                                    });
-                                  },
-                                ),
-                    ),
+                                  setState(() {
+                                    _valSubTema = value;
+                                  });
+                                },
+                              ),
+
                     // akhir dropdown subtema
                   ],
                 ),
