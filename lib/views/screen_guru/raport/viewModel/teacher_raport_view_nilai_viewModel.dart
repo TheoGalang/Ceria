@@ -1,7 +1,5 @@
 import 'package:ceria/models/raport_teacher/indicators.dart';
 import 'package:ceria/models/raport_teacher/nilai_raport.dart';
-import 'package:ceria/models/raport_teacher/sub_tema.dart';
-import 'package:ceria/models/raport_teacher/tema.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -9,8 +7,6 @@ import 'dart:convert';
 class TeacherRaportViewNilaiViewModel extends BaseViewModel {
   final String date;
   final String nis;
-  Tema tema;
-  SubTema subTema;
   NilaiRaport nilai;
   Indicators indikator;
 
@@ -18,37 +14,28 @@ class TeacherRaportViewNilaiViewModel extends BaseViewModel {
 
   initial() async {
     setBusy(true);
-    // get tema
-    getTema();
-    // get subTema
 
     // get nilai by date and nis
-    getNilai();
+    await getNilai();
+
+    // fill indicator string in data nilai
+    await getStringIndicator(nilai: nilai);
 
     setBusy(false);
     notifyListeners();
   }
 
-  // get tema
-  getTema() async {
-    setBusy(true);
-    var temaUrl = 'https://ceriakan.id/api/tema';
-    var result = await http.get(temaUrl);
-    tema = Tema.fromJson(json.decode(result.body));
-    setBusy(false);
-    notifyListeners();
-  }
+  getStringIndicator({NilaiRaport nilai}) async {
+    print("Sedang dalam getStringIndicator");
+    for (var dataNilai in nilai.data) {
+      String stringIndicator = await getIndikator(
+          idTema: dataNilai.idTema,
+          idSubTema: dataNilai.idSubtema,
+          idIndicator: dataNilai.idIndicator);
 
-  // get subTema
-  getSubTema() async {
-    var subTemaUrl = 'https://ceriakan.id/api/subtema/';
-    setBusy(true);
-    var resultSubTema = await http.get(subTemaUrl);
-    subTema = SubTema.fromJson(json.decode(resultSubTema.body));
-    print(resultSubTema.body);
-
-    setBusy(false);
-    notifyListeners();
+      dataNilai.indicator = stringIndicator;
+      print(dataNilai.indicator);
+    }
   }
 
   // get nilai by date and nis
@@ -59,23 +46,41 @@ class TeacherRaportViewNilaiViewModel extends BaseViewModel {
     nilai = NilaiRaport.fromJson(json.decode(resultNilai.body));
     print(resultNilai.body);
 
+    // filter idTema
+    Set<int> setIDTema = {};
+
+    for (var value in nilai.data) {
+      setIDTema.add(value.idTema);
+    }
+
     setBusy(false);
     notifyListeners();
   }
 
-  // get indikator
-  getIndikator({
+  Future<String> getIndikator({
     int idTema,
     int idSubTema,
+    int idIndicator,
   }) async {
     var urlIndikator =
         "https://ceriakan.id/api/tema/$idTema/subtema/$idSubTema/indicator";
 
     setBusy(true);
+
     var response = await http.get(urlIndikator);
     this.indikator = Indicators.fromJson(json.decode(response.body));
-    print("getindikator nilai viewmodel : ${response.body}");
+
     setBusy(false);
     notifyListeners();
+
+    try {
+      return indikator?.data
+              ?.where((element) => element.id == idIndicator)
+              ?.first
+              ?.description ??
+          'no data';
+    } catch (e) {
+      return "Indikator tidak ditemukan";
+    }
   }
 }

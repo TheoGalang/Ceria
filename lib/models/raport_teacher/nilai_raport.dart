@@ -35,6 +35,7 @@ class Data {
   int idTema;
   int idSubtema;
   int idIndicator;
+  String indicator;
 
   Data(
       {this.id,
@@ -43,7 +44,8 @@ class Data {
       this.nis,
       this.idTema,
       this.idSubtema,
-      this.idIndicator});
+      this.idIndicator,
+      this.indicator});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
