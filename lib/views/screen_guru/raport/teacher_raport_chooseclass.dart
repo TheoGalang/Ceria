@@ -22,7 +22,6 @@ class TeacherRaphortChooseClass extends StatelessWidget {
         subJudul1: '',
         child: Container(
           margin: EdgeInsets.only(top: 16),
-          // padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
           width: MediaQuery.of(context).size.width / 1.5,
           decoration: BoxDecoration(
             color: Colors.white,

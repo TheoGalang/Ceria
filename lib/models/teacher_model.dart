@@ -5,7 +5,7 @@ class Teacher {
 
   Teacher({this.success, this.message, this.data});
 
-  Teacher.fromJson(Map<String, dynamic> json) {
+  Teacher.fromJson(Map<dynamic, dynamic> json) {
     success = json['success'];
     message = json['message'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;

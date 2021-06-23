@@ -5,6 +5,7 @@ import 'bulletin/parent_viewbulletin.dart';
 import 'dokumen/parent_listdocument.dart';
 import 'parent_addpresences.dart';
 import 'parent_studentlist.dart';
+import 'raport/parent_choose_history.dart';
 import 'raport/parent_rapot_nilai.dart';
 import 'tugas/parent_assignment_list.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
@@ -145,9 +146,13 @@ class _ParentHomeAlterState extends State<ParentHomeAlter> {
             ),
           ),
           buildMenu(
-            name: "Raport",
+            name: "Raport\nHistory",
             iconData: Icons.school,
-            onTap: ListNilaiStudentRaportParent(),
+            // onTap: ListNilaiStudentRaportParent(),
+            onTap: ChooseHistoryParentRaport(
+              name: model?.child?.data?.nama ?? "",
+              nis: model?.child?.data?.nomorInduk ?? "",
+            ),
           ),
           buildMenu(
             name: "Kelas",

@@ -2,7 +2,7 @@ class ClassDetail {
   bool success;
   String message;
   Data data;
-  List<Students> students;
+  List<Students> students = [];
 
   ClassDetail({this.success, this.message, this.data, this.students});
 
@@ -38,8 +38,8 @@ class Data {
   int thnAkademik;
   int status;
   String nomorPegawai;
-  Null foto;
-  Null deskripsi;
+  String foto;
+  String deskripsi;
 
   Data(
       {this.id,

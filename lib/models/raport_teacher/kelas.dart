@@ -1,7 +1,7 @@
 class Kelas {
   bool success;
   String message;
-  List<Data> data;
+  List<Data> data = [];
 
   Kelas({this.success, this.message, this.data});
 
@@ -11,7 +11,7 @@ class Kelas {
     if (json['data'] != null) {
       data = new List<Data>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data.add(Data.fromJson(v));
       });
     }
   }
@@ -33,8 +33,8 @@ class Data {
   int thnAkademik;
   int status;
   String nomorPegawai;
-  Null foto;
-  Null deskripsi;
+  String foto;
+  String deskripsi;
 
   Data(
       {this.id,
@@ -51,8 +51,8 @@ class Data {
     thnAkademik = json['thn_akademik'];
     status = json['status'];
     nomorPegawai = json['nomor_pegawai'];
-    foto = json['foto'];
-    deskripsi = json['deskripsi'];
+    foto = json['foto'] ?? "";
+    deskripsi = json['deskripsi'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
